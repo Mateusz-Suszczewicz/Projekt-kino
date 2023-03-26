@@ -131,6 +131,7 @@ namespace kino
                 return ex.Message;
             }
         }
+        
         //OPERATOR
         public string DodanieOperatora(string Login,  int Typ, string? Haslo = "")
         {
@@ -264,7 +265,48 @@ namespace kino
                 return ex.Message;
             }
         }
-    
+
+        //KATEGORIA
+        public string DodanieKategorii(string name)
+        {
+            SqlConnection conn = new SqlConnection(connectionString);
+            SqlCommand cmd = new SqlCommand("dbo.addCategory", conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Add("@name", SqlDbType.VarChar).Value = name;
+           
+            var returnParameter = cmd.Parameters.Add("@r", SqlDbType.VarChar, 300);
+            returnParameter.Direction = ParameterDirection.Output;
+            try
+            {
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                var result = returnParameter.Value;
+                conn.Close();
+                return result.ToString();
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
+        }
+
+        public string ModyfikacjaKateogrii(int catId, string name)
+        {
+            SqlConnection conn = new SqlConnection(connectionString);
+            string query = $"UPDATE dbo.category SET Cat_Name = {name} WHERE Car_Id = {catId}";
+            SqlCommand cmd = new SqlCommand(query, conn);
+            try
+            {
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                conn.Close();
+                return "Poprawnie zmodyfikowano miejsce";
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
+        }
 
     }
 }
