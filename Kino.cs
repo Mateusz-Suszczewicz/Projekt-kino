@@ -86,19 +86,22 @@ namespace kino
         }
 
         //FILM
-        public string DodanieFilmu(string tytul, string opis, DateTime dataEmisji, int sala, int category, int duration, string srcPicture)
+        public string DodanieFilmu(string tytul, string opis, DateTime DataDodania, int sala, int category, int duration, string srcPicture, int filmID = 0)
         {
             SqlConnection conn = new SqlConnection(connectionString);
             SqlCommand cmd = new SqlCommand("dbo.addFilm", conn);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.Add("@Title", SqlDbType.VarChar).Value = tytul;
             cmd.Parameters.Add("@Content", SqlDbType.VarChar).Value = opis;
-            cmd.Parameters.Add("@DataEmisji", SqlDbType.DateTime).Value = dataEmisji;
+            cmd.Parameters.Add("@DataDodania", SqlDbType.DateTime).Value = DataDodania;
             cmd.Parameters.Add("@Sala", SqlDbType.Int).Value = sala;
             cmd.Parameters.Add("@Category", SqlDbType.Int).Value = category;
             cmd.Parameters.Add("@Duration", SqlDbType.Int).Value = duration;
             cmd.Parameters.Add("@Duration", SqlDbType.VarChar).Value = srcPicture;
-
+            if(filmID != 0)
+            {
+                cmd.Parameters.Add("@id", SqlDbType.Int).Value = filmID;
+            }
             var returnParameter = cmd.Parameters.Add("@r", SqlDbType.VarChar, 300);
             returnParameter.Direction = ParameterDirection.Output;
 
@@ -107,24 +110,6 @@ namespace kino
             var result = returnParameter.Value;
             conn.Close();
             return result.ToString();
-        }
-
-        public string ModyfikacjaFilmu(int filmId, string tytul, string opis, DateTime dataEmisji, int sala, int category, int duration, string srcPicture)// TODO: do przebudowy
-        {
-            SqlConnection conn = new SqlConnection(connectionString);
-            string query = $"UPDATE dbo.films SET Film_CatID = {category}, Film_Content = '{opis}', Film_DataDodania = {dataEmisji}, Film_Duration = {duration}, Film_SrcPicture = '{srcPicture}, Film_Title = '{tytul}' WHERE Film_ID = {filmId}";
-            SqlCommand cmd = new SqlCommand(query, conn);
-            try
-            {
-                conn.Open();
-                cmd.ExecuteNonQuery();
-                conn.Close();
-                return "Poprawnie zmodyfikowano film";
-            }
-            catch (Exception ex)
-            {
-                return ex.Message;
-            }
         }
         
         //OPERATOR
