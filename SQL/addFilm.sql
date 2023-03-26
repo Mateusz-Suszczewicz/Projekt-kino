@@ -4,6 +4,7 @@ CREATE OR ALTER PROCEDURE dbo.AddFilm (
 , @DataEmisji datetime 
 , @Category int 
 , @Duration int 
+, @src varchar(250)
 , @r varchar(300) OUTPUT) AS
 
 IF  
@@ -13,11 +14,13 @@ IF
 			, Film_Content
 			, Film_CatID
 			, Film_Duration
+			, Film_SrcPicture
 			) 
 		VALUES ( @Title
 			, @Content
 			, @Category
 			, @Duration
+			, @src
 			);
 		select @r = 'Dodano porpawnie nowy film id' + (SELECT Film_ID FROM dbo.films where Film_Title like @title);
 		RETURN;

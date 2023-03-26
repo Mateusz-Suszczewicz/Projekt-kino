@@ -90,7 +90,8 @@ namespace kino
             return reader;
         }
 
-        public string DodanieFilmu(string tytul, string opis, DateTime dataEmisji, int sala, int category, int duration)
+        //FILM
+        public string DodanieFilmu(string tytul, string opis, DateTime dataEmisji, int sala, int category, int duration, string srcPicture)
         {
             SqlConnection conn = new SqlConnection(connectionString);
             SqlCommand cmd = new SqlCommand("dbo.addFilm", conn);
@@ -101,6 +102,7 @@ namespace kino
             cmd.Parameters.Add("@Sala", SqlDbType.Int).Value = sala;
             cmd.Parameters.Add("@Category", SqlDbType.Int).Value = category;
             cmd.Parameters.Add("@Duration", SqlDbType.Int).Value = duration;
+            cmd.Parameters.Add("@Duration", SqlDbType.VarChar).Value = srcPicture;
 
             var returnParameter = cmd.Parameters.Add("@r", SqlDbType.VarChar, 300);
             returnParameter.Direction = ParameterDirection.Output;
@@ -112,6 +114,24 @@ namespace kino
             return result.ToString();
         }
 
+        public string ModyfikacjaFilmu(int filmId, string tytul, string opis, DateTime dataEmisji, int sala, int category, int duration, string srcPicture)
+        {
+            SqlConnection conn = new SqlConnection(connectionString);
+            string query = $"UPDATE dbo.films SET Film_CatID = {category}, Film_Content = '{opis}', Film_DataDodania = {dataEmisji}, Film_Duration = {duration}, Film_SrcPicture = '{srcPicture}, Film_Title = '{tytul}' WHERE Film_ID = {filmId}";
+            SqlCommand cmd = new SqlCommand(query, conn);
+            try
+            {
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                conn.Close();
+                return "Poprawnie zmodyfikowano film";
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
+        }
+        //OPERATOR
         public string DodanieOperatora(string Login,  int Typ, string? Haslo = "")
         {
             SqlConnection conn = new SqlConnection(connectionString);
@@ -156,6 +176,7 @@ namespace kino
 
         }
         
+        //SALA
         public string DodanieSali(int numberSR, string contentSR, int status = 0)
         {
             SqlConnection conn = new SqlConnection(connectionString);
@@ -200,6 +221,7 @@ namespace kino
 
         }
         
+        //MIEJSCE
         public string DodanieMiejsca(int srID, int numberSeat, int rowSeat)
         {
             SqlConnection conn = new SqlConnection(connectionString);
@@ -242,5 +264,7 @@ namespace kino
                 return ex.Message;
             }
         }
+    
+
     }
 }
