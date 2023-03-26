@@ -8,7 +8,7 @@ CREATE OR ALTER PROC dbo.addSeat(
 
 IF (SELECT SR_ID FROM dbo.screeningRoom WHERE SR_ID = @srid) is not null 
 	AND (SELECT Seat_ID FROM dbo.seats WHERE Seat_Nr = @nr AND Seat_Row = @row) is null
-	IF @id <> 0 
+	IF @id = 0 
 		BEGIN 
 			INSERT INTO dbo.seats (Seat_SRID, Seat_Nr, Seat_Row) VALUES (@srid, @nr, @row)
 			SELECT @r = 'Poprawnie dodano miejsce';

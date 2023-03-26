@@ -128,7 +128,7 @@ namespace kino
         }
         
         //OPERATOR
-        public string DodanieOperatora(string Login,  int Typ, string? Haslo = "")
+        public string DodanieOperatora(string Login,  int Typ, int operID = 0, string? Haslo = "")
         {
             SqlConnection conn = new SqlConnection(connectionString);
             SqlCommand cmd = new SqlCommand("dbo.addOper", conn);
@@ -136,7 +136,10 @@ namespace kino
             cmd.Parameters.Add("@login", SqlDbType.VarChar).Value = Login;
             cmd.Parameters.Add("@password", SqlDbType.VarChar).Value = Haslo;
             cmd.Parameters.Add("@typ", SqlDbType.Int).Value = Typ;
-
+            if(operID != 0)
+            {
+                cmd.Parameters.Add("@id", SqlDbType.Int).Value = operID;
+            }
             var returnParameter = cmd.Parameters.Add("@r", SqlDbType.VarChar, 300);
             returnParameter.Direction = ParameterDirection.Output;
             try
@@ -152,28 +155,9 @@ namespace kino
                 return ex.Message;
             }
         }
-        
-        public string ModyfikacjOperatora(int OperId, string Login, int Typ, string? Haslo = "")// TODO: do przebudowy
-        {
-            SqlConnection conn = new SqlConnection(connectionString);
-            string query = $" UPDATE dbo.operator SET Oper_Login = '{Login}' , Oper_Password = '{Haslo}', Oper_Type ='{Typ}' WHERE Oper_ID = '{OperId}'";
-            SqlCommand cmd = new SqlCommand(query, conn);
-            try
-            {
-                conn.Open();
-                cmd.ExecuteNonQuery();
-                conn.Close();
-                return "Poprawnie zmodyfikowano operatora";
-            }
-            catch (Exception ex)
-            {
-                return ex.Message;
-            }
-
-        }
-        
+                
         //SALA
-        public string DodanieSali(int numberSR, string contentSR, int status = 0)
+        public string DodanieSali(int numberSR, string contentSR, int SRID = 0, int status = 0)
         {
             SqlConnection conn = new SqlConnection(connectionString);
             SqlCommand cmd = new SqlCommand("dbo.addSR", conn);
@@ -181,7 +165,10 @@ namespace kino
             cmd.Parameters.Add("@Nr", SqlDbType.Int).Value = numberSR;
             cmd.Parameters.Add("@content", SqlDbType.VarChar).Value = contentSR;
             cmd.Parameters.Add("@status", SqlDbType.Int).Value = status;
-
+            if (SRID != 0)
+            {
+                cmd.Parameters.Add("@id", SqlDbType.Int).Value = SRID;
+            }
             var returnParameter = cmd.Parameters.Add("@r", SqlDbType.VarChar, 300);
             returnParameter.Direction = ParameterDirection.Output;
             try
@@ -197,26 +184,7 @@ namespace kino
                 return ex.Message;
             }
         }
-
-        public string ModyfikacjaSali(int SrID, int numberSR, string contentSR, int status = 0)// TODO: do przebudowy
-        {
-            SqlConnection conn = new SqlConnection(connectionString);
-            string query = $"UPDATE dbo.screeningRoom SET SR_NR = {numberSR}, SR_Status = {status}, SR_Content = '{contentSR}' WHERE SR_ID = {SrID}";
-            SqlCommand cmd = new SqlCommand(query, conn);
-            try
-            {
-                conn.Open();
-                cmd.ExecuteNonQuery();
-                conn.Close();
-                return "Poprawnie zmodyfikowano salę";
-            }
-            catch (Exception ex)
-            {
-                return ex.Message;
-            }
-
-        }
-        
+      
         //MIEJSCE
         public string DodanieMiejsca(int srID, int numberSeat, int rowSeat, int SeatID = 0)
         {
