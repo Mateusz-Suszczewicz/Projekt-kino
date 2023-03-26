@@ -9,10 +9,10 @@ IF (SELECT SR_ID FROM dbo.screeningRoom WHERE SR_Nr = @Nr) is null
 	BEGIN
 		INSERT INTO dbo.screeningRoom (SR_Nr, SR_Content, SR_Status) VALUES (@Nr, @content, @status)
 		SELECT @r =	'Poporawnie dodano salê';
-		RETURN
-	END
+		RETURN;
+	END;
 ELSE
 	BEGIN 
 		SELECT @r = 'Numer sali jest ju¿ dodany'
-		RETURN 
-	END
+		RETURN;
+	END;

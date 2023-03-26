@@ -160,5 +160,30 @@ namespace kino
                 return ex.Message;
             }
         }
+
+        public string DodanieMiejsca(int srID, int numberSeat, int rowSeat0)
+        {
+            SqlConnection conn = new SqlConnection(connectionString);
+            SqlCommand cmd = new SqlCommand("dbo.addSeat", conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Add("@srid", SqlDbType.Int).Value = srID;
+            cmd.Parameters.Add("@nr", SqlDbType.VarChar).Value = numberSeat;
+            cmd.Parameters.Add("@row", SqlDbType.Int).Value = rowSeat0;
+
+            var returnParameter = cmd.Parameters.Add("@r", SqlDbType.VarChar, 300);
+            returnParameter.Direction = ParameterDirection.Output;
+            try
+            {
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                var result = returnParameter.Value;
+                conn.Close();
+                return result.ToString();
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
+        }
     }
 }
