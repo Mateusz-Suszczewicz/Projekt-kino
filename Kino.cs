@@ -226,7 +226,6 @@ namespace kino
             }
         }
 
-
         //SEANSE
         
         

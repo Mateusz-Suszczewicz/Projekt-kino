@@ -10,10 +10,15 @@ INSERT INTO dbo.booking (Book_OperID, Book_SeatID, Book_SeID, Book_CodeID, Book_
 create database test1
 INSERT INTO dbo.Config (Conf_Wartosc, Conf_Opis) VALUES ('0.1', 'wersja')
 
-DECLARE @r VARCHAR(300)
 exec dbo.addOper @login = 'test3', @password = 'test', @typ = 9, @r = @r output
  
   SELECT @r
 SELECT * FROM dbo.operator
 
-delete dbo.operator where Oper_ID = 5
+DECLARE @r VARCHAR(300)
+exec dbo.addSeat @srid = 6, @nr = 1, @row = 1, @r = @r output
+ 
+  SELECT @r
+  SELECT * FROM dbo.seats  SELECT * FROM dbo.screeningRoom
+
+  UPDATE dbo.films SET Film_CatID = , Film_Content = , Film_DataDodania = , Film_Duration = , Film_SrcPicture = , Film_Title = WHERE Film_ID = 
