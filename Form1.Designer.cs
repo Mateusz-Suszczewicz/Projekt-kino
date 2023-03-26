@@ -44,9 +44,9 @@
             // 
             // textBox1
             // 
-            textBox1.Location = new Point(374, 142);
+            textBox1.Location = new Point(12, 242);
             textBox1.Name = "textBox1";
-            textBox1.Size = new Size(100, 23);
+            textBox1.Size = new Size(776, 23);
             textBox1.TabIndex = 1;
             // 
             // Form1

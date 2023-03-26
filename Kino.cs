@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.VisualBasic.Logging;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
@@ -88,7 +89,7 @@ namespace kino
             return reader;
         }
 
-        public void DodanieFilmu(string tytul, string opis, DateTime dataEmisji, int sala, int category, int duration)
+        public string DodanieFilmu(string tytul, string opis, DateTime dataEmisji, int sala, int category, int duration)
         {
             SqlConnection conn = new SqlConnection(connectionString);
             SqlCommand cmd = new SqlCommand("dbo.addFilm", conn);
@@ -100,32 +101,64 @@ namespace kino
             cmd.Parameters.Add("@Category", SqlDbType.Int).Value = category;
             cmd.Parameters.Add("@Duration", SqlDbType.Int).Value = duration;
 
-            var returnParameter = cmd.Parameters.Add("@ReturnVal", SqlDbType.Int);
-            returnParameter.Direction = ParameterDirection.ReturnValue;
+            var returnParameter = cmd.Parameters.Add("@r", SqlDbType.VarChar, 300);
+            returnParameter.Direction = ParameterDirection.Output;
 
             conn.Open();
             cmd.ExecuteNonQuery();
             var result = returnParameter.Value;
-            Console.WriteLine(result.ToString());
+            conn.Close();
+            return result.ToString();
         }
 
         public string DodanieOperatora(string Login,  int Typ, string? Haslo = "")
         {
             SqlConnection conn = new SqlConnection(connectionString);
-            conn.Open();
             SqlCommand cmd = new SqlCommand("dbo.addOper", conn);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.Add("@login", SqlDbType.VarChar).Value = Login;
             cmd.Parameters.Add("@password", SqlDbType.VarChar).Value = Haslo;
             cmd.Parameters.Add("@typ", SqlDbType.Int).Value = Typ;
-            //cmd.Parameters.Add("@r", SqlDbType.VarChar, 300).Value = "";
 
             var returnParameter = cmd.Parameters.Add("@r", SqlDbType.VarChar, 300);
             returnParameter.Direction = ParameterDirection.Output;
+            try
+            {
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                var result = returnParameter.Value;
+                conn.Close();
+                return result.ToString();
+            }
+            catch (Exception ex) 
+            {
+                return ex.Message;
+            }
+        }
+    
+        public string DodanieSali(int numberSR, string contentSR, int status = 0)
+        {
+            SqlConnection conn = new SqlConnection(connectionString);
+            SqlCommand cmd = new SqlCommand("dbo.addSR", conn);
+            cmd.CommandType= CommandType.StoredProcedure;
+            cmd.Parameters.Add("@Nr", SqlDbType.Int).Value = numberSR;
+            cmd.Parameters.Add("@content", SqlDbType.VarChar).Value = contentSR;
+            cmd.Parameters.Add("@status", SqlDbType.Int).Value = status;
 
-            cmd.ExecuteNonQuery();
-            var result = returnParameter.Value;
-            return result.ToString();
+            var returnParameter = cmd.Parameters.Add("@r", SqlDbType.VarChar, 300);
+            returnParameter.Direction = ParameterDirection.Output;
+            try
+            {
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                var result = returnParameter.Value;
+                conn.Close();
+                return result.ToString();
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
         }
     }
 }

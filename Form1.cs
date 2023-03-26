@@ -19,8 +19,8 @@ namespace Projekt_kino
         {
 
 
-           
-            textBox1.Text = a.DodanieOperatora("a", 1);
+
+            textBox1.Text = a.DodanieSali(9, "sala 4", 1);
         }
     }
 }
