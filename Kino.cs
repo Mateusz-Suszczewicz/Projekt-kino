@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -32,6 +33,11 @@ namespace kino
             {
                 return false;
             }
+        }
+
+        public string con()
+        {
+            return connectionString;
         }
 
         public void CreateTable() // Do przemyślenia jak zrobić zeby można było to wywwołać za każdym razem i obsłużyć sytuację kiedy tabele juz powstały 
@@ -103,6 +109,23 @@ namespace kino
             Console.WriteLine(result.ToString());
         }
 
+        public string DodanieOperatora(string Login,  int Typ, string? Haslo = "")
+        {
+            SqlConnection conn = new SqlConnection(connectionString);
+            conn.Open();
+            SqlCommand cmd = new SqlCommand("dbo.addOper", conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Add("@login", SqlDbType.VarChar).Value = Login;
+            cmd.Parameters.Add("@password", SqlDbType.VarChar).Value = Haslo;
+            cmd.Parameters.Add("@typ", SqlDbType.Int).Value = Typ;
+            //cmd.Parameters.Add("@r", SqlDbType.VarChar, 300).Value = "";
 
+            var returnParameter = cmd.Parameters.Add("@r", SqlDbType.VarChar, 300);
+            returnParameter.Direction = ParameterDirection.Output;
+
+            cmd.ExecuteNonQuery();
+            var result = returnParameter.Value;
+            return result.ToString();
+        }
     }
 }
