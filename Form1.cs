@@ -20,7 +20,7 @@ namespace Projekt_kino
 
 
 
-            textBox1.Text = a.DodanieSali(9, "sala 4", 1);
+            textBox1.Text = a.ModyfikacjaSali(1, 4, "opis po modyfikacji");
         }
     }
 }

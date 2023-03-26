@@ -161,6 +161,24 @@ namespace kino
             }
         }
 
+        public string ModyfikacjaSali(int SrID, int numberSR, string contentSR, int status = 0)
+        {
+            SqlConnection conn = new SqlConnection(connectionString);
+            string query = $"UPDATE dbo.screeningRoom SET SR_NR = {numberSR}, SR_Status = {status}, SR_Content = '{contentSR}' WHERE SR_ID = {SrID}";
+            SqlCommand cmd = new SqlCommand(query, conn);
+            try
+            {
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                conn.Close();
+                return "Poprawnie zmodyfikowano salę";
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
+
+        }
         public string DodanieMiejsca(int srID, int numberSeat, int rowSeat0)
         {
             SqlConnection conn = new SqlConnection(connectionString);
