@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Common;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Security.Policy;
@@ -146,7 +147,7 @@ namespace kino
                 conn.Open();
                 cmd.ExecuteNonQuery();
                 conn.Close();
-                return "Poprawnie zmodyfikowano salę";
+                return "Poprawnie zmodyfikowano operatora";
             }
             catch (Exception ex)
             {
@@ -154,6 +155,7 @@ namespace kino
             }
 
         }
+        
         public string DodanieSali(int numberSR, string contentSR, int status = 0)
         {
             SqlConnection conn = new SqlConnection(connectionString);
@@ -198,14 +200,14 @@ namespace kino
 
         }
         
-        public string DodanieMiejsca(int srID, int numberSeat, int rowSeat0)
+        public string DodanieMiejsca(int srID, int numberSeat, int rowSeat)
         {
             SqlConnection conn = new SqlConnection(connectionString);
             SqlCommand cmd = new SqlCommand("dbo.addSeat", conn);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.Add("@srid", SqlDbType.Int).Value = srID;
             cmd.Parameters.Add("@nr", SqlDbType.VarChar).Value = numberSeat;
-            cmd.Parameters.Add("@row", SqlDbType.Int).Value = rowSeat0;
+            cmd.Parameters.Add("@row", SqlDbType.Int).Value = rowSeat;
 
             var returnParameter = cmd.Parameters.Add("@r", SqlDbType.VarChar, 300);
             returnParameter.Direction = ParameterDirection.Output;
@@ -216,6 +218,24 @@ namespace kino
                 var result = returnParameter.Value;
                 conn.Close();
                 return result.ToString();
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
+        }
+    
+        public string ModyfikacjaMiejsca(int seatId, int srID, int numberSeat, int rowSeat)
+        {
+            SqlConnection conn = new SqlConnection(connectionString);
+            string query = $"UPDATE dbo.seats SET Seat_Nr = {numberSeat}, Seat_Row = {rowSeat}, Seat_SRID = {srID} WHERE Seat_ID = {seatId}";
+            SqlCommand cmd = new SqlCommand(query, conn);
+            try
+            {
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                conn.Close();
+                return "Poprawnie zmodyfikowano miejsce";
             }
             catch (Exception ex)
             {
