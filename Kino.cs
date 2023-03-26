@@ -37,12 +37,7 @@ namespace kino
             }
         }
 
-        public string con()
-        {
-            return connectionString;
-        }
-
-        public void CreateTable() // Do przemyślenia jak zrobić zeby można było to wywwołać za każdym razem i obsłużyć sytuację kiedy tabele juz powstały 
+        public void CreateTable() // TODO: Do przemyślenia jak zrobić zeby można było to wywwołać za każdym razem i obsłużyć sytuację kiedy tabele juz powstały 
         {
             FileInfo file = new FileInfo("create.sql");
             string script = file.OpenText().ReadToEnd();
@@ -64,7 +59,7 @@ namespace kino
             finally { conn.Close(); }
         }
 
-        public void InstallScipt()
+        public void InstallScipt() // TODO: do podpięcia skrypty 
         {
 
         }
@@ -114,7 +109,7 @@ namespace kino
             return result.ToString();
         }
 
-        public string ModyfikacjaFilmu(int filmId, string tytul, string opis, DateTime dataEmisji, int sala, int category, int duration, string srcPicture)
+        public string ModyfikacjaFilmu(int filmId, string tytul, string opis, DateTime dataEmisji, int sala, int category, int duration, string srcPicture)// TODO: do przebudowy
         {
             SqlConnection conn = new SqlConnection(connectionString);
             string query = $"UPDATE dbo.films SET Film_CatID = {category}, Film_Content = '{opis}', Film_DataDodania = {dataEmisji}, Film_Duration = {duration}, Film_SrcPicture = '{srcPicture}, Film_Title = '{tytul}' WHERE Film_ID = {filmId}";
@@ -158,7 +153,7 @@ namespace kino
             }
         }
         
-        public string ModyfikacjOperatora(int OperId, string Login, int Typ, string? Haslo = "")
+        public string ModyfikacjOperatora(int OperId, string Login, int Typ, string? Haslo = "")// TODO: do przebudowy
         {
             SqlConnection conn = new SqlConnection(connectionString);
             string query = $" UPDATE dbo.operator SET Oper_Login = '{Login}' , Oper_Password = '{Haslo}', Oper_Type ='{Typ}' WHERE Oper_ID = '{OperId}'";
@@ -203,7 +198,7 @@ namespace kino
             }
         }
 
-        public string ModyfikacjaSali(int SrID, int numberSR, string contentSR, int status = 0)
+        public string ModyfikacjaSali(int SrID, int numberSR, string contentSR, int status = 0)// TODO: do przebudowy
         {
             SqlConnection conn = new SqlConnection(connectionString);
             string query = $"UPDATE dbo.screeningRoom SET SR_NR = {numberSR}, SR_Status = {status}, SR_Content = '{contentSR}' WHERE SR_ID = {SrID}";
@@ -223,7 +218,7 @@ namespace kino
         }
         
         //MIEJSCE
-        public string DodanieMiejsca(int srID, int numberSeat, int rowSeat)
+        public string DodanieMiejsca(int srID, int numberSeat, int rowSeat, int SeatID = 0)
         {
             SqlConnection conn = new SqlConnection(connectionString);
             SqlCommand cmd = new SqlCommand("dbo.addSeat", conn);
@@ -231,7 +226,10 @@ namespace kino
             cmd.Parameters.Add("@srid", SqlDbType.Int).Value = srID;
             cmd.Parameters.Add("@nr", SqlDbType.VarChar).Value = numberSeat;
             cmd.Parameters.Add("@row", SqlDbType.Int).Value = rowSeat;
-
+            if(SeatID != 0)
+            {
+                cmd.Parameters.Add("@id", SqlDbType.Int).Value = SeatID;
+            }
             var returnParameter = cmd.Parameters.Add("@r", SqlDbType.VarChar, 300);
             returnParameter.Direction = ParameterDirection.Output;
             try
@@ -248,32 +246,17 @@ namespace kino
             }
         }
     
-        public string ModyfikacjaMiejsca(int seatId, int srID, int numberSeat, int rowSeat)
-        {
-            SqlConnection conn = new SqlConnection(connectionString);
-            string query = $"UPDATE dbo.seats SET Seat_Nr = {numberSeat}, Seat_Row = {rowSeat}, Seat_SRID = {srID} WHERE Seat_ID = {seatId}";
-            SqlCommand cmd = new SqlCommand(query, conn);
-            try
-            {
-                conn.Open();
-                cmd.ExecuteNonQuery();
-                conn.Close();
-                return "Poprawnie zmodyfikowano miejsce";
-            }
-            catch (Exception ex)
-            {
-                return ex.Message;
-            }
-        }
-
         //KATEGORIA
-        public string DodanieKategorii(string name)
+        public string DodanieKategorii(string name, int CatId = 0)
         {
             SqlConnection conn = new SqlConnection(connectionString);
             SqlCommand cmd = new SqlCommand("dbo.addCategory", conn);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.Add("@name", SqlDbType.VarChar).Value = name;
-           
+            if (CatId != 0)
+            {
+                cmd.Parameters.Add("@id", SqlDbType.Int).Value = CatId;
+            }
             var returnParameter = cmd.Parameters.Add("@r", SqlDbType.VarChar, 300);
             returnParameter.Direction = ParameterDirection.Output;
             try
@@ -290,23 +273,11 @@ namespace kino
             }
         }
 
-        public string ModyfikacjaKateogrii(int catId, string name)
-        {
-            SqlConnection conn = new SqlConnection(connectionString);
-            string query = $"UPDATE dbo.category SET Cat_Name = {name} WHERE Car_Id = {catId}";
-            SqlCommand cmd = new SqlCommand(query, conn);
-            try
-            {
-                conn.Open();
-                cmd.ExecuteNonQuery();
-                conn.Close();
-                return "Poprawnie zmodyfikowano miejsce";
-            }
-            catch (Exception ex)
-            {
-                return ex.Message;
-            }
-        }
+
+        //SEANSE
+        
+        
+        
 
     }
 }
