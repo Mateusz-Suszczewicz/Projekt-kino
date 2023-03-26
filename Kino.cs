@@ -135,7 +135,25 @@ namespace kino
                 return ex.Message;
             }
         }
-    
+        
+        public string ModyfikacjOperatora(int OperId, string Login, int Typ, string? Haslo = "")
+        {
+            SqlConnection conn = new SqlConnection(connectionString);
+            string query = $" UPDATE dbo.operator SET Oper_Login = '{Login}' , Oper_Password = '{Haslo}', Oper_Type ='{Typ}' WHERE Oper_ID = '{OperId}'";
+            SqlCommand cmd = new SqlCommand(query, conn);
+            try
+            {
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                conn.Close();
+                return "Poprawnie zmodyfikowano salę";
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
+
+        }
         public string DodanieSali(int numberSR, string contentSR, int status = 0)
         {
             SqlConnection conn = new SqlConnection(connectionString);
@@ -179,6 +197,7 @@ namespace kino
             }
 
         }
+        
         public string DodanieMiejsca(int srID, int numberSeat, int rowSeat0)
         {
             SqlConnection conn = new SqlConnection(connectionString);
