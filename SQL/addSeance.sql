@@ -3,7 +3,7 @@ CREATE OR ALTER PROC addSeance(
 , @filmID int
 , @srID int
 , @dataEmisji datetime
-, @datakoñca datetime
+, @dataKoñca datetime
 , @r varchar(300) OUTPUT
 ) AS
 
