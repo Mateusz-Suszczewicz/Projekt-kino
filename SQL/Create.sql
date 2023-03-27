@@ -61,6 +61,7 @@ CREATE TABLE dbo.seance(
 	SE_FilmID int not null,
 	SE_SRID int not null,
 	SE_DataEmisji datetime not null,
+	SE_DataKonca datetime not null
 
 	PRIMARY KEY (SE_ID),
 	FOREIGN KEY (SE_SRID) REFERENCES  dbo.screeningRoom (SR_ID),

@@ -227,7 +227,34 @@ namespace kino
         }
 
         //SEANSE
-        
+        public string DodanieSeansu(int filmID, int SRID, DateTime dataEmisji, DateTime dataKonca, int SEID = 0) 
+        {
+            SqlConnection conn = new SqlConnection(connectionString);
+            SqlCommand cmd = new SqlCommand("dbo.addSeance", conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Add("@filmID", SqlDbType.Int).Value = filmID;
+            cmd.Parameters.Add("@srID", SqlDbType.Int).Value = SRID;
+            cmd.Parameters.Add("@dataEmisji", SqlDbType.DateTime).Value = dataEmisji;
+            cmd.Parameters.Add("@datakonca", SqlDbType.DateTime).Value = dataKonca;
+            if (SEID != 0)
+            {
+                cmd.Parameters.Add("@id", SqlDbType.Int).Value = SEID;
+            }
+            var returnParameter = cmd.Parameters.Add("@r", SqlDbType.VarChar, 300);
+            returnParameter.Direction = ParameterDirection.Output;
+            try
+            {
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                var result = returnParameter.Value;
+                conn.Close();
+                return result.ToString();
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
+        }
         
         
 
