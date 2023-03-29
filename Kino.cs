@@ -16,7 +16,7 @@ namespace kino
 {
     internal class kinoDB
     {
-
+        // WERSJA 0.1
         private string? connectionString;
 
         public bool ConnectionString(string server, int loginMethod, string database, string? login = null, string? passowrd = null)
@@ -256,7 +256,36 @@ namespace kino
             }
         }
         
-        //
+        //BOOKING
+        public string DodanieBiletu(int operID, int seatID, int SeID, int type, DateTime dataZakupu, int CodeId = 0, int bookID = 0)
+        {
+            SqlConnection conn = new SqlConnection(connectionString);
+            SqlCommand cmd = new SqlCommand("dbo.addBooking", conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Add("@OperId", SqlDbType.Int).Value = operID;
+            cmd.Parameters.Add("@SeatId", SqlDbType.Int).Value = seatID;
+            cmd.Parameters.Add("@SeId", SqlDbType.Int).Value = SeID;
+            cmd.Parameters.Add("@CodeId", SqlDbType.Int).Value = CodeId;
+            cmd.Parameters.Add("@type", SqlDbType.Int).Value = type;
+            cmd.Parameters.Add("@dataZakupu", SqlDbType.DateTime).Value = dataZakupu;
+            if (bookID != 0)
+            {
+                cmd.Parameters.Add("@id", SqlDbType.Int).Value = bookID;
+            }
+            var returnParameter = cmd.Parameters.Add("@r", SqlDbType.VarChar, 300);
+            returnParameter.Direction = ParameterDirection.Output;
+            try
+            {
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                var result = returnParameter.Value;
+                conn.Close();
+                return result.ToString();
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
 
-    }
+            }
+        }
 }
