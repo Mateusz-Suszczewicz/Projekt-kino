@@ -17,8 +17,18 @@ namespace kino
     internal class kinoDB
     {
         // WERSJA 0.1
+        // TODO: Przebudować metody na mechanizm Dappera
         private string? connectionString;
-
+        
+        /// <summary>
+        /// method <c>ConnectionString</c> Ustawienie linku do połączenie do bazy danych 
+        /// </summary>
+        /// <param name="server">Adres serwera do którego chcemy się połączyć</param>
+        /// <param name="loginMethod">Metoda logowania: 1 - Logowanie zintegrowane 2 - poprzez autoryzację SQL</param>
+        /// <param name="database">Baza danych do której się chcemy podpiąć</param>
+        /// <param name="login">Login użytkownika bazy danych</param>
+        /// <param name="passowrd">Hasło użytkownika bazy danych</param>
+        /// <returns>Zwraca TRUE jesli połączenie się powiodło i FALSE jeśli się nie powiodło</returns>
         public bool ConnectionString(string server, int loginMethod, string database, string? login = null, string? passowrd = null)
         {
             SqlConnection conn;
@@ -37,7 +47,10 @@ namespace kino
             }
         }
 
-        public void CreateTable() // TODO: Do przemyślenia jak zrobić zeby można było to wywwołać za każdym razem i obsłużyć sytuację kiedy tabele juz powstały 
+        /// <summary>
+        /// method <c>CreateTable</c> Tworzy tabele w bazie danych zalecane jednokrotne uruchomienie
+        /// </summary>
+        public void CreateTable() // TODO: Przygotować mechanizm pod sprawdzanie tabel i dodawanie nowych 
         {
             FileInfo file = new FileInfo("create.sql");
             string script = file.OpenText().ReadToEnd();
@@ -59,11 +72,18 @@ namespace kino
             finally { conn.Close(); }
         }
 
-        public void InstallScipt() // TODO: do podpięcia skrypty 
+        /// <summary>
+        /// method <c>InstallScipt</c> Instalacja skryptów -> w trakcie budowy
+        /// </summary>
+        private void InstallScipt() // TODO: do podpięcia skrypty i przygototowanie mechanizmu do weryfikcaji wersji 
         {
 
         }
 
+        /// <summary>
+        /// method <c>ShowFilms</c> wyświetlenie wszystkich filmów
+        /// </summary>
+        /// <returns></returns>
         public SqlDataReader ShowFilms()
         {
             SqlConnection conn = new SqlConnection(connectionString);
@@ -74,6 +94,10 @@ namespace kino
             return reader;
         }
 
+        /// <summary>
+        /// method <c>ShowCode</c> wyświetlenie wszytskich operatorów z kodami 
+        /// </summary>
+        /// <returns></returns>
         public SqlDataReader ShowCode()
         {
             SqlConnection conn = new SqlConnection(connectionString);
@@ -85,8 +109,18 @@ namespace kino
             return reader;
         }
 
-        //FILM
-        public string DodanieFilmu(string tytul, string opis, DateTime DataDodania, int sala, int category, int duration, string srcPicture, int filmID = 0)
+        /// <summary>
+        /// method <c>DodanieFilmu</c> Umozliwia dodanie filmu lub edycję już istniejącego. Jesli do metody zostanie przekazane ID filmu to film w bazie zostanie zaktualizowany o WSZYSTKIE wprowadzone dane
+        /// </summary>
+        /// <param name="tytul">Tytuł filmu</param>
+        /// <param name="opis">OPis filmu</param>
+        /// <param name="DataDodania">Data dodania dilmu </param>
+        /// <param name="category">Kategoria do której należy film</param>
+        /// <param name="duration">Czas trwania filmu w minutach</param>
+        /// <param name="srcPicture">Link do obrazka </param>
+        /// <param name="filmID"><ID filmu domyslnie 0/param>
+        /// <returns>Zwracany tekst z błędem lub komunikatem o poprawnym dodaniu</returns>
+        public string DodanieFilmu(string tytul, string opis, DateTime DataDodania, int category, int duration, string srcPicture, int filmID = 0) //TODO: Do obsłużenia są obrazki
         {
             SqlConnection conn = new SqlConnection(connectionString);
             SqlCommand cmd = new SqlCommand("dbo.addFilm", conn);
@@ -94,7 +128,6 @@ namespace kino
             cmd.Parameters.Add("@Title", SqlDbType.VarChar).Value = tytul;
             cmd.Parameters.Add("@Content", SqlDbType.VarChar).Value = opis;
             cmd.Parameters.Add("@DataDodania", SqlDbType.DateTime).Value = DataDodania;
-            cmd.Parameters.Add("@Sala", SqlDbType.Int).Value = sala;
             cmd.Parameters.Add("@Category", SqlDbType.Int).Value = category;
             cmd.Parameters.Add("@Duration", SqlDbType.Int).Value = duration;
             cmd.Parameters.Add("@Duration", SqlDbType.VarChar).Value = srcPicture;
@@ -111,8 +144,15 @@ namespace kino
             conn.Close();
             return result.ToString();
         }
-        
-        //OPERATOR
+
+        /// <summary>
+        /// method <c>DodanieOperatora</c> Umożliwia dodanie operatora lub edycję już istniejącego.
+        /// </summary>
+        /// <param name="Login">Login operatora</param>
+        /// <param name="Typ">Typ operatora: 1 - kierownik; 2- klient</param>
+        /// <param name="operID">Id operatora</param>
+        /// <param name="Haslo"> hasło operatora</param>
+        /// <returns>Zwracany tekst z błędem lub komunikatem o poprawnym dodaniu</returns>
         public string DodanieOperatora(string Login,  int Typ, int operID = 0, string? Haslo = "")
         {
             SqlConnection conn = new SqlConnection(connectionString);
@@ -140,8 +180,15 @@ namespace kino
                 return ex.Message;
             }
         }
-                
-        //SALA
+
+        /// <summary>
+        /// method <c>DodanieSali</c> Umożliwia dodanie sali lub jej edycję
+        /// </summary>
+        /// <param name="numberSR">Numer sali</param>
+        /// <param name="contentSR">opis sali</param>
+        /// <param name="SRID">Id sali</param>
+        /// <param name="status">status sali: 0 - sala aktywna; 1 - sala nieaktywna</param>
+        /// <returns>Zwracany tekst z błędem lub komunikatem o poprawnym dodaniu</returns>
         public string DodanieSali(int numberSR, string contentSR, int SRID = 0, int status = 0)
         {
             SqlConnection conn = new SqlConnection(connectionString);

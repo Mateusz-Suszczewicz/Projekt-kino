@@ -1,4 +1,4 @@
-CREATE OR ALTER PROCEDURE dbo.AddFilm (
+CREATE OR ALTER PROCEDURE dbo.addFilm (
 @id int = 0
 ,  @Title varchar(50)
 , @Content varchar(250)
