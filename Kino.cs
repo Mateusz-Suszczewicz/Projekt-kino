@@ -9,6 +9,7 @@ using System.Linq;
 using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
+using Dapper;
 
 
 
@@ -19,7 +20,7 @@ namespace kino
         // WERSJA 0.1
         // TODO: Przebudować metody na mechanizm Dappera
         private string? connectionString;
-        
+
         /// <summary>
         /// method <c>ConnectionString</c> Ustawienie linku do połączenie do bazy danych 
         /// </summary>
@@ -131,7 +132,7 @@ namespace kino
             cmd.Parameters.Add("@Category", SqlDbType.Int).Value = category;
             cmd.Parameters.Add("@Duration", SqlDbType.Int).Value = duration;
             cmd.Parameters.Add("@Duration", SqlDbType.VarChar).Value = srcPicture;
-            if(filmID != 0)
+            if (filmID != 0)
             {
                 cmd.Parameters.Add("@id", SqlDbType.Int).Value = filmID;
             }
@@ -153,7 +154,7 @@ namespace kino
         /// <param name="operID">Id operatora</param>
         /// <param name="Haslo"> hasło operatora</param>
         /// <returns>Zwracany tekst z błędem lub komunikatem o poprawnym dodaniu</returns>
-        public string DodanieOperatora(string Login,  int Typ, int operID = 0, string? Haslo = "")
+        public string DodanieOperatora(string Login, int Typ, int operID = 0, string? Haslo = "")
         {
             SqlConnection conn = new SqlConnection(connectionString);
             SqlCommand cmd = new SqlCommand("dbo.addOper", conn);
@@ -161,7 +162,7 @@ namespace kino
             cmd.Parameters.Add("@login", SqlDbType.VarChar).Value = Login;
             cmd.Parameters.Add("@password", SqlDbType.VarChar).Value = Haslo;
             cmd.Parameters.Add("@typ", SqlDbType.Int).Value = Typ;
-            if(operID != 0)
+            if (operID != 0)
             {
                 cmd.Parameters.Add("@id", SqlDbType.Int).Value = operID;
             }
@@ -175,7 +176,7 @@ namespace kino
                 conn.Close();
                 return result.ToString();
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 return ex.Message;
             }
@@ -193,7 +194,7 @@ namespace kino
         {
             SqlConnection conn = new SqlConnection(connectionString);
             SqlCommand cmd = new SqlCommand("dbo.addSR", conn);
-            cmd.CommandType= CommandType.StoredProcedure;
+            cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.Add("@Nr", SqlDbType.Int).Value = numberSR;
             cmd.Parameters.Add("@content", SqlDbType.VarChar).Value = contentSR;
             cmd.Parameters.Add("@status", SqlDbType.Int).Value = status;
@@ -233,7 +234,7 @@ namespace kino
             cmd.Parameters.Add("@srid", SqlDbType.Int).Value = srID;
             cmd.Parameters.Add("@nr", SqlDbType.VarChar).Value = numberSeat;
             cmd.Parameters.Add("@row", SqlDbType.Int).Value = rowSeat;
-            if(SeatID != 0)
+            if (SeatID != 0)
             {
                 cmd.Parameters.Add("@id", SqlDbType.Int).Value = SeatID;
             }
@@ -294,7 +295,7 @@ namespace kino
         /// <param name="dataKonca">data zakończenia seansu</param>
         /// <param name="SEID">ID seansu</param>
         /// <returns>Zwracany tekst z błędem lub komunikatem o poprawnym dodaniu</returns>
-        public string DodanieSeansu(int filmID, int SRID, DateTime dataEmisji, DateTime dataKonca, int SEID = 0) 
+        public string DodanieSeansu(int filmID, int SRID, DateTime dataEmisji, DateTime dataKonca, int SEID = 0)
         {
             SqlConnection conn = new SqlConnection(connectionString);
             SqlCommand cmd = new SqlCommand("dbo.addSeance", conn);
@@ -365,4 +366,13 @@ namespace kino
 
             }
         }
+        public string test()
+        {
+            SqlConnection conn = new SqlConnection(connectionString);
+            var procedure = "addCategory11";
+            var values = new { name = "akcja" };
+            var results = conn.ExecuteScalar<string>(procedure, values,  commandType: CommandType.StoredProcedure);
+            return results;
+        }
+    }
 }

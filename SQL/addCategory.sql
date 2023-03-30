@@ -1,7 +1,7 @@
 CREATE OR ALTER PROC addCategory(
 @id int = 0
 , @name varchar(50)
-, @r varchar(300)
+, @r varchar(300) OUTPUT
 ) AS
 IF (SELECT Cat_ID FROM dbo.category WHERE Cat_Name = @name) is null -- sprawdzenie nazwy
 	IF @id = 0  -- warunek utworzenia nowej kartoteki

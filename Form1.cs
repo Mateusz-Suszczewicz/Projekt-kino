@@ -3,6 +3,7 @@ using Microsoft.VisualBasic.Logging;
 using System.Data.SqlClient;
 using System.Data;
 using System;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Projekt_kino
 {
@@ -18,9 +19,9 @@ namespace Projekt_kino
         private void button1_Click(object sender, EventArgs e)
         {
 
+            //textBox1.Text = "test1";
 
-
-            textBox1.Text = a.DodanieBiletu(1, 4, "opis po modyfikacji");
+            textBox1.Text = a.test();
         }
     }
 }

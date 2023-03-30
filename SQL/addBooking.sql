@@ -10,12 +10,12 @@ CREATE OR ALTER PROC addBooking(
 ) AS
 
 Declare @cena decimal(5,2)
-IF @CodeId != 0
+IF @Code != 0
 	BEGIN 
-		IF (SELECT TOP 1 CD_ID FROM dbo.codes WHERE CD_OperID = @OperId AND CD_Code = @CodeId AND CD_Stauts = 0) is not null
+		IF (SELECT TOP 1 CD_ID FROM dbo.codes WHERE CD_OperID = @OperId AND CD_Code = @Code AND CD_Stauts = 0) is not null
 			BEGIN 
 				SET @cena = 0
-				UPDATE dbo.codes SET CD_Stauts = 1 WHERE CD_ID = (SELECT TOP 1 CD_ID FROM dbo.codes WHERE CD_OperID = @OperId AND CD_Code = @CodeId AND CD_Stauts = 0)
+				UPDATE dbo.codes SET CD_Stauts = 1 WHERE CD_ID = (SELECT TOP 1 CD_ID FROM dbo.codes WHERE CD_OperID = @OperId AND CD_Code = @Code AND CD_Stauts = 0)
 			END
 		ELSE
 			IF(SELECT TOP 1 CD_ID FROM dbo.codes WHERE CD_OperID = @OperId AND CD_Stauts = 0) is null
@@ -23,7 +23,7 @@ IF @CodeId != 0
 					SET @r = 'Operator nie posiada ¿adnych aktywnych kodów'
 					RETURN
 				END
-			IF(SELECT TOP 1 CD_ID FROM dbo.codes WHERE CD_Code = @CodeId AND CD_Stauts = 0) is null
+			IF(SELECT TOP 1 CD_ID FROM dbo.codes WHERE CD_Code = @Code AND CD_Stauts = 0) is null
 				BEGIN 
 					SET @r = 'Nie ma takiego aktywnego kodu'
 					RETURN
@@ -51,13 +51,13 @@ AND (SELECT TOP 1 Book_ID FROM dbo.booking WHERE Book_SeatID = @SeatId AND Book_
 	BEGIN
 		IF @id = 0
 			BEGIN
-				INSERT INTO dbo.booking (Book_Cena, Book_CodeID, Book_DataZakupu, Book_OperID, Book_SeatID, Book_SeID, Book_Type) VALUES (@cena, @CodeId, @dataZakupu, @OperId, @SeatId, @SeId, @type)
+				INSERT INTO dbo.booking (Book_Cena, Book_CodeID, Book_DataZakupu, Book_OperID, Book_SeatID, Book_SeID, Book_Type) VALUES (@cena, @Code, @dataZakupu, @OperId, @SeatId, @SeId, @type)
 				SET @r = 'Poprawnie dodano nowy bilet'
 				RETURN
 			END
 		ELSE
 			BEGIN
-				UPDATE dbo.booking SET Book_CodeID = @CodeId, Book_DataZakupu = @dataZakupu, Book_OperID = @OperId, Book_SeatID = @SeatId, Book_SeID = @SeId, Book_Type = @type
+				UPDATE dbo.booking SET Book_CodeID = @Code, Book_DataZakupu = @dataZakupu, Book_OperID = @OperId, Book_SeatID = @SeatId, Book_SeID = @SeId, Book_Type = @type
 				SET @r = 'Poprawnie dodano nowy bilet'
 				RETURN
 			END
