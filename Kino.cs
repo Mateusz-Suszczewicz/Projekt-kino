@@ -10,16 +10,33 @@ using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using Dapper;
-
-
+using Microsoft.Win32;
 
 namespace kino
 {
     internal class kinoDB
     {
-        // WERSJA 0.1
+        // WERSJA 0.2
         // TODO: Przebudować metody na mechanizm Dappera
+        // TODO: Dodać konstruktor który sprawdzi: 1 czy istnijej już ustalone połaczenie; 2 sprawdzi wersję w bazie danych.
         private string? connectionString;
+       
+        public bool PolaczenieDoBazyZRejestru()
+        {
+            RegistryKey key = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\Kino");
+            if (key != null) {
+                string server = key.GetValue("server").ToString();
+                string loginMethod = key.GetValue("loginMethod").ToString();
+                string database = key.GetValue("database").ToString();
+                string login = key.GetValue("login").ToString();
+                string passowrd = key.GetValue("passowrd").ToString();
+                connectionString = loginMethod == "1" ? $"Data Source={server}; Database={database}; Integrated Security=SSPI;" : $"Data Source={server}; Initial Catalog = {database}; User ID={login}; Password={passowrd}";
+                return true;
+            }
+            return false;
+
+        }
+
 
         /// <summary>
         /// method <c>ConnectionString</c> Ustawienie linku do połączenie do bazy danych 
@@ -30,7 +47,7 @@ namespace kino
         /// <param name="login">Login użytkownika bazy danych</param>
         /// <param name="passowrd">Hasło użytkownika bazy danych</param>
         /// <returns>Zwraca TRUE jesli połączenie się powiodło i FALSE jeśli się nie powiodło</returns>
-        public bool ConnectionString(string server, int loginMethod, string database, string? login = null, string? passowrd = null)
+        public bool ConnectionString(string server, int loginMethod, string database, string login = "0", string passowrd = "0")//TODO: Zapis połączenia w rejestrze
         {
             SqlConnection conn;
             string conString = loginMethod == 1 ? $"Data Source={server}; Database={database}; Integrated Security=SSPI;" : $"Data Source={server}; Initial Catalog = {database}; User ID={login}; Password={passowrd}";
@@ -40,6 +57,14 @@ namespace kino
                 conn.Open();
                 conn.Close();
                 connectionString = conString;
+                RegistryKey key = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\Kino");
+                key.SetValue("server", server);
+                key.SetValue("loginMethod", loginMethod.ToString());
+                key.SetValue("database", database);
+                key.SetValue("login", login);
+                key.SetValue("passowrd", passowrd);
+
+                key.Close();
                 return true;
             }
             catch
@@ -366,6 +391,7 @@ namespace kino
 
             }
         }
+        
         public string test()
         {
             SqlConnection conn = new SqlConnection(connectionString);
