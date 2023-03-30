@@ -216,8 +216,15 @@ namespace kino
                 return ex.Message;
             }
         }
-      
-        //MIEJSCE
+
+        /// <summary>
+        /// method <c>DodanieMiejsca</c> Umożliwia dodanie miejsca na sali lub jego edycję 
+        /// </summary>
+        /// <param name="srID">ID Sali </param>
+        /// <param name="numberSeat">numer fotela</param>
+        /// <param name="rowSeat">rząd foteli</param>
+        /// <param name="SeatID">ID fotela</param>
+        /// <returns>Zwracany tekst z błędem lub komunikatem o poprawnym dodaniu</returns>
         public string DodanieMiejsca(int srID, int numberSeat, int rowSeat, int SeatID = 0)
         {
             SqlConnection conn = new SqlConnection(connectionString);
@@ -245,8 +252,13 @@ namespace kino
                 return ex.Message;
             }
         }
-    
-        //KATEGORIA
+
+        /// <summary>
+        /// method <c>DodanieKategorii</c> Umożliwia dodanie miejsca na sali lub jego edycję 
+        /// </summary>
+        /// <param name="name">nazwa kategorii</param>
+        /// <param name="CatId">ID kategorii</param>
+        /// <returns>Zwracany tekst z błędem lub komunikatem o poprawnym dodaniu</returns>
         public string DodanieKategorii(string name, int CatId = 0)
         {
             SqlConnection conn = new SqlConnection(connectionString);
@@ -273,7 +285,15 @@ namespace kino
             }
         }
 
-        //SEANSE
+        /// <summary>
+        /// method <c>DodanieSeansu</c> Umożliwia dodanie seansu do wyświetlenia
+        /// </summary>
+        /// <param name="filmID">ID filmu</param>
+        /// <param name="SRID"> ID sali</param>
+        /// <param name="dataEmisji">data rozpoczęcia seansu</param>
+        /// <param name="dataKonca">data zakończenia seansu</param>
+        /// <param name="SEID">ID seansu</param>
+        /// <returns>Zwracany tekst z błędem lub komunikatem o poprawnym dodaniu</returns>
         public string DodanieSeansu(int filmID, int SRID, DateTime dataEmisji, DateTime dataKonca, int SEID = 0) 
         {
             SqlConnection conn = new SqlConnection(connectionString);
@@ -302,9 +322,19 @@ namespace kino
                 return ex.Message;
             }
         }
-        
-        //BOOKING
-        public string DodanieBiletu(int operID, int seatID, int SeID, int type, DateTime dataZakupu, int CodeId = 0, int bookID = 0)
+
+        /// <summary>
+        /// method <c>DodanieBiletu</c> Umożliwia dodanie biletu lub jego edycję
+        /// </summary>
+        /// <param name="operID">ID operatora</param>
+        /// <param name="seatID">ID fotela</param>
+        /// <param name="SeID">Id seansu</param>
+        /// <param name="type">typ biletu</param>
+        /// <param name="dataZakupu">data zakupu</param>
+        /// <param name="Code">kod promocyjny</param>
+        /// <param name="bookID">id biletu</param>
+        /// <returns>Zwracany tekst z błędem lub komunikatem o poprawnym dodaniu</returns>
+        public string DodanieBiletu(int operID, int seatID, int SeID, int type, DateTime dataZakupu, int Code = 0, int bookID = 0)
         {
             SqlConnection conn = new SqlConnection(connectionString);
             SqlCommand cmd = new SqlCommand("dbo.addBooking", conn);
@@ -312,7 +342,7 @@ namespace kino
             cmd.Parameters.Add("@OperId", SqlDbType.Int).Value = operID;
             cmd.Parameters.Add("@SeatId", SqlDbType.Int).Value = seatID;
             cmd.Parameters.Add("@SeId", SqlDbType.Int).Value = SeID;
-            cmd.Parameters.Add("@CodeId", SqlDbType.Int).Value = CodeId;
+            cmd.Parameters.Add("@Code", SqlDbType.Int).Value = Code;
             cmd.Parameters.Add("@type", SqlDbType.Int).Value = type;
             cmd.Parameters.Add("@dataZakupu", SqlDbType.DateTime).Value = dataZakupu;
             if (bookID != 0)

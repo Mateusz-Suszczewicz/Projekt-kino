@@ -3,7 +3,7 @@ CREATE OR ALTER PROC addBooking(
 , @OperId int
 , @SeatId int
 , @SeId int
-, @CodeId int
+, @Code int
 , @type int
 , @dataZakupu datetime
 , @r varchar(300) OUTPUT
