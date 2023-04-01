@@ -370,55 +370,39 @@ namespace kino
         /// <summary>
         /// method <c>DodanieBiletu</c> Umożliwia dodanie biletu lub jego edycję
         /// </summary>
-        /// <param name="operID">ID operatora</param>
-        /// <param name="seatID">ID fotela</param>
+        /// <param name="OperId">ID operatora</param>
+        /// <param name="SeatId">ID fotela</param>
         /// <param name="SeID">Id seansu</param>
-        /// <param name="type">typ biletu</param>
-        /// <param name="dataZakupu">data zakupu</param>
+        /// <param name="Type">typ biletu</param>
+        /// <param name="DataZakupu">data zakupu</param>
         /// <param name="Code">kod promocyjny</param>
-        /// <param name="bookID">id biletu</param>
+        /// <param name="BookID">id biletu</param>
         /// <returns>Zwracany tekst z błędem lub komunikatem o poprawnym dodaniu</returns>
-        public string DodanieBiletu(int operID, int seatID, int SeID, int type, DateTime dataZakupu, int Code = 0, int bookID = 0)
+        public string DodanieBiletu(int OperId, int SeatId, int SeID, int Type, DateTime DataZakupu, int Code = 0, int BookID = 0)
         {
             SqlConnection conn = new SqlConnection(connectionString);
-            SqlCommand cmd = new SqlCommand("dbo.addBooking", conn);
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.Add("@OperId", SqlDbType.Int).Value = operID;
-            cmd.Parameters.Add("@SeatId", SqlDbType.Int).Value = seatID;
-            cmd.Parameters.Add("@SeId", SqlDbType.Int).Value = SeID;
-            cmd.Parameters.Add("@Code", SqlDbType.Int).Value = Code;
-            cmd.Parameters.Add("@type", SqlDbType.Int).Value = type;
-            cmd.Parameters.Add("@dataZakupu", SqlDbType.DateTime).Value = dataZakupu;
-            if (bookID != 0)
+            var procedure = "addBooking";
+            var values = new
             {
-                cmd.Parameters.Add("@id", SqlDbType.Int).Value = bookID;
-            }
-            var returnParameter = cmd.Parameters.Add("@r", SqlDbType.VarChar, 300);
-            returnParameter.Direction = ParameterDirection.Output;
+                operID = OperId,
+                seatID = SeatId,
+                seID = SeID,
+                type = Type,
+                dataZakupu = DataZakupu,
+                code = Code,
+                id = BookID
+            };
             try
             {
-                conn.Open();
-                cmd.ExecuteNonQuery();
-                var result = returnParameter.Value;
-                conn.Close();
-                return result.ToString();
+                var results = conn.ExecuteScalar<string>(procedure, values, commandType: CommandType.StoredProcedure);
+                return results;
             }
             catch (Exception ex)
             {
                 return ex.Message;
-
             }
         }
-        
-        public string test()
-        {
-            SqlConnection conn = new SqlConnection(connectionString);
-            var procedure = "addCategory";
-            var values = new { name = "akcja" };
-            var results = conn.ExecuteScalar<string>(procedure, values,  commandType: CommandType.StoredProcedure);
-            return results.ToString();
-        }
-        
+             
         public string WskazanieSciezkiDoObrazka()
         {
             CommonOpenFileDialog dialog = new CommonOpenFileDialog();
