@@ -200,13 +200,13 @@ namespace kino
             var procedure = "dbo.addFilm";
             var values = new
             {
-                title = Title
-                , content = Content
-                , dataDodania = DataDodania
-                , catID = CatID
-                , duration = Duration
-                , src = Src
-                , id = FilmID
+                title = Title,
+                content = Content,
+                dataDodania = DataDodania,
+                catID = CatID,
+                duration = Duration,
+                src = Src,
+                id = FilmID
             };
             try
             {
@@ -233,10 +233,10 @@ namespace kino
             var procedure = "dbo.addOper";
             var values = new
             {
-                login = Login
-                , password = Password
-                , typ = Typ
-                , id = OperID
+                login = Login,
+                password = Password,
+                typ = Typ,
+                id = OperID
             };
             try
             {
@@ -252,37 +252,31 @@ namespace kino
         /// <summary>
         /// method <c>DodanieSali</c> Umożliwia dodanie sali lub jej edycję
         /// </summary>
-        /// <param name="numberSR">Numer sali</param>
-        /// <param name="contentSR">opis sali</param>
+        /// <param name="NumberSR">Numer sali</param>
+        /// <param name="ContentSR">opis sali</param>
         /// <param name="SRID">Id sali</param>
-        /// <param name="status">status sali: 0 - sala aktywna; 1 - sala nieaktywna</param>
+        /// <param name="Status">status sali: 0 - sala aktywna; 1 - sala nieaktywna</param>
         /// <returns>Zwracany tekst z błędem lub komunikatem o poprawnym dodaniu</returns>
-        public string DodanieSali(int numberSR, string contentSR, int SRID = 0, int status = 0)
+        public string DodanieSali(int NumberSR, string ContentSR, int SRID = 0, int Status = 0)
         {
             SqlConnection conn = new SqlConnection(connectionString);
-            SqlCommand cmd = new SqlCommand("dbo.addSR", conn);
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.Add("@Nr", SqlDbType.Int).Value = numberSR;
-            cmd.Parameters.Add("@content", SqlDbType.VarChar).Value = contentSR;
-            cmd.Parameters.Add("@status", SqlDbType.Int).Value = status;
-            if (SRID != 0)
+            var procedure = "dbo.addSR";
+            var values = new
             {
-                cmd.Parameters.Add("@id", SqlDbType.Int).Value = SRID;
-            }
-            var returnParameter = cmd.Parameters.Add("@r", SqlDbType.VarChar, 300);
-            returnParameter.Direction = ParameterDirection.Output;
+                nr = NumberSR,
+                content = ContentSR,
+                status = Status,
+                id = SRID
+            };
             try
             {
-                conn.Open();
-                cmd.ExecuteNonQuery();
-                var result = returnParameter.Value;
-                conn.Close();
-                return result.ToString();
+                var results = conn.ExecuteScalar<string>(procedure, values, commandType: CommandType.StoredProcedure);
+                return results;
             }
             catch (Exception ex)
             {
                 return ex.Message;
-            }
+            };
         }
 
         /// <summary>
