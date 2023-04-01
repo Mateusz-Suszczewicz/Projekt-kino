@@ -96,6 +96,6 @@ CREATE TABLE dbo.config(
 )
 
 INSERT INTO dbo.operator (Oper_Login, Oper_Password, Oper_Type) VALUES ('Admin', '', 0)
-INSERT INTO dbo.config (Conf_Wartosc, Conf_Opis) VALUES ('0.2', 'wersja')
+INSERT INTO dbo.config (Conf_Wartosc, Conf_Opis) VALUES ('0.3', 'wersja')
 INSERT INTO dbo.config (Conf_Wartosc, Conf_Opis) VALUES ('25', 'Cena biletu normalnego')
 INSERT INTO dbo.config (Conf_Wartosc, Conf_Opis) VALUES ('20', 'Cena biletu ulgowego')

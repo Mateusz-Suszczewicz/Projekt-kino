@@ -17,10 +17,11 @@ namespace kino
     internal class kinoDB
     {
         // WERSJA 0.2
-        // TODO: Przebudować metody na mechanizm Dappera
-        // TODO: Dodać konstruktor który sprawdzi: 1 czy istnijej już ustalone połaczenie; 2 sprawdzi wersję w bazie danych.
+        // TODO: Przebudować metod na mechanizm Dappera
+        // TODO: PRZEMYŚLEĆ: Dodać konstruktor który sprawdzi: 1 czy istnijej już ustalone połaczenie; 2 sprawdzi wersję w bazie danych.
+
         private string? connectionString;
-       
+
         public bool PolaczenieDoBazyZRejestru()
         {
             RegistryKey key = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\Kino");
@@ -37,7 +38,6 @@ namespace kino
 
         }
 
-
         /// <summary>
         /// method <c>ConnectionString</c> Ustawienie linku do połączenie do bazy danych 
         /// </summary>
@@ -47,7 +47,7 @@ namespace kino
         /// <param name="login">Login użytkownika bazy danych</param>
         /// <param name="passowrd">Hasło użytkownika bazy danych</param>
         /// <returns>Zwraca TRUE jesli połączenie się powiodło i FALSE jeśli się nie powiodło</returns>
-        public bool ConnectionString(string server, int loginMethod, string database, string login = "0", string passowrd = "0")//TODO: Zapis połączenia w rejestrze
+        public bool ConnectionString(string server, int loginMethod, string database, string login = "0", string passowrd = "0")
         {
             SqlConnection conn;
             string conString = loginMethod == 1 ? $"Data Source={server}; Database={database}; Integrated Security=SSPI;" : $"Data Source={server}; Initial Catalog = {database}; User ID={login}; Password={passowrd}";
@@ -76,26 +76,22 @@ namespace kino
         /// <summary>
         /// method <c>CreateTable</c> Tworzy tabele w bazie danych zalecane jednokrotne uruchomienie
         /// </summary>
-        public void CreateTable() // TODO: Przygotować mechanizm pod sprawdzanie tabel i dodawanie nowych 
+        public bool CreateTable() // TODO: Przygotować mechanizm pod sprawdzanie tabel i dodawanie nowych 
         {
-            FileInfo file = new FileInfo("create.sql");
+            FileInfo file = new FileInfo("SQL/create.sql");
             string script = file.OpenText().ReadToEnd();
             SqlConnection conn = new SqlConnection(connectionString);
-            try
-            {
-                conn.Open();
-                SqlCommand command = new SqlCommand(script, conn);
+             
                 try
                 {
-                    command.ExecuteNonQuery();
+                    conn.Execute(script);
+                    return true;
                 }
-                catch (Exception ex) { Console.WriteLine(ex.Message); }
-            }
-            catch
-            {
-                //return 0;
-            }
-            finally { conn.Close(); }
+                catch (Exception ex) 
+                {
+                    Console.WriteLine(ex.Message);
+                    return false;
+                }
         }
 
         /// <summary>
