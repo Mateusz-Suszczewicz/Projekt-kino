@@ -439,10 +439,10 @@ namespace kino
         public string test()
         {
             SqlConnection conn = new SqlConnection(connectionString);
-            var procedure = "addCategory11";
+            var procedure = "addCategory";
             var values = new { name = "akcja" };
             var results = conn.ExecuteScalar<string>(procedure, values,  commandType: CommandType.StoredProcedure);
-            return results;
+            return results.ToString();
         }
     }
 }
