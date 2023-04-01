@@ -6,6 +6,7 @@ using Dapper;
 using Microsoft.VisualBasic.Logging;
 using Microsoft.Win32;
 using Microsoft.WindowsAPICodePack.Dialogs;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace kino
 {
@@ -87,7 +88,7 @@ namespace kino
                 "addSeance.sql",
                 "addSeat.sql",
                 "addSR.sql",
-                "addUser.sql",
+                "addOper.sql",
                 "FilmListV.sql",
                 "OperCodeV.sql",
             };
@@ -282,37 +283,31 @@ namespace kino
         /// <summary>
         /// method <c>DodanieMiejsca</c> Umożliwia dodanie miejsca na sali lub jego edycję 
         /// </summary>
-        /// <param name="srID">ID Sali </param>
-        /// <param name="numberSeat">numer fotela</param>
-        /// <param name="rowSeat">rząd foteli</param>
+        /// <param name="SrID">ID Sali </param>
+        /// <param name="NumberSeat">numer fotela</param>
+        /// <param name="RowSeat">rząd foteli</param>
         /// <param name="SeatID">ID fotela</param>
         /// <returns>Zwracany tekst z błędem lub komunikatem o poprawnym dodaniu</returns>
-        public string DodanieMiejsca(int srID, int numberSeat, int rowSeat, int SeatID = 0)
+        public string DodanieMiejsca(int SrID, int NumberSeat, int RowSeat, int SeatID = 0)
         {
             SqlConnection conn = new SqlConnection(connectionString);
-            SqlCommand cmd = new SqlCommand("dbo.addSeat", conn);
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.Add("@srid", SqlDbType.Int).Value = srID;
-            cmd.Parameters.Add("@nr", SqlDbType.VarChar).Value = numberSeat;
-            cmd.Parameters.Add("@row", SqlDbType.Int).Value = rowSeat;
-            if (SeatID != 0)
+            var procedure = "dbo.addSeat";
+            var values = new
             {
-                cmd.Parameters.Add("@id", SqlDbType.Int).Value = SeatID;
-            }
-            var returnParameter = cmd.Parameters.Add("@r", SqlDbType.VarChar, 300);
-            returnParameter.Direction = ParameterDirection.Output;
+                srid = SrID,
+                nr = NumberSeat,
+                row = RowSeat,
+                id = SeatID
+            };
             try
             {
-                conn.Open();
-                cmd.ExecuteNonQuery();
-                var result = returnParameter.Value;
-                conn.Close();
-                return result.ToString();
+                var results = conn.ExecuteScalar<string>(procedure, values, commandType: CommandType.StoredProcedure);
+                return results;
             }
             catch (Exception ex)
             {
                 return ex.Message;
-            }
+            };
         }
 
         /// <summary>

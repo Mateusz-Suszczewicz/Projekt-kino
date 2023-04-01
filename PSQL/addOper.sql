@@ -32,15 +32,15 @@ AND ((SELECT Oper_ID FROM dbo.operator WHERE Oper_Login = @login) is null ) --sp
 ELSE
 	IF @typ not in (1,2) 
 		BEGIN
-			SELECT @r += 'B³êdny typ uzytkonika, ' 
+			SET @r += 'B³êdny typ uzytkonika, ' 
 		END
 	IF @login is null OR @login LIKE ''
 		BEGIN
-			SELECT @r += 'Login nie mo¿e byæ pusty, ' 
+			SET @r += 'Login nie mo¿e byæ pusty, ' 
 		END
 	IF (SELECT Oper_ID FROM dbo.operator WHERE Oper_Login = @login) is not null 
 		BEGIN
-			SELECT @r = 'U¿ytkownik o podanym loginie istnieje ju¿ w bazie danych, ' 
+			SET @r = 'U¿ytkownik o podanym loginie istnieje ju¿ w bazie danych, ' 
 		END
 
 SELECT @r

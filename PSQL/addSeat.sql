@@ -3,37 +3,39 @@ CREATE OR ALTER PROC dbo.addSeat(
 , @srid int
 , @nr int
 , @row int
-, @r varchar(300) OUTPUT
 ) AS
 
-IF (SELECT SR_ID FROM dbo.screeningRoom WHERE SR_ID = @srid) is not null 
-	AND (SELECT Seat_ID FROM dbo.seats WHERE Seat_Nr = @nr AND Seat_Row = @row) is null
+DECLARE @r varchar(300) = ''
+
+IF (SELECT SR_ID FROM dbo.screeningRoom WHERE SR_ID = @srid) is not null  --sprawdzenie czy sala istnieje
+AND (SELECT Seat_ID FROM dbo.seats WHERE Seat_Nr = @nr AND Seat_Row = @row) is null -- speawdzenie czy miejsce istnieje
 	IF @id = 0 
 		BEGIN 
 			INSERT INTO dbo.seats (Seat_SRID, Seat_Nr, Seat_Row) VALUES (@srid, @nr, @row)
-			SELECT @r = 'Poprawnie dodano miejsce';
-			RETURN;
-		END;
+			SELECT 'Poprawnie dodano miejsce: ' + @nr + ' - ' + @row + ': ' + (SELECT Seat_ID FROM dbo.seats WHERE Seat_Nr = @nr AND Seat_Row = @row)
+			RETURN
+		END
 	ELSE
 		IF (SELECT Seat_ID FROM dbo.seats WHERE Seat_ID = @id) is not null
 			BEGIN 
 				UPDATE dbo.seats SET Seat_Nr = @nr, Seat_Row = @row, Seat_SRID = @srid WHERE Seat_ID = @id
-				SELECT @r = 'Poprawnie zmodyfikowano miejsce'
+				SELECT 'Poprawnie zmodyfikowano miejsce: ' + @nr + ' - ' + @row + ': ' + @id
 				RETURN
 			END
 		ELSE
 			BEGIN
-				SELECT @r = 'Próba modyfikacji nieistniej¹cego miejsca'
+				SELECT 'Próba modyfikacji nieistniej¹cego miejsca'
 				RETURN
 			END
 ELSE
 	IF (SELECT SR_ID FROM dbo.screeningRoom WHERE SR_ID = @srid) is null
 		BEGIN 
-			SELECT @r = 'Nie znaleziono odpowiadaj¹cej sali';
-			RETURN;
-		END;
+			SET @r += 'Nie znaleziono odpowiadaj¹cej sali: ' + @srid + ', '
+		END
 	IF (SELECT Seat_ID FROM dbo.seats WHERE Seat_Nr = @nr AND Seat_Row = @row) is not null
 		BEGIN 
-			SELECT @r = 'Miejsce na sali ju¿ istnieje';
-			RETURN;
-		END;
+			SET @r += 'Miejsce na sali ju¿ istnieje: ' + @nr + ' - ' + @row + ': ' + (SELECT Seat_ID FROM dbo.seats WHERE Seat_Nr = @nr AND Seat_Row = @row)
+		END
+
+SELECT @r 
+RETURN
