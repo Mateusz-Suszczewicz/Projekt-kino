@@ -1,7 +1,9 @@
-﻿using System.Data;
+﻿using System;
+using System.Data;
 using System.Data.SqlClient;
 using System.Xml.Linq;
 using Dapper;
+using Microsoft.VisualBasic.Logging;
 using Microsoft.Win32;
 using Microsoft.WindowsAPICodePack.Dialogs;
 
@@ -192,7 +194,7 @@ namespace kino
         /// <param name="Src">Link do obrazka </param>
         /// <param name="FilmID"><ID filmu domyslnie 0/param>
         /// <returns>Zwracany tekst z błędem lub komunikatem o poprawnym dodaniu</returns>
-        public string DodanieFilmu(string Title, string Content, DateTime DataDodania, int CatID, int Duration, string Src, int FilmID = 0) //TODO: Do obsłużenia są obrazki
+        public string DodanieFilmu(string Title, string Content, DateTime DataDodania, int CatID, int Duration, string Src, int FilmID = 0) 
         {
             SqlConnection conn = new SqlConnection(connectionString);
             var procedure = "dbo.addFilm";
@@ -222,35 +224,29 @@ namespace kino
         /// </summary>
         /// <param name="Login">Login operatora</param>
         /// <param name="Typ">Typ operatora: 1 - kierownik; 2- klient</param>
-        /// <param name="operID">Id operatora</param>
-        /// <param name="Haslo"> hasło operatora</param>
+        /// <param name="OperID">Id operatora</param>
+        /// <param name="Password"> hasło operatora</param>
         /// <returns>Zwracany tekst z błędem lub komunikatem o poprawnym dodaniu</returns>
-        public string DodanieOperatora(string Login, int Typ, int operID = 0, string? Haslo = "")
+        public string DodanieOperatora(string Login, int Typ, int OperID = 0, string? Password = "")
         {
             SqlConnection conn = new SqlConnection(connectionString);
-            SqlCommand cmd = new SqlCommand("dbo.addOper", conn);
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.Add("@login", SqlDbType.VarChar).Value = Login;
-            cmd.Parameters.Add("@password", SqlDbType.VarChar).Value = Haslo;
-            cmd.Parameters.Add("@typ", SqlDbType.Int).Value = Typ;
-            if (operID != 0)
+            var procedure = "dbo.addOper";
+            var values = new
             {
-                cmd.Parameters.Add("@id", SqlDbType.Int).Value = operID;
-            }
-            var returnParameter = cmd.Parameters.Add("@r", SqlDbType.VarChar, 300);
-            returnParameter.Direction = ParameterDirection.Output;
+                login = Login
+                , password = Password
+                , typ = Typ
+                , id = OperID
+            };
             try
             {
-                conn.Open();
-                cmd.ExecuteNonQuery();
-                var result = returnParameter.Value;
-                conn.Close();
-                return result.ToString();
+                var results = conn.ExecuteScalar<string>(procedure, values, commandType: CommandType.StoredProcedure);
+                return results;
             }
             catch (Exception ex)
             {
                 return ex.Message;
-            }
+            };
         }
 
         /// <summary>
@@ -440,16 +436,15 @@ namespace kino
             return results.ToString();
         }
         
-        public string a()
+        public string WskazanieSciezkiDoObrazka()
         {
             CommonOpenFileDialog dialog = new CommonOpenFileDialog();
             dialog.InitialDirectory = "C:\\Users";
-            //dialog.IsFolderPicker = true;
             if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
             {
-                return "You selected: " + dialog.FileName;
+                return dialog.FileName;
             }
-            return "coś nie pykło";
+            return "";
         }
     }
 }
