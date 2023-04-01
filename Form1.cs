@@ -10,11 +10,11 @@ namespace Projekt_kino
     public partial class Form1 : Form
     {
         kinoDB a = new kinoDB();
-        
+
         public Form1()
         {
             InitializeComponent();
-            if(!a.ConnectionString("DESKTOP-3EFUCJK", 1, "test1", "sa", "123"))
+            if (!a.ConnectionString("DESKTOP-3EFUCJK", 1, "test1", "sa", "123"))
             {
                 textBox1.Text = "nie dzia³a";
             }
@@ -24,9 +24,9 @@ namespace Projekt_kino
         private void button1_Click(object sender, EventArgs e)
         {
 
-            textBox1.Text = a.test();
+            textBox1.Text = a.a(); 
 
-            
+
         }
     }
 }

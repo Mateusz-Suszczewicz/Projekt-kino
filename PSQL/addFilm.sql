@@ -1,47 +1,35 @@
 CREATE OR ALTER PROCEDURE dbo.addFilm (
 @id int = 0
-,  @Title varchar(50)
-, @Content varchar(250)
-, @DataDodania datetime 
-, @Category int 
-, @Duration int 
+, @title varchar(50)
+, @content varchar(250)
+, @dataDodania datetime 
+, @catID int 
+, @duration int 
 , @src varchar(250)
-, @r varchar(300) OUTPUT) AS
+) AS
 
-IF  
-	(SELECT Film_ID FROM dbo.films where Film_Title like @title) is NULL 
+IF(SELECT Film_ID FROM dbo.films WHERE Film_Title LIKE @title) is null -- sprawdzenie czy film o takim tytule ju¿ istnieje
 	IF @id = 0
 		BEGIN 
-			INSERT INTO dbo.films (Film_Title
-				, Film_Content
-				, Film_CatID
-				, Film_Duration
-				, Film_SrcPicture
-				) 
-			VALUES ( @Title
-				, @Content
-				, @Category
-				, @Duration
-				, @src
-				);
-			select @r = 'Dodano porpawnie nowy film id' + (SELECT Film_ID FROM dbo.films where Film_Title like @title);
-			RETURN;
-		END;
+			INSERT INTO dbo.films (Film_Title, Film_Content, Film_CatID, Film_Duration, Film_SrcPicture) VALUES (@title, @content, @catID, @duration, @src)
+			SELECT 'Dodano porpawnie nowy film: ' + @title + ': ' + (SELECT Film_ID FROM dbo.films where Film_Title like @title)
+			RETURN
+		END
 	ELSE
-		IF(SELECT Film_ID FROM dbo.films where Film_ID = @id) is not null
+		IF(SELECT Film_ID FROM dbo.films WHERE Film_ID = @id) is not null
 			BEGIN 
-				UPDATE dbo.films SET Film_Title = @Title, Film_Content = @Content, Film_CatID = @Category, Film_Duration = @Duration, Film_SrcPicture = @src, Film_DataDodania = @DataDodania
-				SELECT @r = 'Poprawnie zmodyfikowano film'
+				UPDATE dbo.films SET Film_Title = @title, Film_Content = @content, Film_CatID = @catID, Film_Duration = @duration, Film_SrcPicture = @src, Film_DataDodania = @dataDodania WHERE Film_ID = @id
+				SELECT 'Poprawnie zmodyfikowano film' + @title + ': ' + @id
 				RETURN
 			END
 		ELSE
 			BEGIN
-				SELECT @r = 'Próba modyfikacji nieistniej¹cego filmu' 
+				SELECT 'Próba modyfikacji nieistniej¹cego filmu' 
 				RETURN
 			END
 ELSE
-	IF (SELECT Film_ID FROM dbo.films where Film_Title like @title) is not NULL 
+	IF (SELECT Film_ID FROM dbo.films WHERE Film_Title LIKE @title) is not NULL 
 		BEGIN
-			SELECT @r = 'Film o takim tytule istanieje ju¿ w bazie'; 
-			RETURN;
-		END;
+			SELECT 'Film o takim tytule istanieje ju¿ w bazie: ' + @title + ': ' + @id
+			RETURN
+		END

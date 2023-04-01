@@ -1,7 +1,9 @@
 ﻿using System.Data;
 using System.Data.SqlClient;
+using System.Xml.Linq;
 using Dapper;
 using Microsoft.Win32;
+using Microsoft.WindowsAPICodePack.Dialogs;
 
 namespace kino
 {
@@ -182,37 +184,37 @@ namespace kino
         /// <summary>
         /// method <c>DodanieFilmu</c> Umozliwia dodanie filmu lub edycję już istniejącego. Jesli do metody zostanie przekazane ID filmu to film w bazie zostanie zaktualizowany o WSZYSTKIE wprowadzone dane
         /// </summary>
-        /// <param name="tytul">Tytuł filmu</param>
-        /// <param name="opis">OPis filmu</param>
+        /// <param name="Title">Tytuł filmu</param>
+        /// <param name="Content">OPis filmu</param>
         /// <param name="DataDodania">Data dodania dilmu </param>
-        /// <param name="category">Kategoria do której należy film</param>
-        /// <param name="duration">Czas trwania filmu w minutach</param>
-        /// <param name="srcPicture">Link do obrazka </param>
-        /// <param name="filmID"><ID filmu domyslnie 0/param>
+        /// <param name="CatID">Kategoria do której należy film</param>
+        /// <param name="Duration">Czas trwania filmu w minutach</param>
+        /// <param name="Src">Link do obrazka </param>
+        /// <param name="FilmID"><ID filmu domyslnie 0/param>
         /// <returns>Zwracany tekst z błędem lub komunikatem o poprawnym dodaniu</returns>
-        public string DodanieFilmu(string tytul, string opis, DateTime DataDodania, int category, int duration, string srcPicture, int filmID = 0) //TODO: Do obsłużenia są obrazki
+        public string DodanieFilmu(string Title, string Content, DateTime DataDodania, int CatID, int Duration, string Src, int FilmID = 0) //TODO: Do obsłużenia są obrazki
         {
             SqlConnection conn = new SqlConnection(connectionString);
-            SqlCommand cmd = new SqlCommand("dbo.addFilm", conn);
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.Add("@Title", SqlDbType.VarChar).Value = tytul;
-            cmd.Parameters.Add("@Content", SqlDbType.VarChar).Value = opis;
-            cmd.Parameters.Add("@DataDodania", SqlDbType.DateTime).Value = DataDodania;
-            cmd.Parameters.Add("@Category", SqlDbType.Int).Value = category;
-            cmd.Parameters.Add("@Duration", SqlDbType.Int).Value = duration;
-            cmd.Parameters.Add("@Duration", SqlDbType.VarChar).Value = srcPicture;
-            if (filmID != 0)
+            var procedure = "dbo.addFilm";
+            var values = new
             {
-                cmd.Parameters.Add("@id", SqlDbType.Int).Value = filmID;
+                title = Title
+                , content = Content
+                , dataDodania = DataDodania
+                , catID = CatID
+                , duration = Duration
+                , src = Src
+                , id = FilmID
+            };
+            try
+            {
+                var results = conn.ExecuteScalar<string>(procedure, values, commandType: CommandType.StoredProcedure);
+                return results;
             }
-            var returnParameter = cmd.Parameters.Add("@r", SqlDbType.VarChar, 300);
-            returnParameter.Direction = ParameterDirection.Output;
-
-            conn.Open();
-            cmd.ExecuteNonQuery();
-            var result = returnParameter.Value;
-            conn.Close();
-            return result.ToString();
+            catch (Exception ex)
+            {
+                return ex.Message;
+            };
         }
 
         /// <summary>
@@ -326,28 +328,21 @@ namespace kino
         /// <summary>
         /// method <c>DodanieKategorii</c> Umożliwia dodanie miejsca na sali lub jego edycję 
         /// </summary>
-        /// <param name="name">nazwa kategorii</param>
+        /// <param name="Name">nazwa kategorii</param>
         /// <param name="CatId">ID kategorii</param>
         /// <returns>Zwracany tekst z błędem lub komunikatem o poprawnym dodaniu</returns>
-        public string DodanieKategorii(string name, int CatId = 0)
+        public string DodanieKategorii(string Name, int CatId = 0)
         {
             SqlConnection conn = new SqlConnection(connectionString);
-            SqlCommand cmd = new SqlCommand("dbo.addCategory", conn);
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.Add("@name", SqlDbType.VarChar).Value = name;
-            if (CatId != 0)
-            {
-                cmd.Parameters.Add("@id", SqlDbType.Int).Value = CatId;
-            }
-            var returnParameter = cmd.Parameters.Add("@r", SqlDbType.VarChar, 300);
-            returnParameter.Direction = ParameterDirection.Output;
+            var procedure = "addCategory";
+            var values = new { 
+                name = Name
+                , id = CatId
+            };
             try
             {
-                conn.Open();
-                cmd.ExecuteNonQuery();
-                var result = returnParameter.Value;
-                conn.Close();
-                return result.ToString();
+                var results = conn.ExecuteScalar<string>(procedure, values, commandType: CommandType.StoredProcedure);
+                return results;
             }
             catch (Exception ex)
             {
@@ -443,6 +438,18 @@ namespace kino
             var values = new { name = "akcja" };
             var results = conn.ExecuteScalar<string>(procedure, values,  commandType: CommandType.StoredProcedure);
             return results.ToString();
+        }
+        
+        public string a()
+        {
+            CommonOpenFileDialog dialog = new CommonOpenFileDialog();
+            dialog.InitialDirectory = "C:\\Users";
+            //dialog.IsFolderPicker = true;
+            if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
+            {
+                return "You selected: " + dialog.FileName;
+            }
+            return "coś nie pykło";
         }
     }
 }

@@ -7,14 +7,14 @@ IF (SELECT Cat_ID FROM dbo.category WHERE Cat_Name = @name) is null -- sprawdzen
 	IF @id = 0  -- warunek utworzenia nowej kartoteki
 		BEGIN 
 			INSERT INTO dbo.category (Cat_Name) VALUES (@name);
-			SELECT 'Poprawnie utworzono kategoriê';
+			SELECT 'Poprawnie utworzono kategoriê: ' + @name + ': ' + (SELECT Cat_ID FROM dbo.category WHERE Cat_Name = @name);
 			RETURN;
 		END;
 	ELSE
 		IF (SELECT Cat_ID FROM dbo.category WHERE Cat_ID = @id) is not null -- sprawdzenie czy modyfikowana kartoteka istnieje 
 			BEGIN 
 				UPDATE dbo.category SET Cat_Name = @name WHERE Cat_ID = @id;
-				SELECT 'Poprawnie dodano kategoriê';
+				SELECT 'Poprawnie zmodyfikowano kategoriê: ' + @name + ': ' +  @id;
 				RETURN;
 			END;
 		ELSE
@@ -24,6 +24,6 @@ IF (SELECT Cat_ID FROM dbo.category WHERE Cat_Name = @name) is null -- sprawdzen
 		END;
 ELSE
 	BEGIN 
-		SELECT 'Kateogria o takiej nazwie ju¿ istanieje';
+		SELECT 'Kateogria o takiej nazwie ju¿ istanieje: ' + @name + ': ' + (SELECT Cat_ID FROM dbo.category WHERE Cat_Name = @name);
 		RETURN;
 	END;
