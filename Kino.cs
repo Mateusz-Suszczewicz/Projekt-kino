@@ -1,14 +1,5 @@
-﻿using Microsoft.VisualBasic.Logging;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Common;
+﻿using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Security.Policy;
-using System.Text;
-using System.Threading.Tasks;
 using Dapper;
 using Microsoft.Win32;
 
@@ -16,7 +7,7 @@ namespace kino
 {
     internal class kinoDB
     {
-        // WERSJA 0.2
+        private decimal wersja = 0.3m;
         // TODO: Przebudować metod na mechanizm Dappera
         // TODO: PRZEMYŚLEĆ: Dodać konstruktor który sprawdzi: 1 czy istnijej już ustalone połaczenie; 2 sprawdzi wersję w bazie danych.
 
@@ -49,23 +40,28 @@ namespace kino
         /// <returns>Zwraca TRUE jesli połączenie się powiodło i FALSE jeśli się nie powiodło</returns>
         public bool ConnectionString(string server, int loginMethod, string database, string login = "0", string passowrd = "0")
         {
-            SqlConnection conn;
             string conString = loginMethod == 1 ? $"Data Source={server}; Database={database}; Integrated Security=SSPI;" : $"Data Source={server}; Initial Catalog = {database}; User ID={login}; Password={passowrd}";
-            conn = new SqlConnection(conString);
+            SqlConnection conn = new SqlConnection(conString);
             try
             {
-                conn.Open();
-                conn.Close();
-                connectionString = conString;
-                RegistryKey key = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\Kino");
-                key.SetValue("server", server);
-                key.SetValue("loginMethod", loginMethod.ToString());
-                key.SetValue("database", database);
-                key.SetValue("login", login);
-                key.SetValue("passowrd", passowrd);
-
-                key.Close();
-                return true;
+                string query = $"SELECT database_id FROM sys.databases WHERE Name = '{database}'";
+                var idDatabase = conn.ExecuteScalar<int>(query);
+                if (idDatabase != 0)
+                {
+                    connectionString = conString;
+                    RegistryKey key = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\Kino");
+                    key.SetValue("server", server);
+                    key.SetValue("loginMethod", loginMethod.ToString());
+                    key.SetValue("database", database);
+                    key.SetValue("login", login);
+                    key.SetValue("passowrd", passowrd);
+                    key.Close();
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
             catch
             {
@@ -76,30 +72,82 @@ namespace kino
         /// <summary>
         /// method <c>CreateTable</c> Tworzy tabele w bazie danych zalecane jednokrotne uruchomienie
         /// </summary>
-        public bool CreateTable() // TODO: Przygotować mechanizm pod sprawdzanie tabel i dodawanie nowych 
+        public string CreateTable(int wymuszenieAktualizacji = 0) // TODO: Przygotować mechanizm pod sprawdzanie czy poszczególne tabele istnieją
         {
-            FileInfo file = new FileInfo("SQL/create.sql");
-            string script = file.OpenText().ReadToEnd();
             SqlConnection conn = new SqlConnection(connectionString);
-             
+            List<string> sqlList = new List<string>() {
+                "create.sql",
+                "addBooking.sql",
+                "addCategory.sql",
+                "addFilm.sql",
+                "addSeance.sql",
+                "addSeat.sql",
+                "addSR.sql",
+                "addUser.sql",
+                "FilmListV.sql",
+                "OperCodeV.sql",
+            };
+            //sprawdzenie istnienia bazy konfiguracujnej
+            string query = "SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'Config'";
+            var tableList = conn.ExecuteScalar<string>(query);
+            if (tableList == "config")
+            {
+                //sprawdzenie wersji w bazie 
+                query = "SELECT Conf_Wartosc FROM dbo.config WHERE Conf_ID = 1";
+                var wersjaWBazie = conn.ExecuteScalar<decimal>(query);
+                //aktualizacja sktyptów bez tworzenia bazy danych 
+                if(wersjaWBazie <= wersja || wymuszenieAktualizacji == 1)
+                {
+                    sqlList.Remove("create.sql");
+                    foreach (string s in sqlList)
+                    {
+                        FileInfo file = new FileInfo($"SQL/{s}");
+                        string script = file.OpenText().ReadToEnd();
+                        try
+                        {
+                            conn.Query(script);
+                        }
+                        catch (Exception ex){ return s.ToString() + ex.Message; }
+                    }
+                    //aktualizacja wersji w bazie danych
+                    query = $"UPDATE dbo.config SET Conf_Wartosc = '{wersja}' WHERE Conf_ID  = 1";
+                    try
+                    {
+                        conn.Query(query);
+                    }
+                    catch (Exception ex)
+                    {
+                        return ex.Message;
+                    }
+                    return "zakończono aktualizację skryptów";
+                }
+            }
+            else
+            {
+                //Wgranie struktury bazy dnaych wraz z wszystkimi skryptami
+                foreach (string s in sqlList)
+                {
+                    FileInfo file = new FileInfo($"SQL/{s}");
+                    string script = file.OpenText().ReadToEnd();
+                    try
+                    {
+                        conn.Query(script);
+                    }
+                    catch (Exception ex) { return "Błąd tworzenia: " + s.ToString() + ex.Message; }
+                }
+                //aktualizacja wersji w bazie danych
+                query = $"UPDATE dbo.config SET Conf_Wartosc = '{wersja}' WHERE Conf_ID  = 1";
                 try
                 {
-                    conn.Execute(script);
-                    return true;
+                    conn.Query(query);
                 }
-                catch (Exception ex) 
+                catch (Exception ex)
                 {
-                    Console.WriteLine(ex.Message);
-                    return false;
+                    return ex.Message;
                 }
-        }
-
-        /// <summary>
-        /// method <c>InstallScipt</c> Instalacja skryptów -> w trakcie budowy
-        /// </summary>
-        private void InstallScipt() // TODO: do podpięcia skrypty i przygototowanie mechanizmu do weryfikcaji wersji 
-        {
-
+                return "Zakończono tworzenie struktury bazy danych";
+            }
+            return "Nie wykonano żadnej operacji"; 
         }
 
         /// <summary>

@@ -14,7 +14,10 @@ namespace Projekt_kino
         public Form1()
         {
             InitializeComponent();
-            a.ConnectionString("DESKTOP-3EFUCJK", 1, "test2", "sa", "123");
+            if(!a.ConnectionString("DESKTOP-3EFUCJK", 1, "test2", "sa", "123"))
+            {
+                textBox1.Text = "nie dzia³a";
+            }
             //a.PolaczenieDoBazyZRejestru();
         }
 
