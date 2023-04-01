@@ -338,34 +338,28 @@ namespace kino
         /// <summary>
         /// method <c>DodanieSeansu</c> Umożliwia dodanie seansu do wyświetlenia
         /// </summary>
-        /// <param name="filmID">ID filmu</param>
+        /// <param name="FilmID">ID filmu</param>
         /// <param name="SRID"> ID sali</param>
-        /// <param name="dataEmisji">data rozpoczęcia seansu</param>
-        /// <param name="dataKonca">data zakończenia seansu</param>
+        /// <param name="DataEmisji">data rozpoczęcia seansu</param>
+        /// <param name="DataKonca">data zakończenia seansu</param>
         /// <param name="SEID">ID seansu</param>
         /// <returns>Zwracany tekst z błędem lub komunikatem o poprawnym dodaniu</returns>
-        public string DodanieSeansu(int filmID, int SRID, DateTime dataEmisji, DateTime dataKonca, int SEID = 0)
+        public string DodanieSeansu(int FilmID, int SRID, DateTime DataEmisji, DateTime DataKonca, int SEID = 0)
         {
             SqlConnection conn = new SqlConnection(connectionString);
-            SqlCommand cmd = new SqlCommand("dbo.addSeance", conn);
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.Add("@filmID", SqlDbType.Int).Value = filmID;
-            cmd.Parameters.Add("@srID", SqlDbType.Int).Value = SRID;
-            cmd.Parameters.Add("@dataEmisji", SqlDbType.DateTime).Value = dataEmisji;
-            cmd.Parameters.Add("@datakonca", SqlDbType.DateTime).Value = dataKonca;
-            if (SEID != 0)
+            var procedure = "addSeance";
+            var values = new
             {
-                cmd.Parameters.Add("@id", SqlDbType.Int).Value = SEID;
-            }
-            var returnParameter = cmd.Parameters.Add("@r", SqlDbType.VarChar, 300);
-            returnParameter.Direction = ParameterDirection.Output;
+                filmID = FilmID,
+                srID = SRID,
+                dataEmisji = DataEmisji,
+                datakonca = DataKonca,
+                id = SEID
+            };
             try
             {
-                conn.Open();
-                cmd.ExecuteNonQuery();
-                var result = returnParameter.Value;
-                conn.Close();
-                return result.ToString();
+                var results = conn.ExecuteScalar<string>(procedure, values, commandType: CommandType.StoredProcedure);
+                return results;
             }
             catch (Exception ex)
             {
