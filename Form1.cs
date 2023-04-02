@@ -5,6 +5,7 @@ using System.Data;
 using System;
 using static System.Net.Mime.MediaTypeNames;
 
+
 namespace Projekt_kino
 {
     public partial class Form1 : Form
@@ -28,9 +29,26 @@ namespace Projekt_kino
 
         }
 
-        private void button2_Click(object sender, EventArgs e)
+
+
+        private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
 
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void przycisk_konto_Click(object sender, EventArgs e)
+        {
+            
         }
     }
 }

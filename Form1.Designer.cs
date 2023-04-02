@@ -30,17 +30,17 @@
         {
             button1 = new Button();
             textBox1 = new TextBox();
-            pictureBox1 = new PictureBox();
             przycisk_konto = new Button();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            aktualny_czas = new Label();
+            bilet_ulgowy = new CheckBox();
             SuspendLayout();
             // 
             // button1
             // 
-            button1.Location = new Point(182, 175);
+            button1.Location = new Point(755, 93);
             button1.Margin = new Padding(3, 4, 3, 4);
             button1.Name = "button1";
-            button1.Size = new Size(86, 31);
+            button1.Size = new Size(145, 45);
             button1.TabIndex = 0;
             button1.Text = "button1";
             button1.UseVisualStyleBackColor = true;
@@ -54,38 +54,50 @@
             textBox1.Size = new Size(886, 27);
             textBox1.TabIndex = 1;
             // 
-            // pictureBox1
-            // 
-            pictureBox1.Location = new Point(400, 165);
-            pictureBox1.Margin = new Padding(3, 4, 3, 4);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(114, 67);
-            pictureBox1.TabIndex = 2;
-            pictureBox1.TabStop = false;
-            // 
             // przycisk_konto
             // 
-            przycisk_konto.Location = new Point(771, 34);
+            przycisk_konto.Location = new Point(755, 41);
             przycisk_konto.Name = "przycisk_konto";
-            przycisk_konto.Size = new Size(94, 29);
+            przycisk_konto.Size = new Size(147, 45);
             przycisk_konto.TabIndex = 3;
             przycisk_konto.Text = "Konto";
             przycisk_konto.UseVisualStyleBackColor = true;
-            przycisk_konto.Click += button2_Click;
+            przycisk_konto.Click += przycisk_konto_Click;
+            // 
+            // aktualny_czas
+            // 
+            aktualny_czas.AutoSize = true;
+            aktualny_czas.Location = new Point(756, 12);
+            aktualny_czas.Name = "aktualny_czas";
+            aktualny_czas.Size = new Size(50, 20);
+            aktualny_czas.TabIndex = 4;
+            aktualny_czas.Text = "label1";
+            aktualny_czas.Click += label1_Click;
+            // 
+            // bilet_ulgowy
+            // 
+            bilet_ulgowy.AutoSize = true;
+            bilet_ulgowy.Location = new Point(790, 157);
+            bilet_ulgowy.Name = "bilet_ulgowy";
+            bilet_ulgowy.Size = new Size(79, 24);
+            bilet_ulgowy.TabIndex = 5;
+            bilet_ulgowy.Text = "ulgowy";
+            bilet_ulgowy.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(914, 600);
+            Controls.Add(bilet_ulgowy);
+            Controls.Add(aktualny_czas);
             Controls.Add(przycisk_konto);
-            Controls.Add(pictureBox1);
             Controls.Add(textBox1);
             Controls.Add(button1);
             Margin = new Padding(3, 4, 3, 4);
             Name = "Form1";
             Text = "Form1";
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            Load += Form1_Load;
             ResumeLayout(false);
             PerformLayout();
         }
@@ -94,7 +106,8 @@
 
         private Button button1;
         private TextBox textBox1;
-        private PictureBox pictureBox1;
         private Button przycisk_konto;
+        private Label aktualny_czas;
+        private CheckBox bilet_ulgowy;
     }
 }
