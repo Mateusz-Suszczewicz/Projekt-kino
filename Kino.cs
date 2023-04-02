@@ -203,7 +203,7 @@ namespace kino
         /// <param name="Src">Link do obrazka </param>
         /// <param name="FilmID"><ID filmu domyslnie 0/param>
         /// <returns>Zwracany tekst z błędem lub komunikatem o poprawnym dodaniu</returns>
-        public string DodanieFilmu(string Title, string Content, DateTime DataDodania, int CatID, int Duration,  int FilmID = 0) 
+        public string DodanieFilmu(string Title, string Content, DateTime DataDodania, int CatID, int Duration, string Film_Language, string Film_Production, string Film_Translation,  int FilmID = 0) 
         {
             SqlConnection conn = new SqlConnection(connectionString);
             var procedure = "dbo.addFilm";
@@ -214,6 +214,9 @@ namespace kino
                 dataDodania = DataDodania,
                 catID = CatID,
                 duration = Duration,
+                film_Language = Film_Language,
+                film_Production = Film_Production,
+                film_Translation = Film_Translation,
                 id = FilmID
             };
             try
