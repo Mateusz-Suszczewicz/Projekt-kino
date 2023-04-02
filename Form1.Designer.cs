@@ -32,7 +32,6 @@
             textBox1 = new TextBox();
             przycisk_konto = new Button();
             aktualny_czas = new Label();
-            bilet_ulgowy = new CheckBox();
             SuspendLayout();
             // 
             // button1
@@ -74,22 +73,11 @@
             aktualny_czas.Text = "label1";
             aktualny_czas.Click += label1_Click;
             // 
-            // bilet_ulgowy
-            // 
-            bilet_ulgowy.AutoSize = true;
-            bilet_ulgowy.Location = new Point(790, 157);
-            bilet_ulgowy.Name = "bilet_ulgowy";
-            bilet_ulgowy.Size = new Size(79, 24);
-            bilet_ulgowy.TabIndex = 5;
-            bilet_ulgowy.Text = "ulgowy";
-            bilet_ulgowy.UseVisualStyleBackColor = true;
-            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(914, 600);
-            Controls.Add(bilet_ulgowy);
             Controls.Add(aktualny_czas);
             Controls.Add(przycisk_konto);
             Controls.Add(textBox1);
@@ -108,6 +96,5 @@
         private TextBox textBox1;
         private Button przycisk_konto;
         private Label aktualny_czas;
-        private CheckBox bilet_ulgowy;
     }
 }
