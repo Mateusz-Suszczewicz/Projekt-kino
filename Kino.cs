@@ -189,7 +189,7 @@ namespace kino
         /// </summary>
         /// <param name="Title">Tytuł filmu</param>
         /// <param name="Content">OPis filmu</param>
-        /// <param name="DataDodania">Data dodania dilmu </param>
+        /// <param name="DataDodania">Data dodania filmu </param>
         /// <param name="CatID">Kategoria do której należy film</param>
         /// <param name="Duration">Czas trwania filmu w minutach</param>
         /// <param name="Src">Link do obrazka </param>

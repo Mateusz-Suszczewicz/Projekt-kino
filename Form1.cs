@@ -14,18 +14,22 @@ namespace Projekt_kino
         public Form1()
         {
             InitializeComponent();
-            if (!a.ConnectionString("DESKTOP-3EFUCJK", 1, "test1", "sa", "123"))
+            if (!a.ConnectionString("LAPTOP-VHVG8IJE", 1, "KINO", "sa", ""))
             {
                 textBox1.Text = "nie dzia³a";
             }
-            //a.PolaczenieDoBazyZRejestru();
+            a.PolaczenieDoBazyZRejestru();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
 
-            textBox1.Text = a.a(); 
+            textBox1.Text = a.CreateTable();
 
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
 
         }
     }
