@@ -23,8 +23,8 @@ namespace Projekt_kino
 
         private void button1_Click(object sender, EventArgs e)
         {
-
-            textBox1.Text = a.a(); 
+ 
+ //           textBox1.Text = a 
 
 
         }

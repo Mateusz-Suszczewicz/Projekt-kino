@@ -12,9 +12,10 @@ namespace kino
 {
     internal class kinoDB
     {
-        private decimal wersja = 0.3m;
-        // TODO: Przebudować metod na mechanizm Dappera
+        private decimal wersja = 0.4m;
+        
         // TODO: PRZEMYŚLEĆ: Dodać konstruktor który sprawdzi: 1 czy istnijej już ustalone połaczenie; 2 sprawdzi wersję w bazie danych.
+        // TODO:  
 
         private string? connectionString;
 
@@ -82,6 +83,7 @@ namespace kino
             SqlConnection conn = new SqlConnection(connectionString);
             List<string> sqlList = new List<string>() {
                 "create.sql",
+                "V04.sql",
                 "addBooking.sql",
                 "addCategory.sql",
                 "addFilm.sql",
@@ -89,6 +91,8 @@ namespace kino
                 "addSeat.sql",
                 "addSR.sql",
                 "addOper.sql",
+                "addCategoryToFilm.sql",
+                "addPicture.sql",
                 "FilmListV.sql",
                 "OperCodeV.sql",
             };
@@ -100,6 +104,10 @@ namespace kino
                 //sprawdzenie wersji w bazie 
                 query = "SELECT Conf_Wartosc FROM dbo.config WHERE Conf_ID = 1";
                 var wersjaWBazie = conn.ExecuteScalar<decimal>(query);
+                if(wersjaWBazie == 0.4m)
+                {
+                    sqlList.Remove("V04.sql");
+                }
                 //aktualizacja sktyptów bez tworzenia bazy danych 
                 if(wersjaWBazie <= wersja || wymuszenieAktualizacji == 1)
                 {
@@ -195,7 +203,7 @@ namespace kino
         /// <param name="Src">Link do obrazka </param>
         /// <param name="FilmID"><ID filmu domyslnie 0/param>
         /// <returns>Zwracany tekst z błędem lub komunikatem o poprawnym dodaniu</returns>
-        public string DodanieFilmu(string Title, string Content, DateTime DataDodania, int CatID, int Duration, string Src, int FilmID = 0) 
+        public string DodanieFilmu(string Title, string Content, DateTime DataDodania, int CatID, int Duration,  int FilmID = 0) 
         {
             SqlConnection conn = new SqlConnection(connectionString);
             var procedure = "dbo.addFilm";
@@ -206,7 +214,6 @@ namespace kino
                 dataDodania = DataDodania,
                 catID = CatID,
                 duration = Duration,
-                src = Src,
                 id = FilmID
             };
             try
@@ -376,9 +383,10 @@ namespace kino
         /// <param name="Type">typ biletu</param>
         /// <param name="DataZakupu">data zakupu</param>
         /// <param name="Code">kod promocyjny</param>
+        /// <param name="StatusB">0 - rezerwacja; 1 - wykupiony; 2 - anulowany</param>
         /// <param name="BookID">id biletu</param>
         /// <returns>Zwracany tekst z błędem lub komunikatem o poprawnym dodaniu</returns>
-        public string DodanieBiletu(int OperId, int SeatId, int SeID, int Type, DateTime DataZakupu, int Code = 0, int BookID = 0)
+        public string DodanieBiletu(int OperId, int SeatId, int SeID, int Type, DateTime DataZakupu, int StatusB = 0, int Code = 0, int BookID = 0)
         {
             SqlConnection conn = new SqlConnection(connectionString);
             var procedure = "addBooking";
@@ -390,6 +398,7 @@ namespace kino
                 type = Type,
                 dataZakupu = DataZakupu,
                 code = Code,
+                status = StatusB,
                 id = BookID
             };
             try
@@ -413,5 +422,47 @@ namespace kino
             }
             return "";
         }
+
+        public string DodanieObrazka(string Src, int FilmID, int PicID = 0)
+        {
+            SqlConnection conn = new SqlConnection(connectionString);
+            var procedure = "dbo.addPicture";
+            var values = new
+            {
+                id = PicID,
+                filmID = FilmID,
+                src = Src,
+                            };
+            try
+            {
+                var results = conn.ExecuteScalar<string>(procedure, values, commandType: CommandType.StoredProcedure);
+                return results;
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            };
+        }
+       
+        public string DodanieKategoriiDoFilmu(int CatID, int FilmID)
+        {
+            SqlConnection conn = new SqlConnection(connectionString);
+            var procedure = "dbo.addCategoryToFilm";
+            var values = new
+            {
+                filmID = FilmID,
+                catID = CatID
+            };
+            try
+            {
+                var results = conn.ExecuteScalar<string>(procedure, values, commandType: CommandType.StoredProcedure);
+                return results;
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            };
+        }
+    
     }
 }

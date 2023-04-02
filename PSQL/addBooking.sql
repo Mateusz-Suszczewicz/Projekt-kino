@@ -6,6 +6,7 @@ CREATE OR ALTER PROC addBooking(
 , @code int
 , @type int
 , @dataZakupu datetime
+, @status int = 0
 ) AS
 
 DECLARE @r varchar(300) = ''
@@ -51,13 +52,13 @@ AND (SELECT TOP 1 Book_ID FROM dbo.booking WHERE Book_SeatID = @seatId AND Book_
 	BEGIN
 		IF @id = 0
 			BEGIN
-				INSERT INTO dbo.booking (Book_Cena, Book_CodeID, Book_DataZakupu, Book_OperID, Book_SeatID, Book_SeID, Book_Type) VALUES (@cena, @code, @dataZakupu, @operId, @seatId, @seId, @type)
+				INSERT INTO dbo.booking (Book_Cena, Book_CodeID, Book_DataZakupu, Book_OperID, Book_SeatID, Book_SeID, Book_Type, Book_Status) VALUES (@cena, @code, @dataZakupu, @operId, @seatId, @seId, @type, @status)
 				SELECT 'Poprawnie dodano nowy bilet'
 				RETURN
 			END
 		ELSE
 			BEGIN
-				UPDATE dbo.booking SET Book_CodeID = @code, Book_DataZakupu = @dataZakupu, Book_OperID = @operId, Book_SeatID = @seatId, Book_SeID = @seId, Book_Type = @type WHERE Book_ID = @id
+				UPDATE dbo.booking SET Book_CodeID = @code, Book_DataZakupu = @dataZakupu, Book_OperID = @operId, Book_SeatID = @seatId, Book_SeID = @seId, Book_Type = @type, Book_Status = @status WHERE Book_ID = @id
 				SELECT 'Poprawnie dodano nowy bilet'
 				RETURN
 			END
