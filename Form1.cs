@@ -20,6 +20,35 @@ namespace Projekt_kino
                 textBox1.Text = "nie dzia³a";
             }
             a.PolaczenieDoBazyZRejestru();
+
+            customizeDesign();
+        }
+        private void customizeDesign()
+        {
+            panel_do_przycisku_konto.Visible = false;
+        }
+
+        private void hideSubMenu()
+        {
+            if (panel_do_przycisku_konto.Visible == true)
+            {
+                panel_do_przycisku_konto.Visible = false;
+            }
+        }
+
+        private void showSubMenu(Panel subMenu)
+        {
+            if (subMenu.Visible == false)
+            {
+                //hideSubMenu();
+                subMenu.Visible = true;
+                przycisk_konto.Text = "Konto";
+            }
+            else
+            {
+                subMenu.Visible = false;
+                przycisk_konto.Text = "Konto ••";
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -46,6 +75,23 @@ namespace Projekt_kino
 
         }
 
+        private void panel_logo_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void przycisk_konto_Click(object sender, EventArgs e)
+        {
+            showSubMenu(panel_do_przycisku_konto);
+        }
+
+        private void Konto_subMenu_rejestracja_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Konto_subMenu_logowanie_Click(object sender, EventArgs e)
+        {
 
         }
     }
