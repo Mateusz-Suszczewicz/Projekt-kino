@@ -46,8 +46,6 @@ namespace Projekt_kino
 
         }
 
-        private void przycisk_konto_Click(object sender, EventArgs e)
-        {
 
         }
     }
