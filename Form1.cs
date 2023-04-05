@@ -15,7 +15,7 @@ namespace Projekt_kino
         {
             InitializeComponent();
            
-            //a.PolaczenieDoBazyZRejestru();
+          
         }
 
         private void button1_Click(object sender, EventArgs e)
