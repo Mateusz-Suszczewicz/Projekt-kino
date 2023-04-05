@@ -14,17 +14,12 @@ namespace Projekt_kino
         public Form1()
         {
             InitializeComponent();
-            if (!a.ConnectionString("DESKTOP-I45S3D6", 1, "kino", "sa", "123"))
-            {
-                textBox1.Text = "nie dzia³a";
-            }
+           
             //a.PolaczenieDoBazyZRejestru();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-
-            textBox1.Text = a.CreateTable();
 
 
         }
