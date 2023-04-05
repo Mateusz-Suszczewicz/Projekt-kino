@@ -78,7 +78,7 @@ CREATE TABLE dbo.booking(
 	Book_Type int not null,
 	Book_DataZakupu datetime DEFAULT GETDATE(),
 	Book_Cena decimal(5,2) not null,
-	Book_Status int DEFAULT 0
+	
 
 	PRIMARY KEY (Book_ID),
 	FOREIGN KEY (Book_OperID) REFERENCES dbo.operator(Oper_ID),

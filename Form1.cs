@@ -14,7 +14,7 @@ namespace Projekt_kino
         public Form1()
         {
             InitializeComponent();
-            if (!a.ConnectionString("DESKTOP-3EFUCJK", 1, "test1", "sa", "123"))
+            if (!a.ConnectionString("DESKTOP-I45S3D6", 1, "kino", "sa", "123"))
             {
                 textBox1.Text = "nie dzia³a";
             }
@@ -23,9 +23,14 @@ namespace Projekt_kino
 
         private void button1_Click(object sender, EventArgs e)
         {
- 
- //           textBox1.Text = a 
 
+            textBox1.Text = a.CreateTable();
+
+
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
 
         }
     }

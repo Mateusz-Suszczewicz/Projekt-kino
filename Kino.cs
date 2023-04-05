@@ -111,6 +111,8 @@ namespace kino
                 //aktualizacja sktyptów bez tworzenia bazy danych 
                 if(wersjaWBazie <= wersja || wymuszenieAktualizacji == 1)
                 {
+                    query = "SELECT CONSTRAINT_NAME FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS WHERE TABLE_NAME like 'films' and CONSTRAINT_NAME like '%Cat%'";
+                    var a = conn.ExecuteScalar<string>(query);
                     sqlList.Remove("create.sql");
                     foreach (string s in sqlList)
                     {
@@ -138,9 +140,19 @@ namespace kino
             else
             {
                 //Wgranie struktury bazy dnaych wraz z wszystkimi skryptami
+                //sqlList.Remove("V04.sql");
+                
                 foreach (string s in sqlList)
                 {
                     FileInfo file = new FileInfo($"SQL/{s}");
+                    //if(s == "V04.sql")
+                    //{
+                    //    query = "SELECT CONSTRAINT_NAME FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS WHERE TABLE_NAME like 'films' and CONSTRAINT_NAME like '%Cat%'";
+                    //    string a = conn.ExecuteScalar<string>(query);
+                    //    string query1 = $"ALTER TABLE dbo.films DROP CONSTRAINT {a}";
+                    //    return query1;
+                    //    var b = conn.ExecuteScalar(query1);
+                    //}
                     string script = file.OpenText().ReadToEnd();
                     try
                     {
