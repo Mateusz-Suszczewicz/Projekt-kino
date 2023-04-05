@@ -31,7 +31,6 @@ namespace kino
                 return true;
             }
             return false;
-
         }
 
         /// <summary>

@@ -28,33 +28,22 @@
         /// </summary>
         private void InitializeComponent()
         {
-            button1 = new Button();
+            components = new System.ComponentModel.Container();
             textBox1 = new TextBox();
             aktualny_czas = new Label();
             panel_menu_right = new Panel();
+            ustawienia = new Button();
             przycisk_repertuar = new Button();
             panel_do_przycisku_konto = new Panel();
             Konto_subMenu_logowanie = new Button();
             Konto_subMenu_rejestracja = new Button();
             przycisk_konto = new Button();
             panel_logo = new Panel();
+            contextMenuStrip1 = new ContextMenuStrip(components);
             panel_menu_right.SuspendLayout();
             panel_do_przycisku_konto.SuspendLayout();
             panel_logo.SuspendLayout();
             SuspendLayout();
-            // 
-            // button1
-            // 
-            button1.Anchor = AnchorStyles.None;
-            button1.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            button1.Location = new Point(174, 105);
-            button1.Margin = new Padding(3, 10, 5, 50);
-            button1.Name = "button1";
-            button1.Size = new Size(171, 83);
-            button1.TabIndex = 0;
-            button1.Text = "button1";
-            button1.UseVisualStyleBackColor = true;
-            button1.Click += button1_Click;
             // 
             // textBox1
             // 
@@ -65,6 +54,7 @@
             textBox1.Name = "textBox1";
             textBox1.Size = new Size(886, 20);
             textBox1.TabIndex = 1;
+            textBox1.TextChanged += textBox1_TextChanged;
             // 
             // aktualny_czas
             // 
@@ -83,6 +73,7 @@
             // 
             panel_menu_right.AutoScroll = true;
             panel_menu_right.BackColor = Color.Firebrick;
+            panel_menu_right.Controls.Add(ustawienia);
             panel_menu_right.Controls.Add(przycisk_repertuar);
             panel_menu_right.Controls.Add(panel_do_przycisku_konto);
             panel_menu_right.Controls.Add(przycisk_konto);
@@ -92,6 +83,16 @@
             panel_menu_right.Name = "panel_menu_right";
             panel_menu_right.Size = new Size(200, 721);
             panel_menu_right.TabIndex = 5;
+            // 
+            // ustawienia
+            // 
+            ustawienia.Location = new Point(94, 680);
+            ustawienia.Name = "ustawienia";
+            ustawienia.Size = new Size(94, 29);
+            ustawienia.TabIndex = 4;
+            ustawienia.Text = "ustawienia";
+            ustawienia.UseVisualStyleBackColor = true;
+            ustawienia.Click += ustawienia_Click;
             // 
             // przycisk_repertuar
             // 
@@ -171,6 +172,12 @@
             panel_logo.TabIndex = 0;
             panel_logo.Paint += panel_logo_Paint;
             // 
+            // contextMenuStrip1
+            // 
+            contextMenuStrip1.ImageScalingSize = new Size(20, 20);
+            contextMenuStrip1.Name = "contextMenuStrip1";
+            contextMenuStrip1.Size = new Size(61, 4);
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -179,7 +186,6 @@
             ClientSize = new Size(1006, 721);
             Controls.Add(panel_menu_right);
             Controls.Add(textBox1);
-            Controls.Add(button1);
             ForeColor = Color.Black;
             Margin = new Padding(3, 4, 3, 4);
             MaximumSize = new Size(1920, 1080);
@@ -197,8 +203,6 @@
         }
 
         #endregion
-
-        private Button button1;
         private TextBox textBox1;
         private Label aktualny_czas;
         private Panel panel_menu_right;
@@ -208,5 +212,7 @@
         private Button Konto_subMenu_logowanie;
         private Button Konto_subMenu_rejestracja;
         private Button przycisk_repertuar;
+        private Button ustawienia;
+        private ContextMenuStrip contextMenuStrip1;
     }
 }

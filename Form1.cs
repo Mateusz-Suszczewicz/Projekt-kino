@@ -21,6 +21,7 @@ namespace Projekt_kino
             }
             a.PolaczenieDoBazyZRejestru();
 
+
             customizeDesign();
         }
         private void customizeDesign()
@@ -50,14 +51,6 @@ namespace Projekt_kino
                 przycisk_konto.Text = "Konto ••";
             }
         }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-
-            textBox1.Text = a.CreateTable();
-
-        }
-
 
 
         private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
@@ -91,6 +84,23 @@ namespace Projekt_kino
         }
 
         private void Konto_subMenu_logowanie_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ustawienia_Click(object sender, EventArgs e)
+        {
+            Okno_ustawien okno_Ustawien = new Okno_ustawien();
+            DialogResult dr = okno_Ustawien.ShowDialog(this);
+
+        }
+
+        private void label1_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
         {
 
         }
