@@ -10,18 +10,16 @@ namespace Projekt_kino
 {
     public partial class Form1 : Form
     {
-        kinoDB a = new kinoDB();
+        kinoDB baza= new kinoDB();
 
         public Form1()
         {
             InitializeComponent();
-            if (!a.ConnectionString("LAPTOP-VHVG8IJE", 1, "KINO", "sa", ""))
+            if (!baza.PolaczenieDoBazyZRejestru())
             {
-                textBox1.Text = "nie dzia³a";
+                Okno_ustawien okno_Ustawien = new Okno_ustawien();
+                DialogResult dr = okno_Ustawien.ShowDialog(this);
             }
-            a.PolaczenieDoBazyZRejestru();
-
-
             customizeDesign();
         }
         private void customizeDesign()

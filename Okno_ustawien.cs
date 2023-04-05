@@ -7,14 +7,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using kino;
 
 namespace Projekt_kino
 {
     public partial class Okno_ustawien : Form
     {
+        kinoDB baza = new kinoDB();
+
         public Okno_ustawien()
         {
             InitializeComponent();
+            if (!baza.PolaczenieDoBazyZRejestru())
+            {
+                btn_ustawienia_zamknij.Enabled = false;
+            }
+            //TODO: po wejściu w okno jesli już jest nawiązane połaczenie do dane mogłby sie autoamtycznie uzupełniać. Do zrobienia są metody w klasie kinoDb które zwrócą wszystkie dane
+            //TODO: dodanie weryfikacji wprowadzonych poł przy zapisie i teście połaczenia. 
         }
 
         private void textBox_okno_ustawien_serwer_TextChanged(object sender, EventArgs e)
@@ -63,7 +72,15 @@ namespace Projekt_kino
             string haslo = textBox_okno_ustawien_haslo.Text;
             string login = textBox_okno_ustawien_login.Text;
 
+            bool metodaLogowania = checkBox_metoda_logowania.Checked;
+            int metLog = metodaLogowania ? 1 : 2;
 
+            bool poprawnoscLogowania = baza.ConnectionString(serwer, metLog, baza_danych, login, haslo);
+            Label_info.Text = poprawnoscLogowania ? "Połączenie nawiązane poprawnie" : "Błąd połaczenia";
+            if (poprawnoscLogowania)
+            {
+                btn_ustawienia_zamknij.Enabled = true;
+            }
 
         }
 
@@ -75,6 +92,26 @@ namespace Projekt_kino
         private void label_haslo_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            string serwer = textBox_okno_ustawien_serwer.Text;
+            string baza_danych = textBox_okno_ustawien_baza_danych.Text;
+            string haslo = textBox_okno_ustawien_haslo.Text;
+            string login = textBox_okno_ustawien_login.Text;
+            bool metodaLogowania = checkBox_metoda_logowania.Checked;
+            int metLog = metodaLogowania ? 1 : 2;
+
+            bool poprawnoscLogowania = baza.ConnectionString(serwer, metLog, baza_danych, login, haslo);
+            Label_info.Text = poprawnoscLogowania ? "Połączenie nawiązane poprawnie" : "Błąd połaczenia";
+        }
+
+        private void btn_ustawienia_skrypty_Click(object sender, EventArgs e)
+        {
+            if(baza.PolaczenieDoBazyZRejestru()) {
+                Label_info.Text = baza.CreateTable();
+            }
         }
     }
 }

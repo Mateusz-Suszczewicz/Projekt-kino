@@ -39,13 +39,18 @@
             label3 = new Label();
             label_login = new Label();
             label_haslo = new Label();
+            button1 = new Button();
+            btn_ustawienia_zamknij = new Button();
+            Label_info = new Label();
+            btn_ustawienia_skrypty = new Button();
             SuspendLayout();
             // 
             // button_okno_ustawien_zapisz
             // 
-            button_okno_ustawien_zapisz.Location = new Point(317, 277);
+            button_okno_ustawien_zapisz.Location = new Point(277, 208);
+            button_okno_ustawien_zapisz.Margin = new Padding(3, 2, 3, 2);
             button_okno_ustawien_zapisz.Name = "button_okno_ustawien_zapisz";
-            button_okno_ustawien_zapisz.Size = new Size(304, 69);
+            button_okno_ustawien_zapisz.Size = new Size(266, 28);
             button_okno_ustawien_zapisz.TabIndex = 0;
             button_okno_ustawien_zapisz.Text = "Zapisz";
             button_okno_ustawien_zapisz.UseVisualStyleBackColor = true;
@@ -53,42 +58,47 @@
             // 
             // textBox_okno_ustawien_serwer
             // 
-            textBox_okno_ustawien_serwer.Location = new Point(317, 48);
+            textBox_okno_ustawien_serwer.Location = new Point(277, 36);
+            textBox_okno_ustawien_serwer.Margin = new Padding(3, 2, 3, 2);
             textBox_okno_ustawien_serwer.Name = "textBox_okno_ustawien_serwer";
-            textBox_okno_ustawien_serwer.Size = new Size(304, 27);
+            textBox_okno_ustawien_serwer.Size = new Size(266, 23);
             textBox_okno_ustawien_serwer.TabIndex = 1;
             textBox_okno_ustawien_serwer.TextChanged += textBox_okno_ustawien_serwer_TextChanged;
             // 
             // textBox_okno_ustawien_baza_danych
             // 
-            textBox_okno_ustawien_baza_danych.Location = new Point(317, 95);
+            textBox_okno_ustawien_baza_danych.Location = new Point(277, 71);
+            textBox_okno_ustawien_baza_danych.Margin = new Padding(3, 2, 3, 2);
             textBox_okno_ustawien_baza_danych.Name = "textBox_okno_ustawien_baza_danych";
-            textBox_okno_ustawien_baza_danych.Size = new Size(304, 27);
+            textBox_okno_ustawien_baza_danych.Size = new Size(266, 23);
             textBox_okno_ustawien_baza_danych.TabIndex = 2;
             textBox_okno_ustawien_baza_danych.TextChanged += textBox_okno_ustawien_baza_danych_TextChanged;
             // 
             // textBox_okno_ustawien_login
             // 
-            textBox_okno_ustawien_login.Location = new Point(317, 178);
+            textBox_okno_ustawien_login.Location = new Point(277, 134);
+            textBox_okno_ustawien_login.Margin = new Padding(3, 2, 3, 2);
             textBox_okno_ustawien_login.Name = "textBox_okno_ustawien_login";
-            textBox_okno_ustawien_login.Size = new Size(304, 27);
+            textBox_okno_ustawien_login.Size = new Size(266, 23);
             textBox_okno_ustawien_login.TabIndex = 3;
             textBox_okno_ustawien_login.TextChanged += textBox_okno_ustawien_login_TextChanged;
             // 
             // textBox_okno_ustawien_haslo
             // 
-            textBox_okno_ustawien_haslo.Location = new Point(317, 226);
+            textBox_okno_ustawien_haslo.Location = new Point(277, 170);
+            textBox_okno_ustawien_haslo.Margin = new Padding(3, 2, 3, 2);
             textBox_okno_ustawien_haslo.Name = "textBox_okno_ustawien_haslo";
-            textBox_okno_ustawien_haslo.Size = new Size(304, 27);
+            textBox_okno_ustawien_haslo.Size = new Size(266, 23);
             textBox_okno_ustawien_haslo.TabIndex = 4;
             textBox_okno_ustawien_haslo.TextChanged += textBox_okno_ustawien_haslo_TextChanged;
             // 
             // checkBox_metoda_logowania
             // 
             checkBox_metoda_logowania.AutoSize = true;
-            checkBox_metoda_logowania.Location = new Point(317, 141);
+            checkBox_metoda_logowania.Location = new Point(277, 106);
+            checkBox_metoda_logowania.Margin = new Padding(3, 2, 3, 2);
             checkBox_metoda_logowania.Name = "checkBox_metoda_logowania";
-            checkBox_metoda_logowania.Size = new Size(18, 17);
+            checkBox_metoda_logowania.Size = new Size(15, 14);
             checkBox_metoda_logowania.TabIndex = 5;
             checkBox_metoda_logowania.UseVisualStyleBackColor = true;
             checkBox_metoda_logowania.CheckedChanged += checkBox_metoda_logowania_CheckedChanged;
@@ -96,36 +106,36 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(130, 51);
+            label1.Location = new Point(114, 38);
             label1.Name = "label1";
-            label1.Size = new Size(181, 20);
+            label1.Size = new Size(144, 15);
             label1.TabIndex = 6;
             label1.Text = "Serwer/nazwa komputera:";
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(216, 95);
+            label2.Location = new Point(189, 71);
             label2.Name = "label2";
-            label2.Size = new Size(95, 20);
+            label2.Size = new Size(76, 15);
             label2.TabIndex = 7;
             label2.Text = "Baza danych:";
             // 
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(173, 138);
+            label3.Location = new Point(129, 106);
             label3.Name = "label3";
-            label3.Size = new Size(138, 20);
+            label3.Size = new Size(139, 15);
             label3.TabIndex = 8;
-            label3.Text = "Metoda logowania:";
+            label3.Text = "Logowanie zintegrowane";
             // 
             // label_login
             // 
             label_login.AutoSize = true;
-            label_login.Location = new Point(262, 178);
+            label_login.Location = new Point(229, 134);
             label_login.Name = "label_login";
-            label_login.Size = new Size(49, 20);
+            label_login.Size = new Size(40, 15);
             label_login.TabIndex = 9;
             label_login.Text = "Login:";
             label_login.Click += label_login_Click;
@@ -133,18 +143,64 @@
             // label_haslo
             // 
             label_haslo.AutoSize = true;
-            label_haslo.Location = new Point(261, 226);
+            label_haslo.Location = new Point(228, 170);
             label_haslo.Name = "label_haslo";
-            label_haslo.Size = new Size(50, 20);
+            label_haslo.Size = new Size(40, 15);
             label_haslo.TabIndex = 10;
             label_haslo.Text = "Hasło:";
             label_haslo.Click += label_haslo_Click;
             // 
+            // button1
+            // 
+            button1.Location = new Point(277, 240);
+            button1.Margin = new Padding(3, 2, 3, 2);
+            button1.Name = "button1";
+            button1.Size = new Size(266, 28);
+            button1.TabIndex = 11;
+            button1.Text = "Testuj połączenie";
+            button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
+            // 
+            // btn_ustawienia_zamknij
+            // 
+            btn_ustawienia_zamknij.DialogResult = DialogResult.Cancel;
+            btn_ustawienia_zamknij.Location = new Point(588, 299);
+            btn_ustawienia_zamknij.Margin = new Padding(3, 2, 3, 2);
+            btn_ustawienia_zamknij.Name = "btn_ustawienia_zamknij";
+            btn_ustawienia_zamknij.Size = new Size(100, 28);
+            btn_ustawienia_zamknij.TabIndex = 12;
+            btn_ustawienia_zamknij.Text = "Zamknij";
+            btn_ustawienia_zamknij.UseVisualStyleBackColor = true;
+            // 
+            // Label_info
+            // 
+            Label_info.AutoSize = true;
+            Label_info.Location = new Point(24, 298);
+            Label_info.Name = "Label_info";
+            Label_info.Size = new Size(0, 15);
+            Label_info.TabIndex = 13;
+            // 
+            // btn_ustawienia_skrypty
+            // 
+            btn_ustawienia_skrypty.Location = new Point(277, 272);
+            btn_ustawienia_skrypty.Margin = new Padding(3, 2, 3, 2);
+            btn_ustawienia_skrypty.Name = "btn_ustawienia_skrypty";
+            btn_ustawienia_skrypty.Size = new Size(266, 28);
+            btn_ustawienia_skrypty.TabIndex = 14;
+            btn_ustawienia_skrypty.Text = "Zainstaluj skrypty";
+            btn_ustawienia_skrypty.UseVisualStyleBackColor = true;
+            btn_ustawienia_skrypty.Click += btn_ustawienia_skrypty_Click;
+            // 
             // Okno_ustawien
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(700, 338);
+            ControlBox = false;
+            Controls.Add(btn_ustawienia_skrypty);
+            Controls.Add(Label_info);
+            Controls.Add(btn_ustawienia_zamknij);
+            Controls.Add(button1);
             Controls.Add(label_haslo);
             Controls.Add(label_login);
             Controls.Add(label3);
@@ -156,6 +212,7 @@
             Controls.Add(textBox_okno_ustawien_baza_danych);
             Controls.Add(textBox_okno_ustawien_serwer);
             Controls.Add(button_okno_ustawien_zapisz);
+            Margin = new Padding(3, 2, 3, 2);
             Name = "Okno_ustawien";
             Text = "Okno_ustawien";
             ResumeLayout(false);
@@ -175,5 +232,9 @@
         private Label label3;
         private Label label_login;
         private Label label_haslo;
+        private Button button1;
+        private Button btn_ustawienia_zamknij;
+        private Label Label_info;
+        private Button btn_ustawienia_skrypty;
     }
 }

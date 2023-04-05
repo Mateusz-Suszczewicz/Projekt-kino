@@ -21,7 +21,7 @@ namespace kino
 
         public bool PolaczenieDoBazyZRejestru()
         {
-            RegistryKey key = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\Kino");
+            RegistryKey key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Kino");
             if (key != null) {
                 string server = key.GetValue("server").ToString();
                 string loginMethod = key.GetValue("loginMethod").ToString();
