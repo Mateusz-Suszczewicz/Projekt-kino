@@ -15,9 +15,19 @@ namespace kino
         private decimal wersja = 0.4m;
         
         // TODO: PRZEMYŚLEĆ: Dodać konstruktor który sprawdzi: 1 czy istnijej już ustalone połaczenie; 2 sprawdzi wersję w bazie danych.
-        // TODO:  
 
         private string? connectionString;
+        private string? serwer;
+        private string? baza_danych;
+        private string? login;
+        private string? haslo;
+        private bool loginmethod;
+
+        public string getSerwer() { return serwer; }
+        public string getbaza_danych() { return baza_danych; }
+        public string getlogin() { return login; }
+        public string gethaslo() { return haslo; }
+        public bool getloginmethod() { return loginmethod; }
 
         public bool PolaczenieDoBazyZRejestru()
         {
@@ -29,6 +39,11 @@ namespace kino
                 string login = key.GetValue("login").ToString();
                 string passowrd = key.GetValue("passowrd").ToString();
                 connectionString = loginMethod == "1" ? $"Data Source={server}; Database={database}; Integrated Security=SSPI;" : $"Data Source={server}; Initial Catalog = {database}; User ID={login}; Password={passowrd}";
+                this.serwer = server;
+                this.baza_danych = database;
+                this.login = login;
+                this.haslo = passowrd;
+                this.loginmethod = loginMethod == "1" ? true : false;
                 return true;
             }
             return false;
@@ -43,9 +58,9 @@ namespace kino
         /// <param name="login">Login użytkownika bazy danych</param>
         /// <param name="passowrd">Hasło użytkownika bazy danych</param>
         /// <returns>Zwraca TRUE jesli połączenie się powiodło i FALSE jeśli się nie powiodło</returns>
-        public bool ConnectionString(string server, int loginMethod, string database, string login = "0", string passowrd = "0")
+        public bool ConnectionString(string server, bool loginMethod, string database, string login = "", string passowrd = "")
         {
-            string conString = loginMethod == 1 ? $"Data Source={server}; Database={database}; Integrated Security=SSPI;" : $"Data Source={server}; Initial Catalog = {database}; User ID={login}; Password={passowrd}";
+            string conString = loginMethod == true ? $"Data Source={server}; Database={database}; Integrated Security=SSPI;" : $"Data Source={server}; Initial Catalog = {database}; User ID={login}; Password={passowrd}";
             SqlConnection conn = new SqlConnection(conString);
             try
             {
@@ -61,6 +76,11 @@ namespace kino
                     key.SetValue("login", login);
                     key.SetValue("passowrd", passowrd);
                     key.Close();
+                    this.serwer = server;
+                    this.baza_danych = database;
+                    this.login = login;
+                    this.haslo = passowrd;
+                    this.loginmethod =loginMethod;
                     return true;
                 }
                 else

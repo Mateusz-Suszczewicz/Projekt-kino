@@ -22,6 +22,11 @@ namespace Projekt_kino
             {
                 btn_ustawienia_zamknij.Enabled = false;
             }
+            textBox_okno_ustawien_baza_danych.Text = baza.getbaza_danych();
+            textBox_okno_ustawien_haslo.Text = baza.gethaslo();
+            textBox_okno_ustawien_login.Text = baza.getlogin();
+            textBox_okno_ustawien_serwer.Text = baza.getSerwer();
+            checkBox_metoda_logowania.Checked = baza.getloginmethod();
             //TODO: po wejściu w okno jesli już jest nawiązane połaczenie do dane mogłby sie autoamtycznie uzupełniać. Do zrobienia są metody w klasie kinoDb które zwrócą wszystkie dane
             //TODO: dodanie weryfikacji wprowadzonych poł przy zapisie i teście połaczenia. 
         }
@@ -73,7 +78,7 @@ namespace Projekt_kino
             string login = textBox_okno_ustawien_login.Text;
 
             bool metodaLogowania = checkBox_metoda_logowania.Checked;
-            int metLog = metodaLogowania ? 1 : 2;
+            bool metLog = metodaLogowania;
 
             bool poprawnoscLogowania = baza.ConnectionString(serwer, metLog, baza_danych, login, haslo);
             Label_info.Text = poprawnoscLogowania ? "Połączenie nawiązane poprawnie" : "Błąd połaczenia";
@@ -101,7 +106,7 @@ namespace Projekt_kino
             string haslo = textBox_okno_ustawien_haslo.Text;
             string login = textBox_okno_ustawien_login.Text;
             bool metodaLogowania = checkBox_metoda_logowania.Checked;
-            int metLog = metodaLogowania ? 1 : 2;
+            bool metLog = metodaLogowania;
 
             bool poprawnoscLogowania = baza.ConnectionString(serwer, metLog, baza_danych, login, haslo);
             Label_info.Text = poprawnoscLogowania ? "Połączenie nawiązane poprawnie" : "Błąd połaczenia";
