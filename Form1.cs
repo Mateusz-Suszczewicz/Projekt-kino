@@ -10,7 +10,7 @@ namespace Projekt_kino
 {
     public partial class Form1 : Form
     {
-        kinoDB baza= new kinoDB();
+        kinoDB baza = new kinoDB();
 
         public Form1()
         {

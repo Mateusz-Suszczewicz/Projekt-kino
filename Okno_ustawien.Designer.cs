@@ -63,7 +63,6 @@
             textBox_okno_ustawien_serwer.Name = "textBox_okno_ustawien_serwer";
             textBox_okno_ustawien_serwer.Size = new Size(266, 23);
             textBox_okno_ustawien_serwer.TabIndex = 1;
-            textBox_okno_ustawien_serwer.TextChanged += textBox_okno_ustawien_serwer_TextChanged;
             // 
             // textBox_okno_ustawien_baza_danych
             // 
@@ -72,7 +71,6 @@
             textBox_okno_ustawien_baza_danych.Name = "textBox_okno_ustawien_baza_danych";
             textBox_okno_ustawien_baza_danych.Size = new Size(266, 23);
             textBox_okno_ustawien_baza_danych.TabIndex = 2;
-            textBox_okno_ustawien_baza_danych.TextChanged += textBox_okno_ustawien_baza_danych_TextChanged;
             // 
             // textBox_okno_ustawien_login
             // 
@@ -81,7 +79,6 @@
             textBox_okno_ustawien_login.Name = "textBox_okno_ustawien_login";
             textBox_okno_ustawien_login.Size = new Size(266, 23);
             textBox_okno_ustawien_login.TabIndex = 3;
-            textBox_okno_ustawien_login.TextChanged += textBox_okno_ustawien_login_TextChanged;
             // 
             // textBox_okno_ustawien_haslo
             // 
@@ -90,7 +87,6 @@
             textBox_okno_ustawien_haslo.Name = "textBox_okno_ustawien_haslo";
             textBox_okno_ustawien_haslo.Size = new Size(266, 23);
             textBox_okno_ustawien_haslo.TabIndex = 4;
-            textBox_okno_ustawien_haslo.TextChanged += textBox_okno_ustawien_haslo_TextChanged;
             // 
             // checkBox_metoda_logowania
             // 
@@ -138,7 +134,6 @@
             label_login.Size = new Size(40, 15);
             label_login.TabIndex = 9;
             label_login.Text = "Login:";
-            label_login.Click += label_login_Click;
             // 
             // label_haslo
             // 
@@ -148,7 +143,6 @@
             label_haslo.Size = new Size(40, 15);
             label_haslo.TabIndex = 10;
             label_haslo.Text = "Hasło:";
-            label_haslo.Click += label_haslo_Click;
             // 
             // button1
             // 
