@@ -6,15 +6,18 @@ using Dapper;
 using Microsoft.VisualBasic.Logging;
 using Microsoft.Win32;
 using Microsoft.WindowsAPICodePack.Dialogs;
+using Projekt_kino;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace kino
 {
     internal class kinoDB
     {
-        private decimal wersja = 0.4m;
+        private decimal wersja = 0.5m;
         
         // TODO: PRZEMYŚLEĆ: Dodać konstruktor który sprawdzi: 1 czy istnijej już ustalone połaczenie; 2 sprawdzi wersję w bazie danych.
+        // TODO: zmienna conn ustawiana od globalnie a nie w każdej metodzie
+        // TODO: poprawić zwracane komunikaty
 
         private string? connectionString;
         private string? serwer;
@@ -43,7 +46,7 @@ namespace kino
                 this.baza_danych = database;
                 this.login = login;
                 this.haslo = passowrd;
-                this.loginmethod = loginMethod == "1" ? true : false;
+                this.loginmethod = loginMethod == "True" ? true : false;
                 return true;
             }
             return false;
@@ -123,15 +126,13 @@ namespace kino
                 //sprawdzenie wersji w bazie 
                 query = "SELECT Conf_Wartosc FROM dbo.config WHERE Conf_ID = 1";
                 var wersjaWBazie = conn.ExecuteScalar<decimal>(query);
-                if(wersjaWBazie == 0.4m)
+                if(wersjaWBazie >= 0.4m)
                 {
                     sqlList.Remove("V04.sql");
                 }
                 //aktualizacja sktyptów bez tworzenia bazy danych 
                 if(wersjaWBazie <= wersja || wymuszenieAktualizacji == 1)
                 {
-                    query = "SELECT CONSTRAINT_NAME FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS WHERE TABLE_NAME like 'films' and CONSTRAINT_NAME like '%Cat%'";
-                    var a = conn.ExecuteScalar<string>(query);
                     sqlList.Remove("create.sql");
                     foreach (string s in sqlList)
                     {
@@ -275,10 +276,10 @@ namespace kino
             var procedure = "dbo.addOper";
             var values = new
             {
-                login = Login,
-                password = Password,
-                typ = Typ,
-                id = OperID
+                OpLogin = Login,
+                OpPassword = Password,
+                OpTyp = Typ,
+                OpId = OperID
             };
             try
             {
@@ -496,6 +497,21 @@ namespace kino
             {
                 return ex.Message;
             };
+        }
+        public Operator GetOperators(string login)
+        {
+            SqlConnection conn = new SqlConnection(connectionString);
+            string query = $"SELECT TOP 1 * FROM dbo.operator WHERE Oper_Login = '{login}'";
+            Operator a;
+            try
+            {
+                a = conn.QuerySingle<Operator>(query);
+            }
+            catch
+            {
+                a = null;
+            }
+            return a;
         }
     
     }

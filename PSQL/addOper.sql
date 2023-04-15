@@ -1,46 +1,46 @@
-CREATE OR ALTER PROC dbo.addOper( 
-@id int = 0
-, @login varchar(50)
-, @password varchar(50) = null
-, @typ int
+ï»¿CREATE OR ALTER   PROC [dbo].[addOper]( 
+@OpId int = 0
+, @OpLogin varchar(50)
+, @OpPassword varchar(50) = null
+, @OpTyp int
 ) AS
 
 DECLARE @r varchar(300) = ''
 
-IF (@typ IN (1,2)) --sprawdzenie poprawnosci typu dodawanego pracownika
-AND (@login is not null) --sprawdzenie czy login nie jest pusty
-AND (@login not like '') --sprawdzenie czy login nie jest pusty 
-AND ((SELECT Oper_ID FROM dbo.operator WHERE Oper_Login = @login) is null ) --sprawdzenie czy login nie jest ju¿ w bazie danych
-	IF @id = 0
+IF (@OpTyp IN (1,2)) --sprawdzenie poprawnosci typu dodawanego pracownika
+AND (@OpLogin is not null) --sprawdzenie czy login nie jest pusty
+AND (@OpLogin not like '') --sprawdzenie czy login nie jest pusty 
+AND ((SELECT Oper_ID FROM dbo.operator WHERE Oper_Login = @OpLogin) is null ) --sprawdzenie czy login nie jest juï¿½ w bazie danych
+	IF @OpId = 0
 		BEGIN
-			INSERT INTO dbo.operator (Oper_Login, Oper_Password, Oper_Type) VALUES (@login, @password, @typ)
-			SELECT 'Poprwanie dodano u¿ytkownika: ' + @login + ': ' + (SELECT Oper_ID FROM dbo.operator WHERE Oper_Login = @login)
+			INSERT INTO dbo.operator (Oper_Login, Oper_Password, Oper_Type) VALUES (@OpLogin, @OpPassword, @OpTyp)
+			SELECT 'Poprawnie dodano uzytkownika: ' + @OpLogin + ': ' + CAST((SELECT Oper_ID FROM dbo.operator WHERE Oper_Login = @OpLogin) as varchar(20))
 			RETURN
 		END
 	ELSE
-		IF (SELECT Oper_ID FROM dbo.operator WHERE Oper_ID = @id) is not null
+		IF (SELECT Oper_ID FROM dbo.operator WHERE Oper_ID = @OpId) is not null
 			BEGIN
-				UPDATE dbo.operator SET Oper_Login = @login, Oper_Password = @password, Oper_Type = @typ WHERE Oper_ID = @id
-				SELECT 'Poprawnie zmodyfikowano operatora: ' + @login + ': ' + @id 
+				UPDATE dbo.operator SET Oper_Login = @OpLogin, Oper_Password = @OpPassword, Oper_Type = @OpTyp WHERE Oper_ID = @OpId
+				SELECT 'Poprawnie zmodyfikowano operatora: ' + @OpLogin + ': ' + @OpId 
 				RETURN
 			END
 		ELSE
 			BEGIN
-				SELECT 'Próba modyfikacji nieistniej¹cego operatora'
+				SELECT 'Prï¿½ba modyfikacji nieistniejï¿½cego operatora'
 				RETURN
 			END
 ELSE
-	IF @typ not in (1,2) 
+	IF @OpTyp not in (1,2) 
 		BEGIN
-			SET @r += 'B³êdny typ uzytkonika, ' 
+			SET @r += 'Bï¿½ï¿½dny typ uzytkonika, ' 
 		END
-	IF @login is null OR @login LIKE ''
+	IF @OpLogin is null OR @OpLogin LIKE ''
 		BEGIN
-			SET @r += 'Login nie mo¿e byæ pusty, ' 
+			SET @r += 'Login nie moï¿½e byï¿½ pusty, ' 
 		END
-	IF (SELECT Oper_ID FROM dbo.operator WHERE Oper_Login = @login) is not null 
+	IF (SELECT Oper_ID FROM dbo.operator WHERE Oper_Login = @OpLogin) is not null 
 		BEGIN
-			SET @r = 'U¿ytkownik o podanym loginie istnieje ju¿ w bazie danych, ' 
+			SET @r = 'Uï¿½ytkownik o podanym loginie istnieje juï¿½ w bazie danych, ' 
 		END
 
 SELECT @r

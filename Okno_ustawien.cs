@@ -27,7 +27,7 @@ namespace Projekt_kino
             textBox_okno_ustawien_login.Text = baza.getlogin();
             textBox_okno_ustawien_serwer.Text = baza.getSerwer();
             checkBox_metoda_logowania.Checked = baza.getloginmethod();
-                        //TODO: dodanie weryfikacji wprowadzonych poł przy zapisie i teście połaczenia. 
+                        //TODO: dodanie weryfikacji wprowadzonych pól przy zapisie i teście połaczenia. 
         }
 
         private void checkBox_metoda_logowania_CheckedChanged(object sender, EventArgs e)
