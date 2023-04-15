@@ -38,11 +38,16 @@ namespace Projekt_kino
         private void customizeDesign()
         {
             panel_do_przycisku_konto.Visible = false;
+            panel_logowanie.Visible = false;
+            panel_rejestracja.Visible = false;
+            label5.Visible = false;
+            label7.Visible = false;
         }
 
         private void hideSubMenu()
         {
-            if (panel_do_przycisku_konto.Visible = true)
+            // == a nie = w ifie
+            if (panel_do_przycisku_konto.Visible == true)
             {
                 panel_do_przycisku_konto.Visible = false;
             }

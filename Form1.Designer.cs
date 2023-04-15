@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            textBox1 = new TextBox();
             aktualny_czas = new Label();
             panel_menu_right = new Panel();
             ustawienia = new Button();
@@ -71,16 +70,6 @@
             panel_rejestracja.SuspendLayout();
             panel_logowanie.SuspendLayout();
             SuspendLayout();
-            // 
-            // textBox1
-            // 
-            textBox1.Anchor = AnchorStyles.None;
-            textBox1.BorderStyle = BorderStyle.None;
-            textBox1.Location = new Point(47, 242);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(775, 16);
-            textBox1.TabIndex = 1;
-            textBox1.TextChanged += textBox1_TextChanged;
             // 
             // aktualny_czas
             // 
@@ -238,7 +227,7 @@
             panel_rejestracja.Controls.Add(label3);
             panel_rejestracja.Controls.Add(label2);
             panel_rejestracja.Controls.Add(label1);
-            panel_rejestracja.Location = new Point(125, 142);
+            panel_rejestracja.Location = new Point(112, 259);
             panel_rejestracja.Margin = new Padding(3, 2, 3, 2);
             panel_rejestracja.MinimumSize = new Size(88, 75);
             panel_rejestracja.Name = "panel_rejestracja";
@@ -373,7 +362,7 @@
             panel_logowanie.Controls.Add(label_logowanie_login);
             panel_logowanie.Controls.Add(textBox3);
             panel_logowanie.Controls.Add(textBox2);
-            panel_logowanie.Location = new Point(128, 140);
+            panel_logowanie.Location = new Point(12, 11);
             panel_logowanie.Margin = new Padding(3, 2, 3, 2);
             panel_logowanie.Name = "panel_logowanie";
             panel_logowanie.Size = new Size(558, 244);
@@ -492,7 +481,6 @@
             Controls.Add(panel_rejestracja);
             Controls.Add(panel1);
             Controls.Add(panel_menu_right);
-            Controls.Add(textBox1);
             ForeColor = Color.Black;
             MaximumSize = new Size(1682, 820);
             MinimumSize = new Size(898, 586);
@@ -513,7 +501,6 @@
         }
 
         #endregion
-        private TextBox textBox1;
         private Label aktualny_czas;
         private Panel panel_menu_right;
         private Button przycisk_konto;
