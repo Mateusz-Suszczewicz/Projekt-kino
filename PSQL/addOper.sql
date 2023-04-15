@@ -10,8 +10,8 @@ DECLARE @r varchar(300) = ''
 IF (@OpTyp IN (1,2)) --sprawdzenie poprawnosci typu dodawanego pracownika
 AND (@OpLogin is not null) --sprawdzenie czy login nie jest pusty
 AND (@OpLogin not like '') --sprawdzenie czy login nie jest pusty 
-AND ((SELECT Oper_ID FROM dbo.operator WHERE Oper_Login = @OpLogin) is null ) --sprawdzenie czy login nie jest ju� w bazie danych
-	IF @OpId = 0
+
+	IF @OpId = 0 AND ((SELECT Oper_ID FROM dbo.operator WHERE Oper_Login = @OpLogin) is null ) --sprawdzenie czy login nie jest ju� w bazie danych
 		BEGIN
 			INSERT INTO dbo.operator (Oper_Login, Oper_Password, Oper_Type) VALUES (@OpLogin, @OpPassword, @OpTyp)
 			SELECT 'Poprawnie dodano uzytkownika: ' + @OpLogin + ': ' + CAST((SELECT Oper_ID FROM dbo.operator WHERE Oper_Login = @OpLogin) as varchar(20))

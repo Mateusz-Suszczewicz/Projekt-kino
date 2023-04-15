@@ -68,6 +68,23 @@ namespace Projekt_kino
             return response;
             
         }
+        public string modyfikacjaOperatora(int id, string? login = null, string? password = null, int typ = -1) 
+        {
+            kinoDB baza = new kinoDB();
+            baza.PolaczenieDoBazyZRejestru();
+            var a = baza.GetOperators(id);
+            if(a != null)
+            {
+                string? opLogin = login == null ? a.Oper_Login : login;
+                int opTyp = typ == -1 ? a.Oper_Type : typ;
+                string? opPassword = password == null ? a.Oper_Password :encryptionPass(password);
+                return baza.DodanieOperatora(opLogin, opTyp, id, opPassword);
+            }
+            else
+            {
+                return "Operator nie istnieje";
+            }
+        }
     }
 }
     

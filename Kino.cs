@@ -513,6 +513,21 @@ namespace kino
             }
             return a;
         }
+        public Operator GetOperators(int id)
+        {
+            SqlConnection conn = new SqlConnection(connectionString);
+            string query = $"SELECT TOP 1 * FROM dbo.operator WHERE Oper_ID = {id}";
+            Operator a;
+            try
+            {
+                a = conn.QuerySingle<Operator>(query);
+            }
+            catch
+            {
+                a = null;
+            }
+            return a;
+        }
     
     }
 }

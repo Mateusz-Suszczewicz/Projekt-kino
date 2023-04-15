@@ -11,8 +11,7 @@ namespace Projekt_kino
     public partial class Form1 : Form
     {
         kinoDB baza = new kinoDB();
-
-        // TODO: ustawienia kurosru na logowanie/rejestracja
+        bool modyfikacja_hasla = false;
 
         public Form1()
         {
@@ -155,6 +154,8 @@ namespace Projekt_kino
         {
             panel_logowanie.Visible = false;
             panel_rejestracja.Visible = true;
+            button_rejestracja_zaloz_konto.Text = "Zmodyfikuj has³o";
+            modyfikacja_hasla = false;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -190,14 +191,32 @@ namespace Projekt_kino
                 string pass = textBox_rejestracja_haslo_1.Text;
                 string login = textBox_rejestracja_login.Text;
                 Operator oper = new Operator();
-                label5.Text = oper.dodanienowegoOperatora(login, pass, 1);
-
+                if (!modyfikacja_hasla)
+                {
+                    label5.Text = oper.dodanienowegoOperatora(login, pass, 1);
+                }
+                else
+                {
+                    Operator a = baza.GetOperators(login);
+                    if(a != null)
+                    {
+                        label5.Text = oper.modyfikacjaOperatora(a.GetOperId(), null, pass);
+                    }
+                }
             }
             else
             {
                 label5.Text = "B³êdne dane";
             }
             label5.Visible = true;
+        }
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            button_rejestracja_zaloz_konto.Text = "Zmodyfikuj has³o";
+            panel_logowanie.Visible = false;
+            panel_rejestracja.Visible = true;
+            modyfikacja_hasla = true;
         }
     }
 }

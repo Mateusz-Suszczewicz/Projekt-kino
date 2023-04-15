@@ -132,7 +132,6 @@
             panel_do_przycisku_konto.BackColor = Color.IndianRed;
             panel_do_przycisku_konto.Controls.Add(Konto_subMenu_logowanie);
             panel_do_przycisku_konto.Controls.Add(Konto_subMenu_rejestracja);
-            panel_do_przycisku_konto.Cursor = Cursors.Arrow;
             panel_do_przycisku_konto.Dock = DockStyle.Top;
             panel_do_przycisku_konto.Location = new Point(0, 139);
             panel_do_przycisku_konto.Margin = new Padding(3, 2, 3, 2);
@@ -142,7 +141,6 @@
             // 
             // Konto_subMenu_logowanie
             // 
-            Konto_subMenu_logowanie.Cursor = Cursors.Arrow;
             Konto_subMenu_logowanie.Dock = DockStyle.Top;
             Konto_subMenu_logowanie.FlatStyle = FlatStyle.Flat;
             Konto_subMenu_logowanie.Font = new Font("Segoe UI", 13F, FontStyle.Regular, GraphicsUnit.Point);
@@ -157,7 +155,6 @@
             // 
             // Konto_subMenu_rejestracja
             // 
-            Konto_subMenu_logowanie.Cursor = Cursors.Arrow;
             Konto_subMenu_rejestracja.Dock = DockStyle.Top;
             Konto_subMenu_rejestracja.FlatStyle = FlatStyle.Flat;
             Konto_subMenu_rejestracja.Font = new Font("Segoe UI", 13F, FontStyle.Regular, GraphicsUnit.Point);
@@ -417,6 +414,7 @@
             linkLabel1.TabIndex = 6;
             linkLabel1.TabStop = true;
             linkLabel1.Text = "Przypomnij hasło";
+            linkLabel1.LinkClicked += linkLabel1_LinkClicked;
             // 
             // label8
             // 
