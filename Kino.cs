@@ -13,7 +13,7 @@ namespace kino
 {
     internal class kinoDB
     {
-        private decimal wersja = 0.5m;
+        private decimal wersja = 0.6m;
         
         // TODO: PRZEMYŚLEĆ: Dodać konstruktor który sprawdzi: 1 czy istnijej już ustalone połaczenie; 2 sprawdzi wersję w bazie danych.
         // TODO: zmienna conn ustawiana od globalnie a nie w każdej metodzie
@@ -125,7 +125,7 @@ namespace kino
             {
                 //sprawdzenie wersji w bazie 
                 query = "SELECT Conf_Wartosc FROM dbo.config WHERE Conf_ID = 1";
-                var wersjaWBazie = conn.ExecuteScalar<decimal>(query);
+                decimal wersjaWBazie = (decimal)conn.ExecuteScalar<decimal>(query) / 10;
                 if(wersjaWBazie >= 0.4m)
                 {
                     sqlList.Remove("V04.sql");
