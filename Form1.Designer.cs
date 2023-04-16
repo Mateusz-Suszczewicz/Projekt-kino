@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            textBox1 = new TextBox();
             aktualny_czas = new Label();
             panel_menu_right = new Panel();
             ustawienia = new Button();
@@ -141,7 +140,6 @@
             panel_do_przycisku_konto.BackColor = Color.IndianRed;
             panel_do_przycisku_konto.Controls.Add(Konto_subMenu_logowanie);
             panel_do_przycisku_konto.Controls.Add(Konto_subMenu_rejestracja);
-            panel_do_przycisku_konto.Cursor = Cursors.No;
             panel_do_przycisku_konto.Dock = DockStyle.Top;
             panel_do_przycisku_konto.Location = new Point(0, 185);
             panel_do_przycisku_konto.Name = "panel_do_przycisku_konto";
@@ -248,6 +246,7 @@
             button_rejestracja_zaloz_konto.TabIndex = 12;
             button_rejestracja_zaloz_konto.Text = "Załóż konto";
             button_rejestracja_zaloz_konto.UseVisualStyleBackColor = true;
+            button_rejestracja_zaloz_konto.Click += button_rejestracja_zaloz_konto_Click;
             // 
             // textBox_rejestracja_haslo
             // 
@@ -378,6 +377,7 @@
             button1.TabIndex = 9;
             button1.Text = "Zaloguj się";
             button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
             // 
             // linkLabel_logowanie_zarejestruj_sie
             // 
@@ -411,6 +411,7 @@
             linkLabel1.TabIndex = 6;
             linkLabel1.TabStop = true;
             linkLabel1.Text = "Przypomnij hasło";
+            linkLabel1.LinkClicked += linkLabel1_LinkClicked;
             // 
             // label8
             // 
@@ -477,7 +478,6 @@
             Controls.Add(panel_rejestracja);
             Controls.Add(panel1);
             Controls.Add(panel_menu_right);
-            Controls.Add(textBox1);
             ForeColor = Color.Black;
             Margin = new Padding(3, 4, 3, 4);
             MaximumSize = new Size(1920, 1078);
@@ -499,7 +499,6 @@
         }
 
         #endregion
-        private TextBox textBox1;
         private Label aktualny_czas;
         private Panel panel_menu_right;
         private Button przycisk_konto;
