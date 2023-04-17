@@ -219,5 +219,11 @@ namespace Projekt_kino
             panel_rejestracja.Visible = true;
             modyfikacja_hasla = true;
         }
+
+        private void przycisk_repertuar_Click_1(object sender, EventArgs e)
+        {
+            repertuar repertuar = new repertuar();
+            DialogResult dr = repertuar.ShowDialog(this);
+        }
     }
 }

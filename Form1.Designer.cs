@@ -125,6 +125,7 @@
             przycisk_repertuar.TabIndex = 3;
             przycisk_repertuar.Text = "Repertuar";
             przycisk_repertuar.UseVisualStyleBackColor = false;
+            przycisk_repertuar.Click += przycisk_repertuar_Click_1;
             // 
             // panel_do_przycisku_konto
             // 
