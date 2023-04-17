@@ -105,6 +105,7 @@ namespace Projekt_kino
                 panel_rejestracja.Visible = false;
             else panel_rejestracja.Visible = true;
             label5.Visible = false;
+            button_rejestracja_zaloz_konto.Text = "Za³ó¿ konto";
         }
 
         private void Konto_subMenu_logowanie_Click(object sender, EventArgs e)
@@ -198,7 +199,7 @@ namespace Projekt_kino
                 else
                 {
                     Operator a = baza.GetOperators(login);
-                    if(a != null)
+                    if (a != null)
                     {
                         label5.Text = oper.modyfikacjaOperatora(a.GetOperId(), null, pass);
                     }
