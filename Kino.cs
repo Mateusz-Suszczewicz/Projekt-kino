@@ -544,5 +544,33 @@ namespace kino
             return a;
         }
 
+        public List<seanse> getseance(DateTime data)
+        {
+            SqlConnection conn = new SqlConnection(connectionString);
+            string query = $"SELECT * FROM dbo.FilmListV WHERE SE_DataEmisji = {data}";
+            List<seanse> a;
+            try
+            {
+                a = conn.Query<seanse>(query).ToList();
+            }
+            catch
+            {
+                a = null;
+            }
+            return a;
+        }
+
+        public List<string> getCategory(int id)
+        {
+            SqlConnection conn = new SqlConnection( connectionString);
+            string query = $"SELECT Cat_Name FROM dbo.category JOIN dbo.cat_film ON Cat_ID = CF_CatID WHERE CF_FilmID = {id}";
+            List<string> a;
+            try
+            {
+                a = conn.Query<string>(query).ToList();
+            }
+            catch { a = null; }
+            return a;
+        }
     }
 }

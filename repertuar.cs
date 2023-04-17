@@ -82,7 +82,7 @@ namespace Projekt_kino
         {
             zmiana_kolorow_przyciskow_dni();
             button_repertuar_4_days_later.BackColor = Color.LightSalmon;
-            button_repertuar_2_days_later.Text = button_repertuar_4_days_later.Text;   
+            //button_repertuar_2_days_later.Text = button_repertuar_4_days_later.Text;   
         }
 
         private void repertuar_Load(object sender, EventArgs e)

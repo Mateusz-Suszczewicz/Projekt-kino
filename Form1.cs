@@ -222,8 +222,10 @@ namespace Projekt_kino
 
         private void przycisk_repertuar_Click_1(object sender, EventArgs e)
         {
+            this.Hide();
             repertuar repertuar = new repertuar();
-            DialogResult dr = repertuar.ShowDialog(this);
+            repertuar.ShowDialog(this);
+            this.Show();
         }
     }
 }

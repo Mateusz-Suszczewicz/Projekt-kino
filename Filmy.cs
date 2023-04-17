@@ -9,29 +9,30 @@ namespace Projekt_kino
 {
     internal class Filmy
     {
-        private string Film_Title;
-        private string Film_Content;
-        private DateTime Film_DataDodania;
-        private int Film_CatID;
-        private int Film_Duration;
-        private int Film_ID;
-        private string Film_Language;
-        private string Film_Production;
-        private string Film_Translation;
+        protected string Film_Title { get; set; }
+        protected string Film_Content;
+        protected DateTime Film_DataDodania;
+        protected int Film_CatID;
+        protected int Film_Duration;
+        protected int Film_ID;
+        protected string Film_Language;
+        protected string Film_Production;
+        protected string Film_Translation;
+        protected List<string>? Film_Cateogry = null;
 
-        public Filmy(string tytul, string kontent, DateTime data, int katID, int dlugosc, int IDFilm, string jezyk, string produkcja, string tluamczenie)
-        {
-            Film_Title = tytul;
-            Film_Content = kontent;
-            Film_DataDodania = data;
-            Film_CatID = katID;
-            Film_Duration = dlugosc;
-            Film_ID = IDFilm;
-            Film_Language = jezyk;
-            Film_Production = produkcja;
-            Film_Translation = tluamczenie;
+        //public Filmy(string tytul, string kontent, DateTime data, int katID, int dlugosc, int IDFilm, string jezyk, string produkcja, string tluamczenie)
+        //{
+        //    Film_Title = tytul;
+        //    Film_Content = kontent;
+        //    Film_DataDodania = data;
+        //    Film_CatID = katID;
+        //    Film_Duration = dlugosc;
+        //    Film_ID = IDFilm;
+        //    Film_Language = jezyk;
+        //    Film_Production = produkcja;
+        //    Film_Translation = tluamczenie;
 
-        }
+        //}
 
         public string modyfikacjaFilmu(int IDFilm, string? tytul = null, string? kontent = null, DateTime? data = null, int katID = -1, int dlugosc = -1,string? jezyk = null,string? produkcja = null, string? tluamczenie = null)
         {
@@ -56,6 +57,12 @@ namespace Projekt_kino
             }
         }
 
+        protected void setCategory()
+        {
+            kinoDB baza = new kinoDB();
+            baza.PolaczenieDoBazyZRejestru();
+            Film_Cateogry = baza.getCategory(Film_ID);
+        }
 
     }
 }
