@@ -71,17 +71,6 @@
             panel_logowanie.SuspendLayout();
             SuspendLayout();
             // 
-            // textBox1
-            // 
-            textBox1.Anchor = AnchorStyles.None;
-            textBox1.BorderStyle = BorderStyle.None;
-            textBox1.Location = new Point(54, 323);
-            textBox1.Margin = new Padding(3, 4, 3, 4);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(886, 20);
-            textBox1.TabIndex = 1;
-            textBox1.TextChanged += textBox1_TextChanged;
-            // 
             // aktualny_czas
             // 
             aktualny_czas.Dock = DockStyle.Top;
@@ -133,6 +122,7 @@
             przycisk_repertuar.TabIndex = 3;
             przycisk_repertuar.Text = "Repertuar";
             przycisk_repertuar.UseVisualStyleBackColor = false;
+            przycisk_repertuar.Click += przycisk_repertuar_Click_1;
             // 
             // panel_do_przycisku_konto
             // 
@@ -162,7 +152,6 @@
             // 
             // Konto_subMenu_rejestracja
             // 
-            Konto_subMenu_rejestracja.Cursor = Cursors.Arrow;
             Konto_subMenu_rejestracja.Dock = DockStyle.Top;
             Konto_subMenu_rejestracja.FlatStyle = FlatStyle.Flat;
             Konto_subMenu_rejestracja.Font = new Font("Segoe UI", 13F, FontStyle.Regular, GraphicsUnit.Point);

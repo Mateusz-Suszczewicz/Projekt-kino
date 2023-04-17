@@ -198,7 +198,7 @@ namespace Projekt_kino
                 else
                 {
                     Operator a = baza.GetOperators(login);
-                    if(a != null)
+                    if (a != null)
                     {
                         label5.Text = oper.modyfikacjaOperatora(a.GetOperId(), null, pass);
                     }
@@ -217,6 +217,12 @@ namespace Projekt_kino
             panel_logowanie.Visible = false;
             panel_rejestracja.Visible = true;
             modyfikacja_hasla = true;
+        }
+
+        private void przycisk_repertuar_Click_1(object sender, EventArgs e)
+        {
+            repertuar repertuar = new repertuar();
+            DialogResult dr = repertuar.ShowDialog(this);
         }
     }
 }
