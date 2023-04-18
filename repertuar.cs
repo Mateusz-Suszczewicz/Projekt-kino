@@ -89,9 +89,6 @@ namespace Projekt_kino
             //string Film_Production,
             //string Film_Translation
             //List<string>? Film_Cateogry = null,
-            
-            
-            
             )
         {
             Panel panel = new Panel();
@@ -106,7 +103,6 @@ namespace Projekt_kino
                 LinkColor = Color.Black,
                 Font = new Font("Arial", 16, FontStyle.Bold),
                 AutoSize = true,
-                
             });
 
             // JEZYK string Film_Language
@@ -116,7 +112,8 @@ namespace Projekt_kino
                 ForeColor = Color.Black,
                 Font = new Font("Arial", 16, FontStyle.Bold),
                 AutoSize = true,
-                Left = 1000,
+                Left = flowLayoutPanel_repertuar.ClientSize.Width - 300,
+                //Left = 1000,
 
             });
 
@@ -127,11 +124,9 @@ namespace Projekt_kino
                 ForeColor = Color.Black,
                 Font = new Font("Arial", 16, FontStyle.Bold),
                 AutoSize = true,
-                Left = 1200,
+                Left = flowLayoutPanel_repertuar.ClientSize.Width - 160,
+                //Left = 1200,
             });
-
-
-
 
             flowLayoutPanel_repertuar.Controls.Add(panel);
 
