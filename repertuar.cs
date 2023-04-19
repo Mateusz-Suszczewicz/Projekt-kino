@@ -142,7 +142,7 @@ namespace Projekt_kino
             zmiana_kolorow_przyciskow_dni();
             button_repertuar_4_days_later.BackColor = Color.LightSalmon;
 
-            dodanie_filmu_do_repertuaru(sender, e, "terminator", 126, "DUB PL");
+            dodanie_filmu_do_repertuaru(sender, e, "nt", 126, "DUB PL");
 
         }
 

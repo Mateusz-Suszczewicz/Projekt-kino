@@ -157,6 +157,7 @@ namespace Projekt_kino
             panel_rejestracja.Visible = true;
             button_rejestracja_zaloz_konto.Text = "Zmodyfikuj has³o";
             modyfikacja_hasla = false;
+            button_rejestracja_zaloz_konto.Text = "Za³ó¿ konto";
         }
 
         private void button1_Click(object sender, EventArgs e)
