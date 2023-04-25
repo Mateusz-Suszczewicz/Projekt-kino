@@ -18,7 +18,7 @@ namespace kino
         // TODO: PRZEMYŚLEĆ: Dodać konstruktor który sprawdzi: 1 czy istnijej już ustalone połaczenie; 2 sprawdzi wersję w bazie danych.
         // TODO: zmienna conn ustawiana od globalnie a nie w każdej metodzie
         // TODO: poprawić zwracane komunikaty
-
+        
         private string? connectionString;
         private string? serwer;
         private string? baza_danych;
@@ -235,7 +235,7 @@ namespace kino
         /// <param name="Src">Link do obrazka </param>
         /// <param name="FilmID"><ID filmu domyslnie 0/param>
         /// <returns>Zwracany tekst z błędem lub komunikatem o poprawnym dodaniu</returns>
-        public string DodanieFilmu(string Title, string Content, DateTime? DataDodania, int CatID, int Duration, string Film_Language, string Film_Production, string Film_Translation,  int FilmID = 0) 
+        public string DodanieFilmu(string Title, string Content, DateTime? DataDodania, int Duration, string Film_Language, string Film_Production, string Film_Translation,  int FilmID = 0) 
         {
             SqlConnection conn = new SqlConnection(connectionString);
             var procedure = "dbo.addFilm";
@@ -244,7 +244,6 @@ namespace kino
                 title = Title,
                 content = Content,
                 dataDodania = DataDodania,
-                catID = CatID,
                 duration = Duration,
                 film_Language = Film_Language,
                 film_Production = Film_Production,
@@ -544,10 +543,10 @@ namespace kino
             return a;
         }
 
-        public List<seanse> getseance(DateTime data)
+        public List<seanse> getSeanceOnFilmAndDay(DateTime data, int filmID)
         {
             SqlConnection conn = new SqlConnection(connectionString);
-            string query = $"SELECT * FROM dbo.FilmListV WHERE SE_DataEmisji = {data}";
+            string query = $"SELECT SE_ID, SE_FilmID, SE_DataEmisji, SE_DataKonca FROM dbo.FilmListV WHERE SE_DataEmisji = {data} and SE_FilmID = {filmID}";
             List<seanse> a;
             try
             {
@@ -572,5 +571,20 @@ namespace kino
             catch { a = null; }
             return a;
         }
+
+        public List<Filmy> getFilmList(DateTime data)
+        {
+            
+            SqlConnection conn = new SqlConnection(connectionString);
+            string query = $"SELECT DISTINCT films.* FROM dbo.films JOIN dbo.seance ON Film_ID = SE_FilmID WHERE SE_DataEmisji >= '{data.ToString("MM-dd-yyyy HH:mm")}' AND SE_DataEmisji < '{data.AddDays(1).ToString("MM-dd-yyyy")}'";
+            List<Filmy> a;
+            try
+            {
+                a = conn.Query<Filmy>(query).ToList();
+            }
+            catch { a = null; }
+            return a;
+        }
+
     }
 }

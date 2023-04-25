@@ -15,31 +15,43 @@ namespace Projekt_kino
     public partial class repertuar : Form
     {
 
-        //List<Control> days = new List<Control>(5);
-
+        //List<Control> days = new List<Control>;
+        List<DateTime> dates = new List<DateTime>();
         public repertuar()
         {
             InitializeComponent();
-
             ustawienie_aktualnych_dni();
-
+            Filmy film = new Filmy();
+            List<Filmy>? ListaFilmow = film.getFilmOnDay(dates[0]);
+            if (ListaFilmow != null)
+            {
+                foreach (var a in ListaFilmow)
+                {
+                    
+                    dodanie_filmu_do_repertuaru(a);
+                }
+            }
         }
 
 
         private void ustawienie_aktualnych_dni()
         {
             DateTime date = DateTime.Now;
+            dates.Add(date);
+            date = date.AddSeconds(60 - date.Second);
+            date = date.AddMinutes(60 - date.Minute);
+            date = date.AddHours(24 - date.Hour);
+            for (int i = 0; i < 5; i++)
+            {
+                dates.Add(date);
+                date = date.AddDays(1);
 
-
-            button_repertuar_today.Text = date.Day.ToString() + "." + date.Month.ToString().PadLeft(2, '0') + "\n" + date.DayOfWeek;
-            date = date.AddDays(1);
-            button_repertuar_tommorow.Text = date.Day.ToString() + "." + date.Month.ToString().PadLeft(2, '0') + "\n" + date.DayOfWeek;
-            date = date.AddDays(1);
-            button_repertuar_2_days_later.Text = date.Day.ToString() + "." + date.Month.ToString().PadLeft(2, '0') + "\n" + date.DayOfWeek;
-            date = date.AddDays(1);
-            button_repertuar_3_days_later.Text = date.Day.ToString() + "." + date.Month.ToString().PadLeft(2, '0') + "\n" + date.DayOfWeek;
-            date = date.AddDays(1);
-            button_repertuar_4_days_later.Text = date.Day.ToString() + "." + date.Month.ToString().PadLeft(2, '0') + "\n" + date.DayOfWeek;
+            }
+            button_repertuar_today.Text = dates[0].Day.ToString() + "." + dates[0].Month.ToString().PadLeft(2, '0') + "\n" + dates[0].DayOfWeek;
+            button_repertuar_tommorow.Text = dates[1].Day.ToString() + "." + dates[1].Month.ToString().PadLeft(2, '0') + "\n" + dates[1].DayOfWeek;
+            button_repertuar_2_days_later.Text = dates[2].Day.ToString() + "." + dates[2].Month.ToString().PadLeft(2, '0') + "\n" + dates[2].DayOfWeek;
+            button_repertuar_3_days_later.Text = dates[3].Day.ToString() + "." + dates[3].Month.ToString().PadLeft(2, '0') + "\n" + dates[3].DayOfWeek;
+            button_repertuar_4_days_later.Text = dates[4].Day.ToString() + "." + dates[4].Month.ToString().PadLeft(2, '0') + "\n" + dates[4].DayOfWeek;
 
 
         }
@@ -48,6 +60,16 @@ namespace Projekt_kino
         {
             zmiana_kolorow_przyciskow_dni();
             button_repertuar_today.BackColor = Color.LightSalmon;
+            flowLayoutPanel_repertuar.Controls.Clear();
+            Filmy film = new Filmy();
+            List<Filmy>? ListaFilmow = film.getFilmOnDay(dates[0]);
+            if (ListaFilmow != null)
+            {
+                foreach (var a in ListaFilmow)
+                {
+                    dodanie_filmu_do_repertuaru(a);
+                }
+            }
         }
 
         private void zmiana_kolorow_przyciskow_dni()
@@ -64,42 +86,73 @@ namespace Projekt_kino
         {
             zmiana_kolorow_przyciskow_dni();
             button_repertuar_tommorow.BackColor = Color.LightSalmon;
+            flowLayoutPanel_repertuar.Controls.Clear();
+            Filmy film = new Filmy();
+            List<Filmy>? ListaFilmow = film.getFilmOnDay(dates[1]);
+            if (ListaFilmow != null)
+            {
+                foreach (var a in ListaFilmow)
+                {
+                    dodanie_filmu_do_repertuaru(a);
+                }
+            }
         }
 
         private void button_repertuar_2_days_later_Click(object sender, EventArgs e)
         {
             zmiana_kolorow_przyciskow_dni();
             button_repertuar_2_days_later.BackColor = Color.LightSalmon;
+            flowLayoutPanel_repertuar.Controls.Clear();
+            Filmy film = new Filmy();
+            List<Filmy>? ListaFilmow = film.getFilmOnDay(dates[2]);
+            if (ListaFilmow != null)
+            {
+                foreach (var a in ListaFilmow)
+                {
+                    dodanie_filmu_do_repertuaru(a);
+                }
+            }
         }
 
         private void button_repertuar_3_days_later_Click(object sender, EventArgs e)
         {
             zmiana_kolorow_przyciskow_dni();
             button_repertuar_3_days_later.BackColor = Color.LightSalmon;
+            flowLayoutPanel_repertuar.Controls.Clear();
+            Filmy film = new Filmy();
+            List<Filmy>? ListaFilmow = film.getFilmOnDay(dates[3]);
+            if (ListaFilmow != null)
+            {
+                foreach (var a in ListaFilmow)
+                {
+                    dodanie_filmu_do_repertuaru(a);
+                }
+            }
         }
 
-        private void dodanie_filmu_do_repertuaru(object sender, EventArgs e,
-            string Film_Title,
-            //string Film_Content,
-            //DateTime Film_DataDodania,
-            //int Film_CatID,
-            int Film_Duration,
-            //int Film_ID,
-            string Film_Language
-            //string Film_Production,
-            //string Film_Translation
-            //List<string>? Film_Cateogry = null,
+        private void dodanie_filmu_do_repertuaru(
+            Filmy film
+            //string Film_Title,
+            ////string Film_Content,
+            ////DateTime Film_DataDodania,
+            ////int Film_CatID,
+            //int Film_Duration,
+            ////int Film_ID,
+            //string Film_Language
+            ////string Film_Production,
+            ////string Film_Translation
+            ////List<string>? Film_Cateogry = null,
             )
         {
+            var a = film.getSeanse();
             Panel panel = new Panel();
-
             panel.BackColor = Color.AliceBlue;
             panel.Size = new Size(flowLayoutPanel_repertuar.ClientSize.Width - 7, 300);
 
             //TYTUL string Film_Title
             panel.Controls.Add(new LinkLabel
             {
-                Text = Film_Title,
+                Text = film.getTitle(),
                 LinkColor = Color.Black,
                 Font = new Font("Arial", 16, FontStyle.Bold),
                 AutoSize = true,
@@ -108,7 +161,7 @@ namespace Projekt_kino
             // JEZYK string Film_Language
             panel.Controls.Add(new Label
             {
-                Text = Film_Language,
+                Text = film.getLanguage(),
                 ForeColor = Color.Black,
                 Font = new Font("Arial", 16, FontStyle.Bold),
                 AutoSize = true,
@@ -120,13 +173,15 @@ namespace Projekt_kino
             // CZAS TRWANIA int Film_Duration,
             panel.Controls.Add(new Label
             {
-                Text = Film_Duration.ToString() + " " + " MIN",
+                Text = film.getDuration().ToString() + " " + " MIN",
+                
+                //Text = a[0].getGodzinaEmisji(),
                 ForeColor = Color.Black,
                 Font = new Font("Arial", 16, FontStyle.Bold),
                 AutoSize = true,
                 Left = flowLayoutPanel_repertuar.ClientSize.Width - 160,
                 //Left = 1200,
-            });
+            });;
 
             flowLayoutPanel_repertuar.Controls.Add(panel);
 
@@ -134,10 +189,20 @@ namespace Projekt_kino
 
         private void button_repertuar_4_days_later_Click(object sender, EventArgs e)
         {
+            DateTime date = DateTime.Now;
+            date = date.AddDays(4);
             zmiana_kolorow_przyciskow_dni();
             button_repertuar_4_days_later.BackColor = Color.LightSalmon;
-
-            dodanie_filmu_do_repertuaru(sender, e, "nt", 126, "DUB PL");
+            flowLayoutPanel_repertuar.Controls.Clear();
+            Filmy film = new Filmy();
+            List<Filmy>? ListaFilmow = film.getFilmOnDay(dates[4]);
+            if (ListaFilmow != null)
+            {
+                foreach (var a in ListaFilmow)
+                {
+                    dodanie_filmu_do_repertuaru(a);
+                }
+            }
 
         }
 

@@ -228,5 +228,15 @@ namespace Projekt_kino
             repertuar.ShowDialog(this);
             this.Show();
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            kinoDB baza = new kinoDB();
+            baza.PolaczenieDoBazyZRejestru();
+           // baza.DodanieSali(1, "Opis 1 sali");
+            baza.DodanieSeansu(1, 1, DateTime.Now, DateTime.Now);
+            //baza.DodanieFilmu("a", "opis filmu", DateTime.Now, 255, "polski", "USA", "dab");
+
+        }
     }
 }

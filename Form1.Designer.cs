@@ -64,6 +64,7 @@
             label_logowanie_login = new Label();
             textBox3 = new TextBox();
             textBox2 = new TextBox();
+            button2 = new Button();
             panel_menu_right.SuspendLayout();
             panel_do_przycisku_konto.SuspendLayout();
             panel_logo.SuspendLayout();
@@ -88,6 +89,7 @@
             // 
             panel_menu_right.AutoScroll = true;
             panel_menu_right.BackColor = Color.Firebrick;
+            panel_menu_right.Controls.Add(button2);
             panel_menu_right.Controls.Add(ustawienia);
             panel_menu_right.Controls.Add(przycisk_repertuar);
             panel_menu_right.Controls.Add(panel_do_przycisku_konto);
@@ -474,6 +476,16 @@
             textBox2.Size = new Size(242, 23);
             textBox2.TabIndex = 0;
             // 
+            // button2
+            // 
+            button2.Location = new Point(17, 314);
+            button2.Name = "button2";
+            button2.Size = new Size(106, 23);
+            button2.TabIndex = 5;
+            button2.Text = "guzik arbuzik :P";
+            button2.UseVisualStyleBackColor = true;
+            button2.Click += button2_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -539,5 +551,6 @@
         private Label label_logowanie_login;
         private TextBox textBox3;
         private TextBox textBox2;
+        private Button button2;
     }
 }

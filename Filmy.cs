@@ -12,14 +12,17 @@ namespace Projekt_kino
         protected string Film_Title { get; set; }
         protected string Film_Content;
         protected DateTime Film_DataDodania;
-        protected int Film_CatID;
         protected int Film_Duration;
         protected int Film_ID;
         protected string Film_Language;
         protected string Film_Production;
         protected string Film_Translation;
         protected List<string>? Film_Cateogry = null;
+        protected List<seanse>? seanses = null;
 
+        public string getTitle() { return Film_Title; }
+        public string getLanguage() { return Film_Language; }
+        public int getDuration() { return Film_Duration; }
         //public Filmy(string tytul, string kontent, DateTime data, int katID, int dlugosc, int IDFilm, string jezyk, string produkcja, string tluamczenie)
         //{
         //    Film_Title = tytul;
@@ -44,12 +47,11 @@ namespace Projekt_kino
                 string? filmtitle = tytul == null ? a.Film_Title : tytul;
                 string? filmcontent = kontent == null ? a.Film_Content : tytul;
                 DateTime? filmdata = data == null ? a.Film_DataDodania : data;
-                int filmcatid = katID == -1 ? a.Film_CatID : katID;
                 int filmdlugosc = dlugosc == -1 ? a.Film_Duration : dlugosc;
                 string? filmjezyk = jezyk == null ? a.Film_Language : tytul;
                 string? filmprodukcja = produkcja == null ? a.Film_Production : produkcja;
                 string? filmtlumacznie = tluamczenie == null ? a.Film_Translation : tluamczenie;
-                return baza.DodanieFilmu(filmtitle, filmcontent, filmdata, filmcatid, filmdlugosc, filmjezyk, filmprodukcja, filmtlumacznie, IDFilm);
+                return baza.DodanieFilmu(filmtitle, filmcontent, filmdata, filmdlugosc, filmjezyk, filmprodukcja, filmtlumacznie, IDFilm);
             }
             else
             {
@@ -64,5 +66,30 @@ namespace Projekt_kino
             Film_Cateogry = baza.getCategory(Film_ID);
         }
 
+        protected void setSeanse(DateTime data)
+        {
+            kinoDB baza = new kinoDB();
+            baza.PolaczenieDoBazyZRejestru();
+            seanses = baza.getSeanceOnFilmAndDay(data, Film_ID);
+
+        }
+
+        public List<Filmy> getFilmOnDay(DateTime date)
+        {
+            kinoDB baza = new kinoDB();
+            baza.PolaczenieDoBazyZRejestru();
+            List<Filmy>? filmy = baza.getFilmList(date);
+            if (filmy != null)
+            {
+                foreach (var film in filmy)
+                {
+                    film.setCategory();
+                    film.setSeanse(date);
+                }
+            }
+            return filmy;
+        }
+
+        public List<seanse> getSeanse() { return seanses; }
     }
 }

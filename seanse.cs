@@ -7,22 +7,15 @@ using System.Threading.Tasks;
 
 namespace Projekt_kino
 {
-    internal class seanse : Filmy
+    internal class seanse
     {
-        protected string? SE_ID;
-        protected DateTime? SE_DataEmisji;
+        protected int SE_ID;
+        protected int SE_FilmID;
+        protected DateTime SE_DataEmisji;
+        protected DateTime SE_DataKonca;
 
-        public List<seanse> seanses(DateTime data)
-        {
-            List<seanse> a;
-            kinoDB baza = new kinoDB();
-            baza.PolaczenieDoBazyZRejestru();
-            a = baza.getseance(data);
-            foreach (seanse seanse in a)
-            {
-                seanse.setCategory();
-            }
-            return a;
-        }
+        public int getFilmdID() { return SE_FilmID; }
+        public string getGodzinaEmisji() { return SE_DataEmisji.ToString("hh:mm"); }
+
     }
 }
