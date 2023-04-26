@@ -83,7 +83,6 @@
             aktualny_czas.TabIndex = 4;
             aktualny_czas.Text = "Willkommen!";
             aktualny_czas.TextAlign = ContentAlignment.MiddleCenter;
-            aktualny_czas.Click += label1_Click;
             // 
             // panel_menu_right
             // 
@@ -101,7 +100,6 @@
             panel_menu_right.Name = "panel_menu_right";
             panel_menu_right.Size = new Size(175, 547);
             panel_menu_right.TabIndex = 5;
-            panel_menu_right.Paint += panel_menu_right_Paint;
             // 
             // ustawienia
             // 
@@ -194,7 +192,6 @@
             panel_logo.Name = "panel_logo";
             panel_logo.Size = new Size(175, 94);
             panel_logo.TabIndex = 0;
-            panel_logo.Paint += panel_logo_Paint;
             // 
             // contextMenuStrip1
             // 
@@ -370,7 +367,6 @@
             panel_logowanie.Name = "panel_logowanie";
             panel_logowanie.Size = new Size(558, 244);
             panel_logowanie.TabIndex = 8;
-            panel_logowanie.Paint += panel_logowanie_Paint;
             // 
             // button1
             // 
@@ -502,7 +498,6 @@
             Name = "Form1";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Form1";
-            Load += Form1_Load;
             panel_menu_right.ResumeLayout(false);
             panel_menu_right.PerformLayout();
             panel_do_przycisku_konto.ResumeLayout(false);

@@ -10,12 +10,10 @@ namespace Projekt_kino
     internal class seanse
     {
         protected int SE_ID;
-        protected int SE_FilmID;
+        public int SE_FilmID { get; set; }
         protected DateTime SE_DataEmisji;
         protected DateTime SE_DataKonca;
 
-        public int getFilmdID() { return SE_FilmID; }
         public string getGodzinaEmisji() { return SE_DataEmisji.ToString("hh:mm"); }
-
     }
 }

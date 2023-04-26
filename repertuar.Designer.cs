@@ -178,7 +178,6 @@
             flowLayoutPanel_repertuar.Name = "flowLayoutPanel_repertuar";
             flowLayoutPanel_repertuar.Size = new Size(1361, 852);
             flowLayoutPanel_repertuar.TabIndex = 1;
-            flowLayoutPanel_repertuar.Paint += flowLayoutPanel_repertuar_Paint;
             // 
             // textBox_rep
             // 
@@ -186,7 +185,6 @@
             textBox_rep.Name = "textBox_rep";
             textBox_rep.Size = new Size(878, 27);
             textBox_rep.TabIndex = 3;
-            textBox_rep.TextChanged += textBox_rep_TextChanged;
             // 
             // repertuar
             // 

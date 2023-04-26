@@ -14,23 +14,28 @@ namespace kino
     internal class kinoDB
     {
         private decimal wersja = 0.6m;
-        
-        // TODO: PRZEMYŚLEĆ: Dodać konstruktor który sprawdzi: 1 czy istnijej już ustalone połaczenie; 2 sprawdzi wersję w bazie danych.
-        // TODO: zmienna conn ustawiana od globalnie a nie w każdej metodzie
-        // TODO: poprawić zwracane komunikaty
-        
-        private string? connectionString;
-        private string? serwer;
-        private string? baza_danych;
-        private string? login;
-        private string? haslo;
-        private bool loginmethod;
 
-        public string getSerwer() { return serwer; }
-        public string getbaza_danych() { return baza_danych; }
-        public string getlogin() { return login; }
-        public string gethaslo() { return haslo; }
-        public bool getloginmethod() { return loginmethod; }
+        private string? connectionString;
+        public string? serwer { get; set; }
+        public string? baza_danych { get; set; }
+        public string? login { get; set; }
+        public string? haslo { get; set; }
+        public bool loginmethod { get; set; }
+        SqlConnection conn;
+        public kinoDB() {
+            if(connectionString == null)
+            {
+                conn = new SqlConnection(connectionString);
+            }
+        }
+        public kinoDB(bool polaczenie)
+        {
+            if (polaczenie)
+            {
+                PolaczenieDoBazyZRejestru();
+                conn = new SqlConnection(connectionString);
+            }
+        }
 
         public bool PolaczenieDoBazyZRejestru()
         {
@@ -102,7 +107,6 @@ namespace kino
         /// </summary>
         public string CreateTable(int wymuszenieAktualizacji = 0) // TODO: Przygotować mechanizm pod sprawdzanie czy poszczególne tabele istnieją
         {
-            SqlConnection conn = new SqlConnection(connectionString);
             List<string> sqlList = new List<string>() {
                 "create.sql",
                 "V04.sql",
@@ -201,7 +205,6 @@ namespace kino
         /// <returns></returns>
         public SqlDataReader ShowFilms()
         {
-            SqlConnection conn = new SqlConnection(connectionString);
             string query = "SELECT * FROM dbo.FIlmListV";
             SqlCommand command = new SqlCommand(query, conn);
             conn.Open();
@@ -215,7 +218,6 @@ namespace kino
         /// <returns></returns>
         public SqlDataReader ShowCode()
         {
-            SqlConnection conn = new SqlConnection(connectionString);
             string query = "SELECT * FROM dbo.OperCodeV";
             SqlCommand command = new SqlCommand(query, conn);
             conn.Open();
@@ -237,7 +239,6 @@ namespace kino
         /// <returns>Zwracany tekst z błędem lub komunikatem o poprawnym dodaniu</returns>
         public string DodanieFilmu(string Title, string Content, DateTime? DataDodania, int Duration, string Film_Language, string Film_Production, string Film_Translation,  int FilmID = 0) 
         {
-            SqlConnection conn = new SqlConnection(connectionString);
             var procedure = "dbo.addFilm";
             var values = new
             {
@@ -271,7 +272,6 @@ namespace kino
         /// <returns>Zwracany tekst z błędem lub komunikatem o poprawnym dodaniu</returns>
         public string DodanieOperatora(string Login, int Typ, int OperID = 0, string? Password = "")
         {
-            SqlConnection conn = new SqlConnection(connectionString);
             var procedure = "dbo.addOper";
             var values = new
             {
@@ -301,7 +301,6 @@ namespace kino
         /// <returns>Zwracany tekst z błędem lub komunikatem o poprawnym dodaniu</returns>
         public string DodanieSali(int NumberSR, string ContentSR, int SRID = 0, int Status = 0)
         {
-            SqlConnection conn = new SqlConnection(connectionString);
             var procedure = "dbo.addSR";
             var values = new
             {
@@ -331,7 +330,6 @@ namespace kino
         /// <returns>Zwracany tekst z błędem lub komunikatem o poprawnym dodaniu</returns>
         public string DodanieMiejsca(int SrID, int NumberSeat, int RowSeat, int SeatID = 0)
         {
-            SqlConnection conn = new SqlConnection(connectionString);
             var procedure = "dbo.addSeat";
             var values = new
             {
@@ -359,7 +357,6 @@ namespace kino
         /// <returns>Zwracany tekst z błędem lub komunikatem o poprawnym dodaniu</returns>
         public string DodanieKategorii(string Name, int CatId = 0)
         {
-            SqlConnection conn = new SqlConnection(connectionString);
             var procedure = "addCategory";
             var values = new { 
                 name = Name
@@ -387,7 +384,6 @@ namespace kino
         /// <returns>Zwracany tekst z błędem lub komunikatem o poprawnym dodaniu</returns>
         public string DodanieSeansu(int FilmID, int SRID, DateTime DataEmisji, DateTime DataKonca, int SEID = 0)
         {
-            SqlConnection conn = new SqlConnection(connectionString);
             var procedure = "addSeance";
             var values = new
             {
@@ -422,7 +418,6 @@ namespace kino
         /// <returns>Zwracany tekst z błędem lub komunikatem o poprawnym dodaniu</returns>
         public string DodanieBiletu(int OperId, int SeatId, int SeID, int Type, DateTime DataZakupu, int StatusB = 0, int Code = 0, int BookID = 0)
         {
-            SqlConnection conn = new SqlConnection(connectionString);
             var procedure = "addBooking";
             var values = new
             {
@@ -459,7 +454,6 @@ namespace kino
 
         public string DodanieObrazka(string Src, int FilmID, int PicID = 0)
         {
-            SqlConnection conn = new SqlConnection(connectionString);
             var procedure = "dbo.addPicture";
             var values = new
             {
@@ -480,7 +474,6 @@ namespace kino
        
         public string DodanieKategoriiDoFilmu(int CatID, int FilmID)
         {
-            SqlConnection conn = new SqlConnection(connectionString);
             var procedure = "dbo.addCategoryToFilm";
             var values = new
             {
@@ -499,7 +492,6 @@ namespace kino
         }
         public Operator GetOperators(string login)
         {
-            SqlConnection conn = new SqlConnection(connectionString);
             string query = $"SELECT TOP 1 * FROM dbo.operator WHERE Oper_Login = '{login}'";
             Operator a;
             try
@@ -529,7 +521,6 @@ namespace kino
         }
         public Filmy GetFilmy(int id)
         {
-            SqlConnection conn = new SqlConnection(connectionString);
             string query = $"SELECT TOP 1 * FROM dbo.films WHERE Oper_ID = {id}";
             Filmy a;
             try
@@ -545,7 +536,6 @@ namespace kino
 
         public List<seanse> getSeanceOnFilmAndDay(DateTime data, int filmID)
         {
-            SqlConnection conn = new SqlConnection(connectionString);
             string query = $"SELECT SE_ID, SE_FilmID, SE_DataEmisji, SE_DataKonca FROM dbo.FilmListV WHERE SE_DataEmisji = {data} and SE_FilmID = {filmID}";
             List<seanse> a;
             try
@@ -561,7 +551,6 @@ namespace kino
 
         public List<string> getCategory(int id)
         {
-            SqlConnection conn = new SqlConnection( connectionString);
             string query = $"SELECT Cat_Name FROM dbo.category JOIN dbo.cat_film ON Cat_ID = CF_CatID WHERE CF_FilmID = {id}";
             List<string> a;
             try
@@ -575,7 +564,6 @@ namespace kino
         public List<Filmy> getFilmList(DateTime data)
         {
             
-            SqlConnection conn = new SqlConnection(connectionString);
             string query = $"SELECT DISTINCT films.* FROM dbo.films JOIN dbo.seance ON Film_ID = SE_FilmID WHERE SE_DataEmisji >= '{data.ToString("MM-dd-yyyy HH:mm")}' AND SE_DataEmisji < '{data.AddDays(1).ToString("MM-dd-yyyy")}'";
             List<Filmy> a;
             try

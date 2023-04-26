@@ -22,12 +22,11 @@ namespace Projekt_kino
             {
                 btn_ustawienia_zamknij.Enabled = false;
             }
-            textBox_okno_ustawien_baza_danych.Text = baza.getbaza_danych();
-            textBox_okno_ustawien_haslo.Text = baza.gethaslo();
-            textBox_okno_ustawien_login.Text = baza.getlogin();
-            textBox_okno_ustawien_serwer.Text = baza.getSerwer();
-            checkBox_metoda_logowania.Checked = baza.getloginmethod();
-                        //TODO: dodanie weryfikacji wprowadzonych pól przy zapisie i teście połaczenia. 
+            textBox_okno_ustawien_baza_danych.Text = baza.baza_danych;
+            textBox_okno_ustawien_haslo.Text = baza.haslo;
+            textBox_okno_ustawien_login.Text = baza.login;
+            textBox_okno_ustawien_serwer.Text = baza.serwer;
+            checkBox_metoda_logowania.Checked = baza.loginmethod;
         }
 
         private void checkBox_metoda_logowania_CheckedChanged(object sender, EventArgs e)
@@ -50,9 +49,49 @@ namespace Projekt_kino
 
         private void button_okno_ustawien_zapisz_Click(object sender, EventArgs e)
         {
+            if (sprawdzenie_danych())
+            {
+                string serwer = textBox_okno_ustawien_serwer.Text;
+                string baza_danych = textBox_okno_ustawien_baza_danych.Text;
+                string haslo = textBox_okno_ustawien_haslo.Text;
+                string login = textBox_okno_ustawien_login.Text;
+                bool metodaLogowania = checkBox_metoda_logowania.Checked;
+                bool poprawnoscLogowania = baza.ConnectionString(serwer, metodaLogowania, baza_danych, login, haslo);
+                Label_info.Text = poprawnoscLogowania ? "Połączenie nawiązane poprawnie" : "Błąd połaczenia";
+                if (poprawnoscLogowania)
+                {
+                    btn_ustawienia_zamknij.Enabled = true;
+                }
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (sprawdzenie_danych())
+            {
+                string serwer = textBox_okno_ustawien_serwer.Text;
+                string baza_danych = textBox_okno_ustawien_baza_danych.Text;
+                string haslo = textBox_okno_ustawien_haslo.Text;
+                string login = textBox_okno_ustawien_login.Text;
+                bool metodaLogowania = checkBox_metoda_logowania.Checked;
+                bool poprawnoscLogowania = baza.ConnectionString(serwer, metodaLogowania, baza_danych, login, haslo);
+                Label_info.Text = poprawnoscLogowania ? "Połączenie nawiązane poprawnie" : "Błąd połaczenia";
+            }
+        }
+
+        private void btn_ustawienia_skrypty_Click(object sender, EventArgs e)
+        {
+            if(baza.PolaczenieDoBazyZRejestru()) {
+                Label_info.Text = baza.CreateTable();
+            }
+        }
+
+        private bool sprawdzenie_danych()
+        {
             bool poprawneDane = true;
             string serwer = textBox_okno_ustawien_serwer.Text;
-            if(serwer == ""){
+            if (serwer == "")
+            {
                 Label_info.Text = "Nie podano nazwy serwera";
                 poprawneDane = false;
             }
@@ -69,38 +108,7 @@ namespace Projekt_kino
                 Label_info.Text = "Nie podano nazwy użytkownika";
                 poprawneDane = false;
             }
-
-            bool metodaLogowania = checkBox_metoda_logowania.Checked;
-            if (poprawneDane)
-            {
-                bool poprawnoscLogowania = baza.ConnectionString(serwer, metodaLogowania, baza_danych, login, haslo);
-
-                Label_info.Text = poprawnoscLogowania ? "Połączenie nawiązane poprawnie" : "Błąd połaczenia";
-                if (poprawnoscLogowania)
-                {
-                    btn_ustawienia_zamknij.Enabled = true;
-                }
-            }
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            string serwer = textBox_okno_ustawien_serwer.Text;
-            string baza_danych = textBox_okno_ustawien_baza_danych.Text;
-            string haslo = textBox_okno_ustawien_haslo.Text;
-            string login = textBox_okno_ustawien_login.Text;
-            bool metodaLogowania = checkBox_metoda_logowania.Checked;
-            bool metLog = metodaLogowania;
-
-            bool poprawnoscLogowania = baza.ConnectionString(serwer, metLog, baza_danych, login, haslo);
-            Label_info.Text = poprawnoscLogowania ? "Połączenie nawiązane poprawnie" : "Błąd połaczenia";
-        }
-
-        private void btn_ustawienia_skrypty_Click(object sender, EventArgs e)
-        {
-            if(baza.PolaczenieDoBazyZRejestru()) {
-                Label_info.Text = baza.CreateTable();
-            }
+            return poprawneDane;
         }
     }
 }

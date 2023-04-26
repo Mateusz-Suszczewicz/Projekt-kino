@@ -10,7 +10,7 @@ namespace Projekt_kino
 {
     public partial class Form1 : Form
     {
-        kinoDB baza = new kinoDB();
+        kinoDB baza = new kinoDB(true);
         bool modyfikacja_hasla = false;
 
         public Form1()
@@ -71,27 +71,6 @@ namespace Projekt_kino
             }
         }
 
-
-        private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
-        {
-
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void panel_logo_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
         private void przycisk_konto_Click(object sender, EventArgs e)
         {
             showSubMenu(panel_do_przycisku_konto);
@@ -125,30 +104,10 @@ namespace Projekt_kino
 
         }
 
-        private void label1_Click_1(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void panel_menu_right_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
         private void linkLabel_rejestracja_zaloguj_sie_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             panel_rejestracja.Visible = false;
             panel_logowanie.Visible = true;
-        }
-
-        private void panel_logowanie_Paint(object sender, PaintEventArgs e)
-        {
-
         }
 
         private void linkLabel_logowanie_zarejestruj_sie_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -171,7 +130,7 @@ namespace Projekt_kino
                 if (a)
                 {
                     panel_logowanie.Visible = false;
-                    aktualny_czas.Text = $"Willkommen! {oper.GetOperLogin()}";
+                    aktualny_czas.Text = $"Willkommen! {oper.Oper_Login}";
                     textBox3.Text = "";
                 }
                 else
@@ -202,7 +161,7 @@ namespace Projekt_kino
                     Operator a = baza.GetOperators(login);
                     if (a != null)
                     {
-                        label5.Text = oper.modyfikacjaOperatora(a.GetOperId(), null, pass);
+                        label5.Text = oper.modyfikacjaOperatora(a.Oper_ID, null, pass);
                     }
                 }
             }
@@ -231,8 +190,7 @@ namespace Projekt_kino
 
         private void button2_Click(object sender, EventArgs e)
         {
-            kinoDB baza = new kinoDB();
-            baza.PolaczenieDoBazyZRejestru();
+            kinoDB baza = new kinoDB(true);
            // baza.DodanieSali(1, "Opis 1 sali");
             baza.DodanieSeansu(1, 1, DateTime.Now, DateTime.Now);
             //baza.DodanieFilmu("a", "opis filmu", DateTime.Now, 255, "polski", "USA", "dab");
