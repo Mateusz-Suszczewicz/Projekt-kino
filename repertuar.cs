@@ -21,7 +21,7 @@ namespace Projekt_kino
         {
             InitializeComponent();
             ustawienie_aktualnych_dni();
-            dodanie_filmu_do_repertuaru(dates[0]);
+            //dodanie_filmu_do_repertuaru(dates[0]);
         }
 
 
@@ -50,7 +50,7 @@ namespace Projekt_kino
             zmiana_kolorow_przyciskow_dni();
             button_repertuar_today.BackColor = Color.LightSalmon;
             flowLayoutPanel_repertuar.Controls.Clear();
-            dodanie_filmu_do_repertuaru(dates[0]);
+            //dodanie_filmu_do_repertuaru(dates[0]);
         }
 
         private void button_repertuar_tommorow_Click(object sender, EventArgs e)
@@ -58,7 +58,7 @@ namespace Projekt_kino
             zmiana_kolorow_przyciskow_dni();
             button_repertuar_tommorow.BackColor = Color.LightSalmon;
             flowLayoutPanel_repertuar.Controls.Clear();
-            dodanie_filmu_do_repertuaru(dates[1]);
+            //dodanie_filmu_do_repertuaru(dates[1]);
         }
 
         private void button_repertuar_2_days_later_Click(object sender, EventArgs e)
@@ -66,7 +66,7 @@ namespace Projekt_kino
             zmiana_kolorow_przyciskow_dni();
             button_repertuar_2_days_later.BackColor = Color.LightSalmon;
             flowLayoutPanel_repertuar.Controls.Clear();
-            dodanie_filmu_do_repertuaru(dates[2]);
+            //dodanie_filmu_do_repertuaru(dates[2]);
         }
 
         private void button_repertuar_3_days_later_Click(object sender, EventArgs e)
@@ -74,7 +74,7 @@ namespace Projekt_kino
             zmiana_kolorow_przyciskow_dni();
             button_repertuar_3_days_later.BackColor = Color.LightSalmon;
             flowLayoutPanel_repertuar.Controls.Clear();
-            dodanie_filmu_do_repertuaru(dates[3]);
+            //dodanie_filmu_do_repertuaru(dates[3]);
         }
 
         private void button_repertuar_4_days_later_Click(object sender, EventArgs e)
@@ -83,60 +83,105 @@ namespace Projekt_kino
             date = date.AddDays(4);
             zmiana_kolorow_przyciskow_dni();
             button_repertuar_4_days_later.BackColor = Color.LightSalmon;
-            flowLayoutPanel_repertuar.Controls.Clear();
+            //flowLayoutPanel_repertuar.Controls.Clear();
+
+            //dodanie_filmu_do_repertuaru("Terminator", "USA", "Dubbing", 96, "Elektroniczny morderca zostaje wysłany z przyszłości do roku 1984, by zabić matkę przyszłego lidera rewolucji. W ślad za nim rusza Kyle Reese, który ma chronić kobietę.");
             dodanie_filmu_do_repertuaru(dates[4]);
 
         }
-        private void dodanie_filmu_do_repertuaru(DateTime date)
+
+    
+    private void dodanie_filmu_do_repertuaru(DateTime date)
+    {
+        Panel panel = new Panel();
+        panel.BackColor = Color.AliceBlue;
+        panel.Size = new Size(flowLayoutPanel_repertuar.ClientSize.Width - 7, 400);
+
+        Filmy fm = new Filmy();
+        List<Filmy>? ListaFilmow = fm.getFilmOnDay(date);
+
+        if (ListaFilmow != null)
         {
-            Panel panel = new Panel();
-            panel.BackColor = Color.AliceBlue;
-            panel.Size = new Size(flowLayoutPanel_repertuar.ClientSize.Width - 7, 300);
-            
-            Filmy fm = new Filmy();
-            List<Filmy>? ListaFilmow = fm.getFilmOnDay(date);
-            
-            if (ListaFilmow != null)
+            foreach (var film in ListaFilmow)
             {
-                foreach (var film in ListaFilmow)
+                //TYTUL string Film_Title
+                panel.Controls.Add(new LinkLabel
                 {
-                    //TYTUL string Film_Title
-                    panel.Controls.Add(new LinkLabel
-                    {
-                        Text = film.Film_Title,
-                        LinkColor = Color.Black,
-                        Font = new Font("Arial", 16, FontStyle.Bold),
-                        AutoSize = true,
-                    });
+                    Text = film.Film_Title,
+                    LinkColor = Color.Black,
+                    Font = new Font("Arial", 16, FontStyle.Bold),
+                    AutoSize = true,
+                });
 
-                    // JEZYK string Film_Language
-                    panel.Controls.Add(new Label
-                    {
-                        Text = film.Film_Language,
-                        ForeColor = Color.Black,
-                        Font = new Font("Arial", 16, FontStyle.Bold),
-                        AutoSize = true,
-                        Left = flowLayoutPanel_repertuar.ClientSize.Width - 300,
+                // KRAJ PRODUKCJI string Film_Production
+                panel.Controls.Add(new Label
+                {
+                    Text = film.Film_Production,
+                    ForeColor = Color.Black,
+                    Font = new Font("Arial", 16, FontStyle.Bold),
+                    AutoSize = true,
+                    Top = 40,
+                    //Left = flowLayoutPanel_repertuar.ClientSize.Width - 300,
+                    Left = 280,
 
-                    });
+                });
 
-                    // CZAS TRWANIA int Film_Duration,
-                    panel.Controls.Add(new Label
-                    {
-                        Text = film.Film_Duration.ToString() + " " + " MIN",
-                        ForeColor = Color.Black,
-                        Font = new Font("Arial", 16, FontStyle.Bold),
-                        AutoSize = true,
-                        Left = flowLayoutPanel_repertuar.ClientSize.Width - 160,
-                    });;
+                // JEZYK string Film_Language
+                panel.Controls.Add(new Label
+                {
+                    Text = film.Film_Language,
+                    ForeColor = Color.Black,
+                    Font = new Font("Arial", 16, FontStyle.Bold),
+                    AutoSize = true,
+                    Top = 40,
+                    Left = 1100
 
-                    flowLayoutPanel_repertuar.Controls.Add(panel);
-                }
+                });
+
+                // CZAS TRWANIA int Film_Duration,
+                panel.Controls.Add(new Label
+                {
+                    Text = film.Film_Duration.ToString() + " " + " MIN",
+                    ForeColor = Color.Black,
+                    Font = new Font("Arial", 16, FontStyle.Bold),
+                    AutoSize = true,
+                    Top = 40,
+                    Left = 700
+                }); ;
+
+                // OPIS string Film_Content
+                panel.Controls.Add(new Label
+                {
+                    Text = film.Film_Content,
+                    ForeColor = Color.Black,
+                    Font = new Font("Arial", 14),
+                    //AutoSize = true,
+                    Size = new Size(flowLayoutPanel_repertuar.ClientSize.Width - 300, 200),
+                    TextAlign = ContentAlignment.TopLeft,
+                    Top = 80,
+                    Left = 280,
+                });
+
+                // PRZYCISK REZERWACJA
+                panel.Controls.Add(new Button
+                {
+                    Text = "REZERWUJ",
+                    ForeColor= Color.Black,
+                    BackColor = Color.LightSalmon,
+                    Font = new Font("Arial", 16),
+                    Location = new Point(flowLayoutPanel_repertuar.Width-200, 300),
+                    Size = new Size(180, 80),
+
+                });
+
+                flowLayoutPanel_repertuar.Controls.Add(panel);
             }
-
         }
 
-        private void zmiana_kolorow_przyciskow_dni()
+    }
+
+    
+    private void zmiana_kolorow_przyciskow_dni()
         {
             button_repertuar_today.BackColor = Color.IndianRed;
             button_repertuar_tommorow.BackColor = Color.IndianRed;
@@ -144,6 +189,11 @@ namespace Projekt_kino
             button_repertuar_3_days_later.BackColor = Color.IndianRed;
             button_repertuar_4_days_later.BackColor = Color.IndianRed;
 
+        }
+
+        private void textBox_rep_TextChanged(object sender, EventArgs e)
+        {
+            
         }
     }
 }

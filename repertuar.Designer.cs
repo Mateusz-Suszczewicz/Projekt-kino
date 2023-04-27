@@ -185,6 +185,7 @@
             textBox_rep.Name = "textBox_rep";
             textBox_rep.Size = new Size(878, 27);
             textBox_rep.TabIndex = 3;
+            textBox_rep.TextChanged += textBox_rep_TextChanged;
             // 
             // repertuar
             // 
@@ -200,7 +201,6 @@
             Name = "repertuar";
             StartPosition = FormStartPosition.CenterParent;
             Text = "repertuar";
-            
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             ResumeLayout(false);
