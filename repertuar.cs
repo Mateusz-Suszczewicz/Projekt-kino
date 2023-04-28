@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 
-
 namespace Projekt_kino
 {
     public partial class repertuar : Form
     {
+        private System.Windows.Forms.LinkLabel LinkLabel1;
 
         List<DateTime> dates = new List<DateTime>();
         public repertuar()
@@ -87,27 +87,41 @@ namespace Projekt_kino
         }
 
 
-        private void dodanie_filmu_do_repertuaru(DateTime date)
+        private void Tytul_Click(object? sender, EventArgs e)
         {
-            Panel panel = new Panel();
-            panel.BackColor = Color.AliceBlue;
-            panel.Size = new Size(flowLayoutPanel_repertuar.ClientSize.Width - 7, 400);
+            string title = sender.ToString();
+            textBox_rep.Text = title.Split(':', 2).Last();
+        }
+
+        public void tytul_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void dodanie_filmu_do_repertuaru(DateTime date)
+    {
+        Panel panel = new Panel();
+        panel.BackColor = Color.AliceBlue;
+        panel.Size = new Size(flowLayoutPanel_repertuar.ClientSize.Width - 7, 400);
 
             Filmy fm = new Filmy();
             List<Filmy>? ListaFilmow = fm.getFilmOnDay(date);
 
-            if (ListaFilmow != null)
+        if (ListaFilmow != null)
+        {
+            foreach (var film in ListaFilmow)
             {
-                foreach (var film in ListaFilmow)
-                {
-                    //TYTUL string Film_Title
-                    panel.Controls.Add(new LinkLabel
-                    {
-                        Text = film.Film_Title,
-                        LinkColor = Color.Black,
-                        Font = new Font("Arial", 16, FontStyle.Bold),
-                        AutoSize = true,
-                    });
+                //TYTUL string Film_Title
+
+                LinkLabel tytul = new LinkLabel();
+
+                tytul.Text = film.Film_Title;
+                tytul.LinkColor = Color.Black;
+                tytul.Font = new Font("Arial", 16, FontStyle.Bold);
+                tytul.AutoSize = true;
+                tytul.Click += Tytul_Click;
+
+                panel.Controls.Add(tytul);
 
                     // KRAJ PRODUKCJI string Film_Production
                     panel.Controls.Add(new Label
@@ -202,6 +216,7 @@ namespace Projekt_kino
             fs.Close();
             this.Show();
         }
+
 
         private void zmiana_kolorow_przyciskow_dni()
         {
