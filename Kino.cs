@@ -599,9 +599,9 @@ namespace kino
             return a;
         }
 
-        public List<line_up> GetLine_Ups(int idFIlm)
+        public List<line_up> GetLine_Ups(int idFIlm, int status)
         {
-            string query = $"SELECT LU_ID, LU_Name, LU_Surname, LU_Country FROM dbo.line_up JOIN dbo.lu_film ON LU_ID = LF_LUID WHERE LF_FilmID = {idFIlm}";
+            string query = $"SELECT LU_ID, LU_Name, LU_Surname, LU_Country, LF_Status FROM dbo.line_up JOIN dbo.lu_film ON LU_ID = LF_LUID WHERE LF_FilmID = {idFIlm} AND LF_Status = {status}";
             List<line_up> a;
             try
             {

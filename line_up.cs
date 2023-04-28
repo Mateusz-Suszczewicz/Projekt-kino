@@ -12,11 +12,13 @@ namespace Projekt_kino
         protected string LU_Name { get; set; }
         protected string LU_Surname { get; set; }
         protected string LU_Country { get; set; }
+        protected int LF_Status { get; set; }
 
         public string getActor()
         {
             return $"{LU_Name} {LU_Surname}";
         }
+        
 
     }
 }
