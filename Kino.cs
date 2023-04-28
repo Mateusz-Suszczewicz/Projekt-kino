@@ -13,7 +13,8 @@ namespace kino
 {
     internal class kinoDB
     {
-        private decimal wersja = 0.6m;
+        // TODO: dodać obsade filmu
+        private decimal wersja = 0.8m;
 
         private string? connectionString;
         public string? serwer { get; set; }
@@ -22,6 +23,7 @@ namespace kino
         public string? haslo { get; set; }
         public bool loginmethod { get; set; }
         SqlConnection conn;
+
         public kinoDB() {
             if(connectionString == null)
             {
@@ -52,6 +54,7 @@ namespace kino
                 this.login = login;
                 this.haslo = passowrd;
                 this.loginmethod = loginMethod == "True" ? true : false;
+                conn = new SqlConnection(connectionString);
                 return true;
             }
             return false;
@@ -121,6 +124,8 @@ namespace kino
                 "addPicture.sql",
                 "FilmListV.sql",
                 "OperCodeV.sql",
+                "V07.sql",
+                "V08.sql",
             };
             //sprawdzenie istnienia bazy konfiguracujnej
             string query = "SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'Config'";
@@ -134,8 +139,16 @@ namespace kino
                 {
                     sqlList.Remove("V04.sql");
                 }
+                if (wersjaWBazie >= 0.7m)
+                {
+                    sqlList.Remove("V07.sql");
+                }
+                if (wersjaWBazie >= 0.8m)
+                {
+                    sqlList.Remove("V08.sql");
+                }
                 //aktualizacja sktyptów bez tworzenia bazy danych 
-                if(wersjaWBazie <= wersja || wymuszenieAktualizacji == 1)
+                if (wersjaWBazie <= wersja || wymuszenieAktualizacji == 1)
                 {
                     sqlList.Remove("create.sql");
                     foreach (string s in sqlList)
@@ -521,7 +534,7 @@ namespace kino
         }
         public Filmy GetFilmy(int id)
         {
-            string query = $"SELECT TOP 1 * FROM dbo.films WHERE Oper_ID = {id}";
+            string query = $"SELECT TOP 1 * FROM dbo.films WHERE Film_ID = {id}";
             Filmy a;
             try
             {
@@ -574,5 +587,28 @@ namespace kino
             return a;
         }
 
+        public List<string> getPic(int idFIlm)
+        {
+            string query = $"SELECT Pic_Src FROM dbo.picture WHERE pic_FilmId = {idFIlm} ORDER BY Pic_Sequence";
+            List<string> a;
+            try
+            {
+                a = conn.Query<string>(query).ToList();
+            }
+            catch { a = null; }
+            return a;
+        }
+
+        public List<line_up> GetLine_Ups(int idFIlm)
+        {
+            string query = $"SELECT LU_ID, LU_Name, LU_Surname, LU_Country FROM dbo.line_up JOIN dbo.lu_film ON LU_ID = LF_LUID WHERE LF_FilmID = {idFIlm}";
+            List<line_up> a;
+            try
+            {
+                a = conn.Query<line_up>(query).ToList();
+            }
+            catch { a = null; }
+            return a;
+        }
     }
 }
