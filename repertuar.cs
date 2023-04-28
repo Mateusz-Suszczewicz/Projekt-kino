@@ -21,7 +21,7 @@ namespace Projekt_kino
         {
             InitializeComponent();
             ustawienie_aktualnych_dni();
-            //dodanie_filmu_do_repertuaru(dates[0]);
+            dodanie_filmu_do_repertuaru(dates[0]);
         }
 
 
@@ -50,7 +50,7 @@ namespace Projekt_kino
             zmiana_kolorow_przyciskow_dni();
             button_repertuar_today.BackColor = Color.LightSalmon;
             flowLayoutPanel_repertuar.Controls.Clear();
-            //dodanie_filmu_do_repertuaru(dates[0]);
+            dodanie_filmu_do_repertuaru(dates[0]);
         }
 
         private void button_repertuar_tommorow_Click(object sender, EventArgs e)
@@ -58,7 +58,7 @@ namespace Projekt_kino
             zmiana_kolorow_przyciskow_dni();
             button_repertuar_tommorow.BackColor = Color.LightSalmon;
             flowLayoutPanel_repertuar.Controls.Clear();
-            //dodanie_filmu_do_repertuaru(dates[1]);
+            dodanie_filmu_do_repertuaru(dates[1]);
         }
 
         private void button_repertuar_2_days_later_Click(object sender, EventArgs e)
@@ -66,7 +66,7 @@ namespace Projekt_kino
             zmiana_kolorow_przyciskow_dni();
             button_repertuar_2_days_later.BackColor = Color.LightSalmon;
             flowLayoutPanel_repertuar.Controls.Clear();
-            //dodanie_filmu_do_repertuaru(dates[2]);
+            dodanie_filmu_do_repertuaru(dates[2]);
         }
 
         private void button_repertuar_3_days_later_Click(object sender, EventArgs e)
@@ -74,7 +74,7 @@ namespace Projekt_kino
             zmiana_kolorow_przyciskow_dni();
             button_repertuar_3_days_later.BackColor = Color.LightSalmon;
             flowLayoutPanel_repertuar.Controls.Clear();
-            //dodanie_filmu_do_repertuaru(dates[3]);
+            dodanie_filmu_do_repertuaru(dates[3]);
         }
 
         private void button_repertuar_4_days_later_Click(object sender, EventArgs e)
@@ -83,9 +83,7 @@ namespace Projekt_kino
             date = date.AddDays(4);
             zmiana_kolorow_przyciskow_dni();
             button_repertuar_4_days_later.BackColor = Color.LightSalmon;
-            //flowLayoutPanel_repertuar.Controls.Clear();
-
-            //dodanie_filmu_do_repertuaru("Terminator", "USA", "Dubbing", 96, "Elektroniczny morderca zostaje wysłany z przyszłości do roku 1984, by zabić matkę przyszłego lidera rewolucji. W ślad za nim rusza Kyle Reese, który ma chronić kobietę.");
+            flowLayoutPanel_repertuar.Controls.Clear();
             dodanie_filmu_do_repertuaru(dates[4]);
 
         }
@@ -162,17 +160,6 @@ namespace Projekt_kino
                     Left = 280,
                 });
 
-                // PRZYCISK REZERWACJA
-                panel.Controls.Add(new Button
-                {
-                    Text = "REZERWUJ",
-                    ForeColor= Color.Black,
-                    BackColor = Color.LightSalmon,
-                    Font = new Font("Arial", 16),
-                    Location = new Point(flowLayoutPanel_repertuar.Width-200, 300),
-                    Size = new Size(180, 80),
-
-                });
 
                 flowLayoutPanel_repertuar.Controls.Add(panel);
             }
