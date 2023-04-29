@@ -84,7 +84,9 @@ namespace Projekt_kino
                 panel_rejestracja.Visible = false;
             else panel_rejestracja.Visible = true;
             label5.Visible = false;
+            przycisk_konto.Text = "Konto ••";
             button_rejestracja_zaloz_konto.Text = "Za³ó¿ konto";
+
         }
 
         private void Konto_subMenu_logowanie_Click(object sender, EventArgs e)
@@ -93,6 +95,7 @@ namespace Projekt_kino
             if (panel_logowanie.Visible)
                 panel_logowanie.Visible = false;
             else panel_logowanie.Visible = true;
+            przycisk_konto.Text = "Konto ••";
             label7.Visible = false;
 
         }
@@ -191,10 +194,12 @@ namespace Projekt_kino
         private void button2_Click(object sender, EventArgs e)
         {
             kinoDB baza = new kinoDB(true);
-           // baza.DodanieSali(1, "Opis 1 sali");
-            //baza.DodanieFilmu("a", "opis filmu", DateTime.Now, 255, "polski", "USA", "dab");
+            baza.DodanieSali(1, "Opis 1 sali");
+            baza.DodanieFilmu("a", "opis filmu", DateTime.Now, 145, "polski", "USA", "dab");
             baza.DodanieSeansu(1, 1, DateTime.Now, DateTime.Now);
 
         }
+
+
     }
 }
