@@ -192,8 +192,8 @@ namespace Projekt_kino
         {
             kinoDB baza = new kinoDB(true);
            // baza.DodanieSali(1, "Opis 1 sali");
-            baza.DodanieSeansu(1, 1, DateTime.Now, DateTime.Now);
             //baza.DodanieFilmu("a", "opis filmu", DateTime.Now, 255, "polski", "USA", "dab");
+            baza.DodanieSeansu(1, 1, DateTime.Now, DateTime.Now);
 
         }
     }

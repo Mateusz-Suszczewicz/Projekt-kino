@@ -19,6 +19,10 @@ namespace Projekt_kino
         public string Film_Translation;
         public List<string>? Film_Cateogry = null;
         public List<seanse>? seanses = null;
+        public List<string>? Pic_Src = null;
+        public List<line_up> line_up = null;
+        public List<line_up> directors = null;
+
         private kinoDB baza = new kinoDB(true);
         
         public string modyfikacjaFilmu(int IDFilm, string? tytul = null, string? kontent = null, DateTime? data = null, int katID = -1, int dlugosc = -1,string? jezyk = null,string? produkcja = null, string? tluamczenie = null)
@@ -51,6 +55,20 @@ namespace Projekt_kino
            seanses = baza.getSeanceOnFilmAndDay(data, Film_ID);
 
         }
+        protected void setPic()
+        {
+            Pic_Src = baza.getPic(Film_ID);
+        }
+
+        protected void setLine_ups()
+        {
+            line_up = baza.GetLine_Ups(Film_ID, 0);
+        }
+
+        protected void setDirector()
+        {
+            line_up = baza.GetLine_Ups(Film_ID, 1);
+        }
 
         public List<Filmy> getFilmOnDay(DateTime date)
         {
@@ -61,6 +79,9 @@ namespace Projekt_kino
                 {
                     film.setCategory();
                     film.setSeanse(date);
+                    film.setPic();
+                    film.setLine_ups();
+                    film.setDirector();
                 }
             }
             return filmy;

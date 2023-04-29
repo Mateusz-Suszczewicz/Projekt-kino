@@ -15,13 +15,12 @@ namespace Projekt_kino
     {
         private System.Windows.Forms.LinkLabel LinkLabel1;
 
-        //List<Control> days = new List<Control>;
         List<DateTime> dates = new List<DateTime>();
         public repertuar()
         {
             InitializeComponent();
             ustawienie_aktualnych_dni();
-            //dodanie_filmu_do_repertuaru(dates[0]);
+            dodanie_filmu_do_repertuaru(dates[0]);
         }
 
 
@@ -85,7 +84,6 @@ namespace Projekt_kino
             button_repertuar_4_days_later.BackColor = Color.LightSalmon;
             flowLayoutPanel_repertuar.Controls.Clear();
             dodanie_filmu_do_repertuaru(dates[4]);
-
         }
 
 
@@ -103,8 +101,8 @@ namespace Projekt_kino
         panel.BackColor = Color.AliceBlue;
         panel.Size = new Size(flowLayoutPanel_repertuar.ClientSize.Width - 7, 400);
 
-        Filmy fm = new Filmy();
-        List<Filmy>? ListaFilmow = fm.getFilmOnDay(date);
+            Filmy fm = new Filmy();
+            List<Filmy>? ListaFilmow = fm.getFilmOnDay(date);
 
         if (ListaFilmow != null)
         {
@@ -122,61 +120,99 @@ namespace Projekt_kino
 
                 panel.Controls.Add(tytul);
 
-                // KRAJ PRODUKCJI string Film_Production
-                panel.Controls.Add(new Label
-                {
-                    Text = film.Film_Production,
-                    ForeColor = Color.Black,
-                    Font = new Font("Arial", 16, FontStyle.Bold),
-                    AutoSize = true,
-                    Top = 40,
-                    //Left = flowLayoutPanel_repertuar.ClientSize.Width - 300,
-                    Left = 280,
+                    // KRAJ PRODUKCJI string Film_Production
+                    panel.Controls.Add(new Label
+                    {
+                        Text = film.Film_Production,
+                        ForeColor = Color.Black,
+                        Font = new Font("Arial", 16, FontStyle.Bold),
+                        AutoSize = true,
+                        Top = 40,
+                        //Left = flowLayoutPanel_repertuar.ClientSize.Width - 300,
+                        Left = 280,
 
-                });
+                    });
 
-                // JEZYK string Film_Language
-                panel.Controls.Add(new Label
-                {
-                    Text = film.Film_Language,
-                    ForeColor = Color.Black,
-                    Font = new Font("Arial", 16, FontStyle.Bold),
-                    AutoSize = true,
-                    Top = 40,
-                    Left = 1100
+                    // JEZYK string Film_Language
+                    panel.Controls.Add(new Label
+                    {
+                        Text = film.Film_Language,
+                        ForeColor = Color.Black,
+                        Font = new Font("Arial", 16, FontStyle.Bold),
+                        AutoSize = true,
+                        Top = 40,
+                        Left = 1100
 
-                });
+                    });
 
-                // CZAS TRWANIA int Film_Duration,
-                panel.Controls.Add(new Label
-                {
-                    Text = film.Film_Duration.ToString() + " " + " MIN",
-                    ForeColor = Color.Black,
-                    Font = new Font("Arial", 16, FontStyle.Bold),
-                    AutoSize = true,
-                    Top = 40,
-                    Left = 700
-                }); ;
+                    // CZAS TRWANIA int Film_Duration,
+                    panel.Controls.Add(new Label
+                    {
+                        Text = film.Film_Duration.ToString() + " " + " MIN",
+                        ForeColor = Color.Black,
+                        Font = new Font("Arial", 16, FontStyle.Bold),
+                        AutoSize = true,
+                        Top = 40,
+                        Left = 700
+                    }); ;
 
-                // OPIS string Film_Content
-                panel.Controls.Add(new Label
-                {
-                    Text = film.Film_Content,
-                    ForeColor = Color.Black,
-                    Font = new Font("Arial", 14),
-                    //AutoSize = true,
-                    Size = new Size(flowLayoutPanel_repertuar.ClientSize.Width - 300, 200),
-                    TextAlign = ContentAlignment.TopLeft,
-                    Top = 80,
-                    Left = 280,
-                });
+                    // OPIS string Film_Content
+                    panel.Controls.Add(new Label
+                    {
+                        Text = film.Film_Content,
+                        ForeColor = Color.Black,
+                        Font = new Font("Arial", 14),
+                        //AutoSize = true,
+                        Size = new Size(flowLayoutPanel_repertuar.ClientSize.Width - 300, 200),
+                        TextAlign = ContentAlignment.TopLeft,
+                        Top = 80,
+                        Left = 280,
+                    });
 
+                    // PRZYCISK REZERWACJA
+                    Button btn = new Button
+                    {
+                        Text = "REZERWUJ",
+                        ForeColor = Color.Black,
+                        BackColor = Color.LightSalmon,
+                        Font = new Font("Arial", 16),
+                        Location = new Point(flowLayoutPanel_repertuar.Width - 200, 300),
+                        Size = new Size(180, 80),
+                        Name = film.Film_ID.ToString()
+                    };
 
-                flowLayoutPanel_repertuar.Controls.Add(panel);
+                    btn.Click += wywołanie_okna_szczegolow;
+
+                    panel.Controls.Add(btn);
+                    // Obrazek :D -> pierwszy na liście jest obrazkiem nagłówkowym w bazie danych dodalem kolumnę z kolejnością po której sortuje
+                    panel.Controls.Add(new PictureBox
+                    {
+                        Image = Image.FromFile(film.Pic_Src[0]),
+                        Size = new Size(221, 118),
+                    });
+
+                    //dodawanie seansów
+                    //foreach(var a in film.seanses)
+                    //{
+                    //    textBox_rep.Text = a.getGodzinaEmisji();
+                    //}
+
+                    flowLayoutPanel_repertuar.Controls.Add(panel);
+                }
             }
         }
 
-    }
+        private void wywołanie_okna_szczegolow(object sender, EventArgs e)
+        {
+            Button button = (Button)sender;
+            var film_id = button.Name;
+            Film_szczegoly fs = new Film_szczegoly();
+            fs.getFIlmId(film_id);
+            this.Hide();
+            fs.ShowDialog(this);
+            fs.Close();
+            this.Show();
+        }
 
 
         private void zmiana_kolorow_przyciskow_dni()
@@ -186,29 +222,6 @@ namespace Projekt_kino
             button_repertuar_2_days_later.BackColor = Color.IndianRed;
             button_repertuar_3_days_later.BackColor = Color.IndianRed;
             button_repertuar_4_days_later.BackColor = Color.IndianRed;
-
-        }
-
-
-    
-        
-
-        private void textBox_rep_TextChanged(object sender, EventArgs e)
-        {
-            
-        }
-
-        
-
-       
-        private void Click_Film(object sender, LinkClickedEventHandler e)
-        {
-            LinkLabel label = sender as LinkLabel;
-            LinkClickedEventHandler.Equals(panel1, label);
-            string key = label.Text;
-
-            textBox_rep.Text = key;
-
         }
     }
 }
