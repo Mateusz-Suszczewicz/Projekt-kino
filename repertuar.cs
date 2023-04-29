@@ -95,10 +95,7 @@ namespace Projekt_kino
             textBox_rep.Text = title.Split(':', 2).Last();
         }
 
-        public void tytul_Click(object sender, EventArgs e)
-        {
-            
-        }
+        
 
         private void dodanie_filmu_do_repertuaru(DateTime date)
     {
