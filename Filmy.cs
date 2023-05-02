@@ -13,7 +13,7 @@ namespace Projekt_kino
         public string Film_Content;
         public DateTime Film_DataDodania;
         public int Film_Duration;
-        public int Film_ID;
+        public int Film_ID = 0;
         public string Film_Language;
         public string Film_Production;
         public string Film_Translation;
@@ -22,6 +22,26 @@ namespace Projekt_kino
         public List<string>? Pic_Src = null;
         public List<line_up> line_up = null;
         public List<line_up> directors = null;
+
+        public Filmy() { }
+
+        public Filmy(int filmID)
+        {
+            Filmy film = new Filmy(filmID);
+            film = baza.GetFilmy(filmID);
+            Film_Title = film.Film_Title;
+            Film_Content = film.Film_Content;
+            Film_DataDodania = film.Film_DataDodania;
+            Film_Duration = film.Film_Duration;
+            Film_ID = film.Film_ID;
+            Film_Language = film.Film_Language;
+            Film_Production = film.Film_Production;
+            Film_Translation = film.Film_Translation;
+            setCategory();
+            setPic();
+            setLine_ups();
+            setDirector();
+        }
 
         private kinoDB baza = new kinoDB(true);
         
@@ -55,6 +75,7 @@ namespace Projekt_kino
            seanses = baza.getSeanceOnFilmAndDay(data, Film_ID);
 
         }
+        
         protected void setPic()
         {
             Pic_Src = baza.getPic(Film_ID);

@@ -22,8 +22,7 @@ namespace Projekt_kino
         public void getFIlmId(string id)
         {
             var FilmId = int.Parse(id);
-            kinoDB baza = new kinoDB(true);
-            Film = baza.GetFilmy(FilmId);
+            Film = new Filmy(FilmId);
             label1.Text = Film.Film_Title;
         }
         // tutaj działasz juz na zmiennej Film 

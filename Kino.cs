@@ -13,8 +13,8 @@ namespace kino
 {
     internal class kinoDB
     {
-        // TODO: dodać obsade filmu
-        private decimal wersja = 0.8m;
+        // TODO: poprawić w procedurach zwracana komunikaty -> dodać convert albo ogarnąć to z poziomu c#
+        private decimal wersja = 0.9m;
 
         private string? connectionString;
         public string? serwer { get; set; }
@@ -30,6 +30,7 @@ namespace kino
                 conn = new SqlConnection(connectionString);
             }
         }
+        
         public kinoDB(bool polaczenie)
         {
             if (polaczenie)
@@ -126,6 +127,7 @@ namespace kino
                 "OperCodeV.sql",
                 "V07.sql",
                 "V08.sql",
+                "V09.sql",
             };
             //sprawdzenie istnienia bazy konfiguracujnej
             string query = "SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'Config'";
@@ -146,6 +148,10 @@ namespace kino
                 if (wersjaWBazie >= 0.8m)
                 {
                     sqlList.Remove("V08.sql");
+                }
+                if (wersjaWBazie >= 0.9m)
+                {
+                    sqlList.Remove("V09.sql");
                 }
                 //aktualizacja sktyptów bez tworzenia bazy danych 
                 if (wersjaWBazie <= wersja || wymuszenieAktualizacji == 1)
@@ -503,6 +509,7 @@ namespace kino
                 return ex.Message;
             };
         }
+        
         public Operator GetOperators(string login)
         {
             string query = $"SELECT TOP 1 * FROM dbo.operator WHERE Oper_Login = '{login}'";
@@ -517,6 +524,7 @@ namespace kino
             }
             return a;
         }
+        
         public Operator GetOperators(int id)
         {
             SqlConnection conn = new SqlConnection(connectionString);
@@ -532,6 +540,7 @@ namespace kino
             }
             return a;
         }
+        
         public Filmy GetFilmy(int id)
         {
             string query = $"SELECT TOP 1 * FROM dbo.films WHERE Film_ID = {id}";
@@ -609,6 +618,239 @@ namespace kino
             }
             catch { a = null; }
             return a;
+        }
+
+        public string dodanieFilmu2(Filmy film)
+        {
+            string query;
+            if (film.Film_ID == 0)
+            {
+                #region sprawdzenie warunków
+                //istnienie filmu w bazie
+                query = $"SELECT Film_ID FROM dbo.films WHERE Film_Title LIKE '{film.Film_Title}'";
+                int a;
+                try
+                {
+                    a = conn.QueryFirst<int>(query);
+                }
+                catch
+                {
+                    a = 0;
+                }
+                if (a != 0) { return "Film o takim tytule istenije"; }
+                //istnienie kategorii w bazie
+                if (film.Film_Cateogry != null)
+                {
+                    foreach (var categoria in film.Film_Cateogry)
+                    {
+                        if(!zapytanie($"SELECT TOP 1 Cat_ID FROM dbo.category WHERE Cat_Name like '{categoria}'")) { return $"Podana kategoria nie istanieje w bazie {categoria}"; }
+                    }
+                }
+                //istnienie aktorów w bazie
+                if(film.line_up != null)
+                {
+                    foreach(var aktor in film.line_up)
+                    {
+                        if(!zapytanie($"SELECT TOP 1 LU_ID FROM dbo.line_up WHERE Cat_Name like '{aktor}'")) { return $"Podany aktor nie istanieje w bazie {aktor}"; }
+                    }
+                }
+                #endregion
+                #region dodanie filmu
+                query = @$"INSERT INTO dbo.films (
+                            Film_Title, 
+                            Film_Content, 
+                            Film_Duration,
+                            Film_DataDodania,
+                            Film_Language, 
+                            Film_Translation,
+                            Film_Production 
+                          ) 
+                          OUTPUT INSERTED.Film_ID
+                          VALUES (
+                            '{film.Film_Title}',
+                            '{film.Film_Content}', 
+                            {film.Film_Duration}, 
+                            '{DateTime.Now}', 
+                            '{film.Film_Language}',
+                            '{film.Film_Translation}',
+                            '{film.Film_Production}'
+                          )";
+                try
+                {
+                    film.Film_ID = conn.QuerySingle<int>(query);
+                }
+                catch (Exception ex)
+                {
+                    return ex.Message;
+                }
+                #endregion
+                #region dodanie kategorii
+                if (film.Film_Cateogry != null)
+                {
+                    foreach (var categoria in film.Film_Cateogry)
+                    {
+                        query = $"SELECT TOP 1 Cat_ID FROM dbo.category WHERE Cat_Name like '{categoria}'";
+                        int catId;
+                        try
+                        {
+                           catId = conn.QueryFirst<int>(query);
+                        }
+                        catch
+                        {
+                            return $"Podana kategoria nie istanieje w bazie {categoria}";
+                        }
+                        query = $"INSERT INTO dbo.cat_film (CF_CatID, CF_FilmID) VALUES ({catId}, {film.Film_ID})";
+                        try
+                        {
+                            conn.Execute(query);
+                        }
+                        catch (Exception ex)
+                        {
+                            return ex.Message;
+                        }
+                    }
+                }
+                #endregion
+                #region dodanie aktorów
+                if (film.line_up != null)
+                {
+                    foreach (var aktor in film.line_up)
+                    {
+                        query = $"SELECT TOP 1 LU_ID FROM dbo.line_up WHERE LU_ID = {aktor.LU_ID}";
+                        int luID;
+                        try
+                        {
+                            luID = conn.QueryFirst<int>(query);
+                        }
+                        catch
+                        {
+                            return $"Podany aktor nie istanieje w bazie {aktor}";
+                        }
+                        query = $"INSERT INTO sbo.lu_film (LF_FilmID, LF_LUID, LF_Status) VALUES ({film.Film_ID}, {luID}, {aktor.LF_Status})";
+                        try
+                        {
+                            conn.Execute(query);
+                        }
+                        catch (Exception ex)
+                        {
+                            return ex.Message;
+                        }
+                    }
+                }
+                #endregion
+                #region dodanie obrazka
+                if(film.Pic_Src != null)
+                {
+                    int sequence = 0;
+                    foreach (var obrazek in film.Pic_Src)
+                    {
+                        query = $"INSERT INTO dbo.picture (Pic_FilmID, Pic_Src, Pic_Sequence) VALUES ({film.Film_ID}, '{obrazek}', {sequence})";
+                        try
+                        {
+                            conn.Execute(query);
+                        }
+                        catch (Exception ex)
+                        {
+                            return ex.Message;
+                        }
+                        sequence++;
+                    }
+                }
+                #endregion
+
+                #region dodanie seansów
+                dodanieSeansu2(film);
+                #endregion
+            }
+            else
+            {
+                // TODO: dokończyć pracę nad modyfikacją filmów przy powiązaniach 1:n n:n
+                #region sprawdzenie warunków
+                query = $"SELECT * FROM dbo.films WHERE Film_ID = {film.Film_ID} AND Film_Title = '{film.Film_Title}'";
+                Filmy tempFilm;
+                try
+                {
+                    tempFilm = conn.QueryFirst<Filmy>(query);
+                }
+                catch
+                {
+                    return "Nie ma takiego filmu w bazie";
+                }
+                #endregion
+                
+                query = $@"UPDATE dbo.films SET 
+                            Film_Title = '{film.Film_Title}', 
+                            Film_Content = '{film.Film_Content}', 
+                            Film_Duration = {film.Film_Duration},  
+                            Film_DataModyfikacji = '{DateTime.Now}',
+                            Film_Language = '{film.Film_Language}', 
+                            Film_Production = '{film.Film_Production}', 
+                            Film_Translation =  '{film.Film_Translation}'
+                            WHERE Film_ID = {film.Film_ID}";
+                try
+                {
+                    conn.Execute(query);
+                    return $"zmodyfikowano film: {film.Film_ID}";
+                }
+                catch(Exception ex)
+                {
+                    return ex.Message;
+                }
+
+
+            }
+            return "a";
+        }
+    
+        public string dodanieSeansu2(Filmy film)
+        {
+            if(film.seanses != null)
+            {
+                string query;
+                if(!zapytanie($"SELECT Film_ID FROM dbo.films WHERE Film_ID = {film.Film_ID}")) { return "Film nie istnieje w bazie"; }
+                foreach (var seans in film.seanses) 
+                {
+                    if (seans.SE_ID == 0)
+                    {
+                        if (!zapytanie($"SELECT SR_ID FROM dbo.screeningRoom WHERE SR_ID = {seans.SE_SRID}")) { return "Sala nie istnieje w bazie"; }
+                        if (zapytanie($"SELECT top 1 SE_ID FROM dbo.seance WHERE SE_SRID = {seans.SE_SRID} AND ('{seans.SE_DataKonca}' > SE_DataEmisji AND  SE_DataKonca > '{seans.SE_DataEmisji}')")) { return "w podanym czasie istnieje inny seans"; }
+                        query = $"INSERT INTO dbo.seance (SE_DataEmisji, SE_FilmID, SE_SRID, SE_DataKonca) VALUES ('{seans.SE_DataEmisji}', {film.Film_ID}, {seans.SE_SRID}, '{seans.SE_DataKonca}')";
+                        try
+                        {
+                            conn.Execute(query);
+                        }
+                        catch(Exception ex) { return ex.Message;}
+                    }
+                    else
+                    {
+                        if(!zapytanie($"SELECT SE_ID FROM dbo.seance WHERE SE_ID = {seans.SE_ID}")) { return "brak seansu w bazie"; }
+                        query = $"UPDATE dbo.seance SET SE_FilmID = {film.Film_ID}, SE_DataEmisji = '{seans.SE_DataEmisji}', SE_SRID = {seans.SE_SRID}, SE_DataKonca = '{seans.SE_DataKonca}' WHERE SE_ID = {seans.SE_ID}";
+                        try
+                        {
+                            conn.Execute(query);
+                        }
+                        catch (Exception ex) { return ex.Message; }
+                    }
+                }
+                return "dodano wszystkie wpisy";
+            }
+            else
+            {
+                return "Brak sensów do dodania";
+            }
+        }
+
+        protected bool zapytanie(string query)
+        {
+            try
+            {
+                conn.QueryFirst<int>(query);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }

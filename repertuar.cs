@@ -1,4 +1,5 @@
-﻿using System;
+﻿using kino;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -176,7 +177,7 @@ namespace Projekt_kino
                             ForeColor = Color.Black,
                             BackColor = Color.LightSalmon,
                             Font = new Font("Arial", 16),
-                            Location = new Point(flowLayoutPanel_repertuar.Width - 200, 405),
+                            //Location = new Point(flowLayoutPanel_repertuar.Width - 200, 405),
                             Size = new Size(180, 80),
                             Name = film.Film_ID.ToString()
                         };
@@ -206,14 +207,22 @@ namespace Projekt_kino
             }
             private void wywołanie_okna_szczegolow(object sender, EventArgs e)
         {
+
             Button button = (Button)sender;
-            var film_id = button.Name;
-            Film_szczegoly fs = new Film_szczegoly();
-            fs.getFIlmId(film_id);
-            this.Hide();
-            fs.ShowDialog(this);
-            fs.Close();
-            this.Show();
+            string film_id = button.Name;
+            Filmy film = new Filmy();
+            kinoDB baza = new kinoDB(true);
+            film = baza.GetFilmy(Int32.Parse(film_id));
+            film.Film_Title = "aaa";
+            film.Film_Content = "zmiana";
+            film.Film_ID = 2;
+            baza.dodanieFilmu2(film);
+            //Film_szczegoly fs = new Film_szczegoly();
+            //fs.getFIlmId(film_id);
+            //this.Hide();
+            //fs.ShowDialog(this);
+            //fs.Close();
+            //this.Show();
         }
 
 
