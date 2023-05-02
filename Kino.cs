@@ -49,7 +49,7 @@ namespace kino
                 string database = key.GetValue("database").ToString();
                 string login = key.GetValue("login").ToString();
                 string passowrd = key.GetValue("passowrd").ToString();
-                connectionString = loginMethod == "1" ? $"Data Source={server}; Database={database}; Integrated Security=SSPI;" : $"Data Source={server}; Initial Catalog = {database}; User ID={login}; Password={passowrd}";
+                connectionString = loginMethod == "True" ? $"Data Source={server}; Database={database}; Integrated Security=SSPI;" : $"Data Source={server}; Initial Catalog = {database}; User ID={login}; Password={passowrd}";
                 this.serwer = server;
                 this.baza_danych = database;
                 this.login = login;
@@ -796,6 +796,7 @@ namespace kino
                 {
                     return ex.Message;
                 }
+           
 
 
             }

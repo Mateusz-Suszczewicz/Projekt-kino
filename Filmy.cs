@@ -27,7 +27,7 @@ namespace Projekt_kino
 
         public Filmy(int filmID)
         {
-            Filmy film = new Filmy(filmID);
+            Filmy film = new Filmy();
             film = baza.GetFilmy(filmID);
             Film_Title = film.Film_Title;
             Film_Content = film.Film_Content;
