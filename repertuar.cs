@@ -182,7 +182,7 @@ namespace Projekt_kino
                         Left = flowLayoutPanel_repertuar.Width - 220,
                         Top = 305,
                         Size = new Size(180, 80),
-                        Name = film.Film_ID.ToString()
+                        Name = film.Film_ID.ToString(),
                         
                     };
 

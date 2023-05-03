@@ -107,6 +107,7 @@
             MinimumSize = new Size(1300, 900);
             Name = "Film_szczegoly";
             Text = "Film_szczegoly";
+            Load += Film_szczegoly_Load;
             ResumeLayout(false);
             PerformLayout();
         }
