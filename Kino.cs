@@ -544,9 +544,19 @@ namespace kino
             return a;
         }
         
-        public Filmy GetFilmy(int id)
+        public Filmy GetFilmy(int id, bool metoda)
         {
-            string query = $"SELECT TOP 1 * FROM dbo.films WHERE Film_ID = {id}";
+            //true -> po id filmu
+            //false -> po id seansu
+            string query;
+            if (metoda)
+            {
+                query = $"SELECT TOP 1 * FROM dbo.films WHERE Film_ID = {id}";
+            }
+            else
+            {
+                query = $"SELECT TOP 1 films.* FROM dbo.films JOIN dbo.seance ON SE_FilmID = Film_ID WHERE SE_ID = {id}";
+            }
             Filmy a;
             try
             {
@@ -561,7 +571,7 @@ namespace kino
 
         public List<seanse> getSeanceOnFilmAndDay(DateTime data, int filmID)
         {
-            string query = $"SELECT SE_ID, SE_FilmID, SE_DataEmisji, SE_DataKonca FROM dbo.FilmListV WHERE SE_DataEmisji = {data} and SE_FilmID = {filmID}";
+            string query = $"SELECT * FROM dbo.seance WHERE SE_DataEmisji >= '{data.ToString("dd-MM-yyyy HH:mm")}' AND SE_DataEmisji < '{data.AddDays(1).ToString("dd-MM-yyyy")}' AND SE_FilmID = {filmID}";
             List<seanse> a;
             try
             {
@@ -589,7 +599,7 @@ namespace kino
         public List<Filmy> getFilmList(DateTime data)
         {
             
-            string query = $"SELECT DISTINCT films.* FROM dbo.films JOIN dbo.seance ON Film_ID = SE_FilmID WHERE SE_DataEmisji >= '{data.ToString("MM-dd-yyyy HH:mm")}' AND SE_DataEmisji < '{data.AddDays(1).ToString("MM-dd-yyyy")}'";
+            string query = $"SELECT DISTINCT films.* FROM dbo.films JOIN dbo.seance ON Film_ID = SE_FilmID WHERE SE_DataEmisji >= '{data.ToString("dd-MM-yyyy HH:mm")}' AND SE_DataEmisji < '{data.AddDays(1).ToString("dd-MM-yyyy")}'";
             List<Filmy> a;
             try
             {
@@ -618,6 +628,17 @@ namespace kino
             try
             {
                 a = conn.Query<line_up>(query).ToList();
+            }
+            catch { a = null; }
+            return a;
+        }
+        public List<seanse> getOneSeanse(int seanceID)
+        {
+            string query = $"SELECT * FROM dbo.seance WHERE SE_ID = {seanceID}";
+            List<seanse> a;
+            try
+            {
+                a = conn.Query<seanse>(query).ToList();
             }
             catch { a = null; }
             return a;
@@ -854,6 +875,17 @@ namespace kino
             catch
             {
                 return false;
+            }
+        }
+        public void aktualizacjaSeansów()
+        {
+            string query = "SELECT SE_ID, SE_DataEmisji, SE_DataKonca FROM dbo.seance";
+            var a = conn.Query<(int, DateTime, DateTime)>(query).ToList();
+            foreach(var b in a)
+            {
+                var c = DateTime.Now.Day - b.Item2.Day + 1;   
+                query = $"Update dbo.seance SET SE_DataEmisji = '{b.Item2.AddDays(c)}', SE_DataKonca = '{b.Item3.AddDays(c)}' WHERE SE_ID = {b.Item1}";
+                zapytanie(query);
             }
         }
     }

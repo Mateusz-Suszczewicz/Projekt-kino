@@ -15,6 +15,7 @@ namespace Projekt_kino
     public partial class repertuar : Form
     {
         //private System.Windows.Forms.LinkLabel LinkLabel1;
+        DateTime data;
 
         List<DateTime> dates = new List<DateTime>();
         public repertuar()
@@ -98,7 +99,7 @@ namespace Projekt_kino
 
         private void dodanie_filmu_do_repertuaru(DateTime date)
         {
-            
+            data = date;
 
             Filmy fm = new Filmy();
             List<Filmy>? ListaFilmow = fm.getFilmOnDay(date);
@@ -188,7 +189,7 @@ namespace Projekt_kino
 
                     
 
-                    btn.Click += wywołanie_okna_szczegolow;
+                    btn.Click += wywołanie_okna_szczegolow ;
 
                    panel.Controls.Add(btn);
                     // Obrazek :D -> pierwszy na liście jest obrazkiem nagłówkowym w bazie danych dodalem kolumnę z kolejnością po której sortuje
@@ -211,14 +212,14 @@ namespace Projekt_kino
                 }
             }
         }
-        private void wywołanie_okna_szczegolow(object sender, EventArgs e)
+        private void wywołanie_okna_szczegolow(object sender, EventArgs eventArgs)
         {
 
             Button button = (Button)sender;
             string film_id = button.Name;
                    
             Film_szczegoly fs = new Film_szczegoly();
-            fs.getFIlmId(film_id);
+            fs.getFIlmId(film_id, data);
             this.Hide();
             fs.ShowDialog(this);
             fs.Close();

@@ -15,6 +15,7 @@ namespace Projekt_kino
         public DateTime SE_DataKonca;
         public int SE_SRID;
 
-        public string getGodzinaEmisji() { return SE_DataEmisji.ToString("hh:mm"); }
+        public string getGodzinaEmisji() { return SE_DataEmisji.ToString("HH:mm"); }
+        public string getDataEmisji() { return SE_DataEmisji.ToString("dd.MM.yyyy"); }
     }
 }

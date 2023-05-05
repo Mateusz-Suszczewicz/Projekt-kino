@@ -18,21 +18,21 @@ namespace Projekt_kino
             InitializeComponent();
         }
 
-        public void get_details(string id , string godzina_seansu)
+        public void get_details(string id)
         {
-            var FilmId = int.Parse(id);
-            Film = new Filmy(FilmId);
-            string godzina = godzina_seansu;
-            sala_kinowa_Load(godzina);
+            var seanceID = int.Parse(id);
+            Film = new Filmy(seanceID, false);
+            Film.setSeanse(DateTime.Now, seanceID);
+            sala_kinowa_Load();
         }
         
 
-        private void sala_kinowa_Load(string godzina_seansu)
+        private void sala_kinowa_Load()
         {
             label1.Text = "id: " + Film.Film_ID.ToString() +
                           " tytul: " + Film.Film_Title +
                           " data: " + " tutaj data " +
-                          " godzina: " + godzina_seansu;
+                          " godzina: " + Film.seanses[0].getGodzinaEmisji();
             label1.Font = new Font("Arial", 16, FontStyle.Bold);
         }
     }

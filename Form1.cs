@@ -194,6 +194,7 @@ namespace Projekt_kino
         private void button2_Click(object sender, EventArgs e)
         {
             kinoDB baza = new kinoDB(true);
+            baza.aktualizacjaSeansów();
             //baza.DodanieSali(1, "Opis 1 sali");
             //baza.DodanieFilmu("tytul", "opis filmu", DateTime.Now, 145, "polski", "USA", "dab");
             //baza.DodanieSeansu(1, 1, DateTime.Now.AddDays(1), DateTime.Now.AddDays(1));

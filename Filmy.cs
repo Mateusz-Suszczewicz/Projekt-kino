@@ -25,10 +25,10 @@ namespace Projekt_kino
 
         public Filmy() { }
 
-        public Filmy(int filmID)
+        public Filmy(int filmID, bool metoda = true)
         {
             Filmy film = new Filmy();
-            film = baza.GetFilmy(filmID);
+            film = baza.GetFilmy(filmID, metoda);
             Film_Title = film.Film_Title;
             Film_Content = film.Film_Content;
             Film_DataDodania = film.Film_DataDodania;
@@ -47,7 +47,7 @@ namespace Projekt_kino
         
         public string modyfikacjaFilmu(int IDFilm, string? tytul = null, string? kontent = null, DateTime? data = null, int katID = -1, int dlugosc = -1,string? jezyk = null,string? produkcja = null, string? tluamczenie = null)
         {
-            var a = baza.GetFilmy(IDFilm);
+            var a = baza.GetFilmy(IDFilm, true);
             if(a != null)
             {
                 string? filmtitle = tytul == null ? a.Film_Title : tytul;
@@ -70,9 +70,15 @@ namespace Projekt_kino
             Film_Cateogry = baza.getCategory(Film_ID);
         }
 
-        protected void setSeanse(DateTime data)
+        public void setSeanse(DateTime data, int id = 0)
         {
-           seanses = baza.getSeanceOnFilmAndDay(data, Film_ID);
+            if (id == 0)
+            {
+                seanses = baza.getSeanceOnFilmAndDay(data, Film_ID);
+            }
+            else {
+                seanses = baza.getOneSeanse(id);
+            }
 
         }
         

@@ -20,10 +20,12 @@ namespace Projekt_kino
             InitializeComponent();
         }
 
-        public void getFIlmId(string id)
+        public void getFIlmId(string Film_id, DateTime data)
         {
-            var FilmId = int.Parse(id);
+            var FilmId = int.Parse(Film_id);
+
             Film = new Filmy(FilmId);
+            Film.setSeanse(data);
             dodanie_szczegolow();
         }
 
@@ -80,19 +82,20 @@ namespace Projekt_kino
             //}
             #region Przycisky godzin
 
-            List<string> godziny = new List<string> { "9:20", "10:40", "12:15", "15:20", "17:40", "20:15" };
+            //List<string> godziny = new List<string> { "9:20", "10:40", "12:15", "15:20", "17:40", "20:15" };
+            
             int w = 300;
             int h = 500;
-            foreach (var seans in godziny)
+            foreach (var seans in Film.seanses)
             {
                 Button btn = new Button();
-                btn.Text = seans.ToString();
+                btn.Text = seans.getGodzinaEmisji();
                 btn.ForeColor = Color.Black;
                 btn.BackColor = Color.Transparent;
                 btn.Font = new Font("Arial", 14, FontStyle.Bold);
                 btn.Location = new Point(w, h);
                 btn.Size = new Size(180, 80);
-                btn.Name = Film.Film_ID.ToString();
+                btn.Name = seans.SE_ID.ToString();
                 Controls.Add(btn);
                 if (w < 900)
                     w += 200;
@@ -114,7 +117,7 @@ namespace Projekt_kino
             string id = button.Name;
 
             sala_kinowa sk = new sala_kinowa();
-            sk.get_details(id , godzina_seansu);
+            sk.get_details(id);
             this.Hide();
             sk.ShowDialog(this);
             sk.Close();
