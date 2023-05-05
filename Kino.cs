@@ -56,9 +56,12 @@ namespace kino
                 this.haslo = passowrd;
                 this.loginmethod = loginMethod == "True" ? true : false;
                 conn = new SqlConnection(connectionString);
+                key.Close();
                 return true;
             }
+            key.Close();
             return false;
+
         }
 
         /// <summary>
