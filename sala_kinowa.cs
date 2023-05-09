@@ -25,7 +25,7 @@ namespace Projekt_kino
             Film.setSeanse(DateTime.Now, seanceID);
             sala_kinowa_Load();
         }
-        
+
 
         private void sala_kinowa_Load()
         {

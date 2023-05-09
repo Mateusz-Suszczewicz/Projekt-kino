@@ -44,11 +44,12 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(1282, 853);
             Controls.Add(label1);
+            MaximumSize = new Size(1920, 1080);
+            MinimumSize = new Size(1300, 900);
             Name = "sala_kinowa";
             Text = "sala_kinowa";
-            //Load += sala_kinowa_Load;
             ResumeLayout(false);
             PerformLayout();
         }
