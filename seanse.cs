@@ -16,6 +16,7 @@ namespace Projekt_kino
         public int SE_SRID;
         public sala sal;
 
+
         public void ustawienieSali()
         {
             if(SE_ID > 0 && SE_SRID > 0) {
@@ -30,6 +31,6 @@ namespace Projekt_kino
 
 
 
-
+    
 
 }

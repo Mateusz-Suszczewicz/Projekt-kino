@@ -23,6 +23,7 @@ namespace Projekt_kino
             var seanceID = int.Parse(id);
             Film = new Filmy(seanceID, false);
             Film.setSeanse(DateTime.Now, seanceID);
+            
             sala_kinowa_Load();
         }
 
