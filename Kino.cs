@@ -908,7 +908,13 @@ namespace kino
                 foreach(var mie in a)
                 {
                     query = $"SELECT TOP 1 Book_ID FROM dbo.booking WHERE Book_SeatID = {mie.Seat_ID} AND Book_SeID = {SE_ID}";
-                    int stat = conn.QueryFirst<int> (query);
+                    int stat;
+                    try
+                    {
+                        stat = conn.QueryFirst<int> (query);
+
+                    }
+                    catch { stat = 0; }
                     if (stat > 0)
                     {
                         mie.status = true;
