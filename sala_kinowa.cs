@@ -31,7 +31,7 @@ namespace Projekt_kino
         {
             label1.Text = "id: " + Film.Film_ID.ToString() +
                           " tytul: " + Film.Film_Title +
-                          " data: " + " tutaj data " +
+                          " data: " + Film.seanses[0].getDataEmisji() +
                           " godzina: " + Film.seanses[0].getGodzinaEmisji();
             label1.Font = new Font("Arial", 16, FontStyle.Bold);
         }
