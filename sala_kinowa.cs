@@ -29,11 +29,21 @@ namespace Projekt_kino
 
         private void sala_kinowa_Load()
         {
-            label1.Text = "id: " + Film.Film_ID.ToString() +
-                          " tytul: " + Film.Film_Title +
-                          " data: " + Film.seanses[0].getDataEmisji() +
-                          " godzina: " + Film.seanses[0].getGodzinaEmisji();
-            label1.Font = new Font("Arial", 16, FontStyle.Bold);
+            label1.Text = "id: " + Film.Film_ID.ToString() + "    |    "
+                          + Film.Film_Title + "    |    "
+                          + Film.seanses[0].getDataEmisji() + "    |    "
+                          + Film.seanses[0].getGodzinaEmisji();
+            label1.Font = new Font("Arial", 20, FontStyle.Bold);
+            
+            label1.TextAlign = ContentAlignment.MiddleCenter;
+            label1.Dock = DockStyle.Top;
+            label1.AutoSize = false;
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
