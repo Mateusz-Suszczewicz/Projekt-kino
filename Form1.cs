@@ -135,6 +135,7 @@ namespace Projekt_kino
                     panel_logowanie.Visible = false;
                     aktualny_czas.Text = $"Willkommen! {oper.Oper_Login}";
                     textBox3.Text = "";
+                    Program.zalogowanyOperator = oper;
                 }
                 else
                 {

@@ -882,6 +882,7 @@ namespace kino
                 return false;
             }
         }
+       
         public void aktualizacjaSeansów()
         {
             string query = "SELECT SE_ID, SE_DataEmisji, SE_DataKonca FROM dbo.seance";
@@ -945,11 +946,5 @@ namespace kino
             return a;
         }
 
-        //public bool sprawdzenieMiejsca(int seatID, int SE_ID) 
-        //{
-        //    string query = $"SELECT TOP 1 * FROM dbo.booking";
-        //    // TODO: dokończyć metodę zwracącą czy miejsce jest dostępne czy nie.
-        //}
     }
-    // TODO: powiązanie w bazie danych miedzie lU a LU_film i  films !!
 }
