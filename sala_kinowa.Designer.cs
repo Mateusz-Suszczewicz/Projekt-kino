@@ -39,7 +39,7 @@
             label1.Size = new Size(216, 15);
             label1.TabIndex = 0;
             label1.Text = "id + tytul + data emisji + godzina emisji";
-            label1.Click += label1_Click;
+            //label1.Click += label1_Click;
             // 
             // sala_kinowa
             // 
