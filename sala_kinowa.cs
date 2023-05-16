@@ -30,10 +30,10 @@ namespace Projekt_kino
 
         private void sala_kinowa_Load()
         {
-            label1.Text = "id: " + Film.seanses[0].SE_SRID + 
-                          " id miejsca: " + Film.seanses[0].sal.listaMiejsc[3].Seat_ID +
-                          " data: " + Film.seanses[0].getDataEmisji() +
-                          " godzina: " + Film.seanses[0].getGodzinaEmisji();
+            label1.Text = "id: " + Film.seanses[0].SE_SRID +
+                          " id miejsca: " + Film.seanses[0].sal.listaMiejsc[0].Seat_ID;// +
+                          //" data: " + Film.seanses[0].getDataEmisji();// +
+                          //" godzina: " + Film.seanses[0].getGodzinaEmisji();
             label1.Font = new Font("Arial", 16, FontStyle.Bold);
         }
 

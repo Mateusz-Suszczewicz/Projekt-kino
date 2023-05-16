@@ -5,6 +5,7 @@ namespace Projekt_kino
         /// <summary>
         ///  The main entry point for the application.
         /// </summary>
+
         [STAThread]
         static void Main()
         {
@@ -12,6 +13,8 @@ namespace Projekt_kino
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
             Application.Run(new Form1());
+
         }
+        public static Operator zalogowanyOperator;
     }
 }

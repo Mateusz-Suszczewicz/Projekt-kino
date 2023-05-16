@@ -576,7 +576,7 @@ namespace kino
 
         public List<seanse> getSeanceOnFilmAndDay(DateTime data, int filmID)
         {
-            string query = $"SELECT * FROM dbo.seance WHERE SE_DataEmisji >= '{data.ToString("dd-MM-yyyy HH:mm")}' AND SE_DataEmisji < '{data.AddDays(1).ToString("dd-MM-yyyy")}' AND SE_FilmID = {filmID}";
+            string query = $"SELECT * FROM dbo.seance WHERE SE_DataEmisji >= '{data.ToString("yyyy-MM-dd HH:mm")}' AND SE_DataEmisji < '{data.AddDays(1).ToString("yyyy-MM-dd")}' AND SE_FilmID = {filmID}";
             List<seanse> a;
             try
             {
@@ -604,7 +604,7 @@ namespace kino
         public List<Filmy> getFilmList(DateTime data)
         {
             
-            string query = $"SELECT DISTINCT films.* FROM dbo.films JOIN dbo.seance ON Film_ID = SE_FilmID WHERE SE_DataEmisji >= '{data.ToString("dd-MM-yyyy HH:mm")}' AND SE_DataEmisji < '{data.AddDays(1).ToString("dd-MM-yyyy")}'";
+            string query = $"SELECT DISTINCT films.* FROM dbo.films JOIN dbo.seance ON Film_ID = SE_FilmID WHERE SE_DataEmisji >= '{data.ToString("yyyy-MM-dd HH:mm")}' AND SE_DataEmisji < '{data.AddDays(1).ToString("yyyy-MM-dd")}'";
             List<Filmy> a;
             try
             {
@@ -882,14 +882,17 @@ namespace kino
                 return false;
             }
         }
+       
         public void aktualizacjaSeansów()
         {
             string query = "SELECT SE_ID, SE_DataEmisji, SE_DataKonca FROM dbo.seance";
             var a = conn.Query<(int, DateTime, DateTime)>(query).ToList();
             foreach(var b in a)
             {
-                var c = DateTime.Now.Day - b.Item2.Day + 1;   
-                query = $"Update dbo.seance SET SE_DataEmisji = '{b.Item2.AddDays(c)}', SE_DataKonca = '{b.Item3.AddDays(c)}' WHERE SE_ID = {b.Item1}";
+                var c = DateTime.Now.Day - b.Item2.Day + 1;
+                DateTime DE = b.Item2.AddDays(c);
+                DateTime DK = b.Item3.AddDays(c);
+                query = $"Update dbo.seance SET SE_DataEmisji = '{DE.ToString("yyyy-MM-dd HH:mm")}', SE_DataKonca = '{DK.ToString("yyyy-MM-dd HH:mm")}' WHERE SE_ID = {b.Item1}";
                 zapytanie(query);
             }
         }
@@ -942,6 +945,6 @@ namespace kino
             }
             return a;
         }
+
     }
-    // TODO: powiązanie w bazie danych miedzie lU a LU_film i  films !!
 }
