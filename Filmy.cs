@@ -78,6 +78,7 @@ namespace Projekt_kino
             }
             else {
                 seanses = baza.getOneSeanse(id);
+                seanses[0].ustawienieSali();
             }
 
         }

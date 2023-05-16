@@ -34,21 +34,22 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(30, 22);
+            label1.Location = new Point(26, 16);
             label1.Name = "label1";
-            label1.Size = new Size(275, 20);
+            label1.Size = new Size(216, 15);
             label1.TabIndex = 0;
             label1.Text = "id + tytul + data emisji + godzina emisji";
             label1.Click += label1_Click;
             // 
             // sala_kinowa
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1282, 853);
+            ClientSize = new Size(1124, 646);
             Controls.Add(label1);
-            MaximumSize = new Size(1920, 1080);
-            MinimumSize = new Size(1300, 900);
+            Margin = new Padding(3, 2, 3, 2);
+            MaximumSize = new Size(1682, 820);
+            MinimumSize = new Size(1140, 685);
             Name = "sala_kinowa";
             Text = "sala_kinowa";
             ResumeLayout(false);

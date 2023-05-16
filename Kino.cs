@@ -14,7 +14,7 @@ namespace kino
     internal class kinoDB
     {
         // TODO: poprawić w procedurach zwracana komunikaty -> dodać convert albo ogarnąć to z poziomu c#
-        private decimal wersja = 0.9m;
+        private decimal wersja = 1.0m;
 
         private string? connectionString;
         public string? serwer { get; set; }
@@ -131,6 +131,7 @@ namespace kino
                 "V07.sql",
                 "V08.sql",
                 "V09.sql",
+                "V10.sql",
             };
             //sprawdzenie istnienia bazy konfiguracujnej
             string query = "SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'Config'";
@@ -155,6 +156,10 @@ namespace kino
                 if (wersjaWBazie >= 0.9m)
                 {
                     sqlList.Remove("V09.sql");
+                }
+                if (wersjaWBazie >= 1.0m)
+                {
+                    sqlList.Remove("V10.sql");
                 }
                 //aktualizacja sktyptów bez tworzenia bazy danych 
                 if (wersjaWBazie <= wersja || wymuszenieAktualizacji == 1)
@@ -888,5 +893,55 @@ namespace kino
                 zapytanie(query);
             }
         }
+        
+        public List<miejsce> pobranieMiejsc(int SalaId, int SE_ID = 0)
+        {
+            string query = $"SELECT Seat_ID, Seat_Nr, Seat_Row FROM dbo.seats WHERE Seat_SRID = {SalaId}";
+            List<miejsce> a;
+            try
+            {
+                a = conn.Query<miejsce>(query).ToList();
+            }
+            catch { a = null; }
+            if(a != null && SE_ID != 0)
+            {
+                foreach(var mie in a)
+                {
+                    query = $"SELECT TOP 1 Book_ID FROM dbo.booking WHERE Book_SeatID = {mie.Seat_ID} AND Book_SeID = {SE_ID}";
+                    int stat;
+                    try
+                    {
+                        stat = conn.QueryFirst<int> (query);
+
+                    }
+                    catch { stat = 0; }
+                    if (stat > 0)
+                    {
+                        mie.status = true;
+                    }
+                    else
+                    {
+                        mie.status = false;
+                    }
+                }
+            }
+            return a;
+        }
+
+        public sala pobranieSali(int srId)
+        {
+            string query = $"SELECT TOP 1 * FROM dbo.screeningRoom WHERE SR_ID = {srId}";
+            sala a;
+            try
+            {
+                a = conn.QueryFirst<sala>(query);
+            }
+            catch
+            {
+                a = null;
+            }
+            return a;
+        }
     }
+    // TODO: powiązanie w bazie danych miedzie lU a LU_film i  films !!
 }
