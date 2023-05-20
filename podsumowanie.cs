@@ -94,10 +94,11 @@ namespace Projekt_kino
             tab.ReadOnly = true;
             
             if (listaMiejsc.Count() > 10)
-                tab.Size = new Size(680, 200);
+                tab.Size = new Size(690, 200);
             else
-                tab.Size = new Size(680, listaMiejsc.Count() * 20);
+                tab.Size = new Size(690, listaMiejsc.Count() * 50);
 
+            tab.AllowUserToResizeRows = false;
             tab.Location = new Point(300, 280);
             this.Controls.Add(tab);
 
