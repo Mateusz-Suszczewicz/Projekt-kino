@@ -27,7 +27,6 @@ namespace Projekt_kino
             var seanceID = int.Parse(id);
             Film = new Filmy(seanceID, false);
             Film.setSeanse(DateTime.Now, seanceID);
-
             sala_kinowa_Load();
             sala_kinowa_dodanie_miejsc(Film.seanses[0].sal);
             button_final.Enabled = false;
@@ -159,6 +158,7 @@ namespace Projekt_kino
         {
             podsumowanie pods = new podsumowanie();
             this.Hide();
+            pods.zaladowanie_danych(miejscaDoKupienia, Film);
             pods.ShowDialog();
             this.Show();
         }

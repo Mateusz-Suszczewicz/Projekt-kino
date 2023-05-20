@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Projekt_kino
 {
-    internal class seanse
+    public class seanse
     {
         public int SE_ID { get; set; }
         public int SE_FilmID { get; set; }

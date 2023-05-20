@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Projekt_kino
 {
-    internal class sala
+    public class sala
     {
         public int SR_ID;
         public int SR_maxNrMiejsca;

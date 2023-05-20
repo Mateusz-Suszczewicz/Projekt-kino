@@ -15,6 +15,6 @@ namespace Projekt_kino
             Application.Run(new Form1());
 
         }
-        public static Operator zalogowanyOperator;
+        public static Operator zalogowanyOperator = null;
     }
 }
