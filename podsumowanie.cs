@@ -93,7 +93,11 @@ namespace Projekt_kino
             tab.BackgroundColor = Color.White;
             tab.ReadOnly = true;
             
-            tab.Size = new Size(680, 200);
+            if (listaMiejsc.Count() > 10)
+                tab.Size = new Size(680, 200);
+            else
+                tab.Size = new Size(680, listaMiejsc.Count() * 20);
+
             tab.Location = new Point(300, 280);
             this.Controls.Add(tab);
 
