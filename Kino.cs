@@ -959,6 +959,14 @@ namespace kino
             }
             return a;
         }
-
+        public void ustawienieCen()
+        {
+            string query = "SELECT Conf_Wartosc FROM dbo.config WHERE Conf_ID = 2";
+            var a = conn.QueryFirst<string> (query);
+            Program.cenaNormalna = decimal.Parse(a);
+            query = "SELECT Conf_Wartosc FROM dbo.config WHERE Conf_ID = 3";
+            a = conn.QueryFirst<string>(query);
+            Program.cenaUlgowa = decimal.Parse(a);
+        }
     }
 }

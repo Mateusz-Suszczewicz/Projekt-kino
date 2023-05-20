@@ -16,5 +16,7 @@ namespace Projekt_kino
 
         }
         public static Operator zalogowanyOperator = null;
+        public static decimal cenaNormalna = 0;
+        public static decimal cenaUlgowa = 0;
     }
 }

@@ -88,11 +88,11 @@ namespace Projekt_kino
             tab.Columns.Add(type);
 
             //tab.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
-            tab.AllowUserToResizeColumns = false;    
+            tab.AllowUserToResizeColumns = false;
             tab.RowHeadersVisible = false;
             tab.BackgroundColor = Color.White;
             tab.ReadOnly = true;
-            
+
             if (listaMiejsc.Count() > 10)
                 tab.Size = new Size(680, 200);
             else
@@ -100,8 +100,6 @@ namespace Projekt_kino
 
             tab.Location = new Point(300, 280);
             this.Controls.Add(tab);
-
-            
 
 
 

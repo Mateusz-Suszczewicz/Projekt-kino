@@ -21,11 +21,14 @@ namespace Projekt_kino
             {
                 Okno_ustawien okno_Ustawien = new Okno_ustawien();
                 DialogResult dr = okno_Ustawien.ShowDialog(this);
+
             }
             if (!log)
             {
                 customizeDesign();
+                baza.ustawienieCen();
             }
+
         }
 
         public void logowanie()

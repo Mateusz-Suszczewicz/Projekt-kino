@@ -38,60 +38,61 @@
             // label_pods_tytul
             // 
             label_pods_tytul.AutoSize = true;
-            label_pods_tytul.Location = new Point(305, 19);
+            label_pods_tytul.Location = new Point(267, 14);
             label_pods_tytul.Name = "label_pods_tytul";
-            label_pods_tytul.Size = new Size(50, 20);
+            label_pods_tytul.Size = new Size(38, 15);
             label_pods_tytul.TabIndex = 0;
             label_pods_tytul.Text = "label1";
             // 
             // label_pods_dzien
             // 
             label_pods_dzien.AutoSize = true;
-            label_pods_dzien.Location = new Point(305, 84);
+            label_pods_dzien.Location = new Point(267, 63);
             label_pods_dzien.Name = "label_pods_dzien";
-            label_pods_dzien.Size = new Size(50, 20);
+            label_pods_dzien.Size = new Size(38, 15);
             label_pods_dzien.TabIndex = 1;
             label_pods_dzien.Text = "label1";
             // 
             // label_pods_godzina
             // 
             label_pods_godzina.AutoSize = true;
-            label_pods_godzina.Location = new Point(305, 151);
+            label_pods_godzina.Location = new Point(267, 113);
             label_pods_godzina.Name = "label_pods_godzina";
-            label_pods_godzina.Size = new Size(50, 20);
+            label_pods_godzina.Size = new Size(38, 15);
             label_pods_godzina.TabIndex = 2;
             label_pods_godzina.Text = "label1";
             // 
             // label_pods_sala
             // 
             label_pods_sala.AutoSize = true;
-            label_pods_sala.Location = new Point(305, 210);
+            label_pods_sala.Location = new Point(267, 158);
             label_pods_sala.Name = "label_pods_sala";
-            label_pods_sala.Size = new Size(50, 20);
+            label_pods_sala.Size = new Size(38, 15);
             label_pods_sala.TabIndex = 3;
             label_pods_sala.Text = "label1";
             // 
             // label_pods_miejsca
             // 
             label_pods_miejsca.AutoSize = true;
-            label_pods_miejsca.Location = new Point(305, 270);
+            label_pods_miejsca.Location = new Point(267, 202);
             label_pods_miejsca.Name = "label_pods_miejsca";
-            label_pods_miejsca.Size = new Size(50, 20);
+            label_pods_miejsca.Size = new Size(38, 15);
             label_pods_miejsca.TabIndex = 4;
             label_pods_miejsca.Text = "label1";
             // 
             // podsumowanie
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1086, 729);
+            ClientSize = new Size(952, 553);
             Controls.Add(label_pods_miejsca);
             Controls.Add(label_pods_sala);
             Controls.Add(label_pods_godzina);
             Controls.Add(label_pods_dzien);
             Controls.Add(label_pods_tytul);
-            MaximumSize = new Size(1104, 776);
-            MinimumSize = new Size(1104, 776);
+            Margin = new Padding(3, 2, 3, 2);
+            MaximumSize = new Size(968, 592);
+            MinimumSize = new Size(968, 592);
             Name = "podsumowanie";
             Text = "podsumowanie";
             ResumeLayout(false);
