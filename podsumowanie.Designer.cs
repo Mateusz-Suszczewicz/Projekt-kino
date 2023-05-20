@@ -33,6 +33,8 @@
             label_pods_godzina = new Label();
             label_pods_sala = new Label();
             label_pods_miejsca = new Label();
+            button_zatwierdz = new Button();
+            label_koszyk = new Label();
             SuspendLayout();
             // 
             // label_pods_tytul
@@ -80,11 +82,32 @@
             label_pods_miejsca.TabIndex = 4;
             label_pods_miejsca.Text = "label1";
             // 
+            // button_zatwierdz
+            // 
+            button_zatwierdz.Location = new Point(925, 638);
+            button_zatwierdz.Name = "button_zatwierdz";
+            button_zatwierdz.Size = new Size(149, 79);
+            button_zatwierdz.TabIndex = 5;
+            button_zatwierdz.Text = "Zatwierdź";
+            button_zatwierdz.UseVisualStyleBackColor = true;
+            button_zatwierdz.Click += button_zatwierdz_Click;
+            // 
+            // label_koszyk
+            // 
+            label_koszyk.AutoSize = true;
+            label_koszyk.Location = new Point(836, 9);
+            label_koszyk.Name = "label_koszyk";
+            label_koszyk.Size = new Size(50, 20);
+            label_koszyk.TabIndex = 6;
+            label_koszyk.Text = "label1";
+            // 
             // podsumowanie
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(952, 553);
+            ClientSize = new Size(1086, 729);
+            Controls.Add(label_koszyk);
+            Controls.Add(button_zatwierdz);
             Controls.Add(label_pods_miejsca);
             Controls.Add(label_pods_sala);
             Controls.Add(label_pods_godzina);
@@ -106,5 +129,7 @@
         private Label label_pods_godzina;
         private Label label_pods_sala;
         private Label label_pods_miejsca;
+        private Button button_zatwierdz;
+        private Label label_koszyk;
     }
 }

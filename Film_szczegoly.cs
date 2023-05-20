@@ -65,7 +65,7 @@ namespace Projekt_kino
 
             #endregion
 
-            #region Film_Language
+            #region Film_Production
 
             label5.Text = "    Produkcja: " + Film.Film_Production;
             label5.Font = new Font("Arial", 14);
@@ -73,7 +73,15 @@ namespace Projekt_kino
             #endregion
 
             #region Film_Category
-
+            label6.Text = "     Kategoria: ";
+            label6.Font = new Font("Arial", 14);
+            foreach (string kat in Film.Film_Cateogry)
+            {
+                 label6.Text += kat + ", ";
+            }
+            label6.Text = label6.Text.Remove(label6.Text.Length - 2);
+            
+            
             #endregion
 
             //foreach (var seans in Film.seanses)
@@ -83,7 +91,7 @@ namespace Projekt_kino
             #region Przycisky godzin
 
             //List<string> godziny = new List<string> { "9:20", "10:40", "12:15", "15:20", "17:40", "20:15" };
-            
+
             int w = 300;
             int h = 500;
             foreach (var seans in Film.seanses)
