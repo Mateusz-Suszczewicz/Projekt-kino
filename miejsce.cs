@@ -12,5 +12,6 @@ namespace Projekt_kino
         public int Seat_Nr;
         public int Seat_Row;
         public bool status;
+        // status -> true -> zajęte
     }
 }

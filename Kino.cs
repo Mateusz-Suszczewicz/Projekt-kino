@@ -22,7 +22,7 @@ namespace kino
         public string? login { get; set; }
         public string? haslo { get; set; }
         public bool loginmethod { get; set; }
-        SqlConnection conn;
+        public SqlConnection conn;
 
         public kinoDB() {
             if(connectionString == null)
