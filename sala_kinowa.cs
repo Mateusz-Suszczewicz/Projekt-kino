@@ -157,19 +157,15 @@ namespace Projekt_kino
         private void button_final_Click(object sender, EventArgs e)
         {
             this.Hide();
-            if (Program.zalogowanyOperator != null)
-            {
-                podsumowanie pods = new podsumowanie();
-                pods.zaladowanie_danych(miejscaDoKupienia, Film);
-                pods.ShowDialog();
-            }
-            else
+            if (Program.zalogowanyOperator == null)
             {
                 Form1 form = new Form1();
-                
+                form.logowanie();
                 form.ShowDialog();
-
             }
+            podsumowanie pods = new podsumowanie();
+            pods.zaladowanie_danych(miejscaDoKupienia, Film);
+            pods.ShowDialog();
             this.Show();
         }
     }

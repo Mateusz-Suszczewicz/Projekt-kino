@@ -18,7 +18,7 @@ namespace Projekt_kino
         public miejsce() { }
         public miejsce (int id)
         {
-            kinoDB baza = new kinoDB();
+            kinoDB baza = new kinoDB(true);
             miejsce a = baza.pobranieMiejsca(id);
             Seat_ID = a.Seat_ID;
             Seat_Nr = a.Seat_Nr;

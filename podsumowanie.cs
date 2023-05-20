@@ -13,11 +13,10 @@ namespace Projekt_kino
     public partial class podsumowanie : Form
     {
         Filmy Film;
-        List<miejsce> listaMiejsc;
+        List<miejsce> listaMiejsc = new List<miejsce>();
         public podsumowanie()
         {
             InitializeComponent();
-            buttons_loads();
         }
 
         public void zaladowanie_danych(List<int> listaMijesc, Filmy film)
@@ -28,6 +27,7 @@ namespace Projekt_kino
                 miejsce miejsce = new miejsce(i);
                 listaMiejsc.Add(miejsce);
             }
+            buttons_loads();
         }
 
 
