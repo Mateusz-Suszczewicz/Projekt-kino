@@ -12,6 +12,7 @@ namespace Projekt_kino
     {
         kinoDB baza = new kinoDB(true);
         bool modyfikacja_hasla = false;
+        bool log = false;
 
         public Form1()
         {
@@ -21,7 +22,16 @@ namespace Projekt_kino
                 Okno_ustawien okno_Ustawien = new Okno_ustawien();
                 DialogResult dr = okno_Ustawien.ShowDialog(this);
             }
-            customizeDesign();
+            if (!log)
+            {
+                customizeDesign();
+            }
+        }
+
+        public void logowanie()
+        {
+            log = true;
+            panel_logowanie.Visible = true;
         }
 
         private void HidePanels(ControlCollection controls)
@@ -124,6 +134,7 @@ namespace Projekt_kino
 
         private void button1_Click(object sender, EventArgs e)
         {
+            
             string login = textBox2.Text;
             string password = textBox3.Text;
             Operator oper = new Operator();
@@ -145,6 +156,10 @@ namespace Projekt_kino
             else
             {
                 label7.Text = "login nie mo¿e byæ pusty";
+            }
+            if (log)
+            {
+                this.Close();
             }
             label7.Visible = true;
         }

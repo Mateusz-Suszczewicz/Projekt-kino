@@ -897,6 +897,20 @@ namespace kino
             }
         }
         
+        public miejsce pobranieMiejsca(int idMiejsca)
+        {
+            string query = $"SELECT TOP 1 * FROM dbo.seats WHERE Seat_ID = {idMiejsca}";
+            miejsce a;
+            try
+            {
+                a = conn.QueryFirst<miejsce>(query);
+            }
+            catch
+            {
+                a = null;
+            }
+            return a;
+        }
         public List<miejsce> pobranieMiejsc(int SalaId, int SE_ID = 0)
         {
             string query = $"SELECT Seat_ID, Seat_Nr, Seat_Row FROM dbo.seats WHERE Seat_SRID = {SalaId}";

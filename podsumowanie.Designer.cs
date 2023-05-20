@@ -94,7 +94,6 @@
             MinimumSize = new Size(1104, 776);
             Name = "podsumowanie";
             Text = "podsumowanie";
-            Load += podsumowanie_Load;
             ResumeLayout(false);
             PerformLayout();
         }

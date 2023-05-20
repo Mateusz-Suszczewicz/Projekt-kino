@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Projekt_kino
 {
-    internal class line_up
+    public class line_up
     {
         public int LU_ID { get; set; }
         protected string LU_Name { get; set; }
