@@ -17,9 +17,9 @@ namespace Projekt_kino
         public string Film_Language;
         public string Film_Production;
         public string Film_Translation;
-        public List<string>? Film_Cateogry = null;
+        public List<(int,string)>? Film_Cateogry = null;
         public List<seanse>? seanses = null;
-        public List<string>? Pic_Src = null;
+        public List<(int, string)>? Pic_Src = null;
         public List<line_up> line_up = null;
         public List<line_up> directors = null;
 
@@ -83,7 +83,7 @@ namespace Projekt_kino
 
         }
         
-        protected void setPic()
+        public void setPic()
         {
             Pic_Src = baza.getPic(Film_ID);
         }

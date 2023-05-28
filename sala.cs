@@ -19,6 +19,7 @@ namespace Projekt_kino
         private kinoDB baza = new kinoDB(true);
         
         public sala() {}
+        
         public sala(int srID, int seid)
         {
             SR_ID = srID;
@@ -30,5 +31,6 @@ namespace Projekt_kino
             this.SR_Content = a.SR_Content;
             this.SR_Name = a.SR_Name;
         }
+
     }
 }

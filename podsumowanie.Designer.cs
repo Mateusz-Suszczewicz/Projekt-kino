@@ -1,4 +1,6 @@
-﻿namespace Projekt_kino
+﻿using System.Windows.Forms;
+
+namespace Projekt_kino
 {
     partial class podsumowanie
     {
@@ -97,15 +99,16 @@
             label_koszyk.AutoSize = true;
             label_koszyk.Location = new Point(836, 9);
             label_koszyk.Name = "label_koszyk";
-            label_koszyk.Size = new Size(50, 20);
+            label_koszyk.Size = new Size(38, 15);
             label_koszyk.TabIndex = 6;
             label_koszyk.Text = "label1";
+
             // 
             // podsumowanie
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1086, 729);
+            ClientSize = new Size(952, 553);
             Controls.Add(label_koszyk);
             Controls.Add(button_zatwierdz);
             Controls.Add(label_pods_miejsca);
