@@ -402,37 +402,6 @@ namespace kino
         }
 
         /// <summary>
-        /// method <c>DodanieSeansu</c> Umożliwia dodanie seansu do wyświetlenia
-        /// </summary>
-        /// <param name="FilmID">ID filmu</param>
-        /// <param name="SRID"> ID sali</param>
-        /// <param name="DataEmisji">data rozpoczęcia seansu</param>
-        /// <param name="DataKonca">data zakończenia seansu</param>
-        /// <param name="SEID">ID seansu</param>
-        /// <returns>Zwracany tekst z błędem lub komunikatem o poprawnym dodaniu</returns>
-        public string DodanieSeansu(int FilmID, int SRID, DateTime DataEmisji, DateTime DataKonca, int SEID = 0)
-        {
-            var procedure = "addSeance";
-            var values = new
-            {
-                filmID = FilmID,
-                srID = SRID,
-                dataEmisji = DataEmisji,
-                datakonca = DataKonca,
-                id = SEID
-            };
-            try
-            {
-                var results = conn.ExecuteScalar<string>(procedure, values, commandType: CommandType.StoredProcedure);
-                return results;
-            }
-            catch (Exception ex)
-            {
-                return ex.Message;
-            }
-        }
-
-        /// <summary>
         /// method <c>DodanieBiletu</c> Umożliwia dodanie biletu lub jego edycję
         /// </summary>
         /// <param name="OperId">ID operatora</param>
@@ -884,6 +853,7 @@ namespace kino
                 return false;
             }
         }
+        
         protected int zapytanieINT(string query)
         {
             try
@@ -1245,6 +1215,24 @@ namespace kino
             }
             catch { a = null; }
             return a;
+        }
+    
+        public int getIdSali(int nr)
+        {
+            string query = $"SELECT SR_ID FROM dbo.screeningRoom WHERE SR_Nr = {nr}";
+            return zapytanieINT(query);
+        }
+    
+        public bool dodajSeans(seanse seans)
+        {
+            return false; 
+            //TODO: zrobić
+        }
+
+        public bool usunSeans(int seansId)
+        {
+            return false;
+            //TODO: zrobić
         }
     }
 }

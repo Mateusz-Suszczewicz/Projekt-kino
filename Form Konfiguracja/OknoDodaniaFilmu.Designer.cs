@@ -54,6 +54,10 @@
             dgv_seanse = new DataGridView();
             btn_usunSeans = new Button();
             btn_dodajSeans = new Button();
+            tp_aktorzy = new TabPage();
+            dgv_aktorzy = new DataGridView();
+            btn_usunAktora = new Button();
+            btn_dodajAktora = new Button();
             tabControl1.SuspendLayout();
             tabPage_kategorie.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgv_kategoria).BeginInit();
@@ -61,6 +65,8 @@
             ((System.ComponentModel.ISupportInitialize)dgv_zdjecia).BeginInit();
             tabPage_seanse.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgv_seanse).BeginInit();
+            tp_aktorzy.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgv_aktorzy).BeginInit();
             SuspendLayout();
             // 
             // tyul
@@ -184,6 +190,7 @@
             tabControl1.Controls.Add(tabPage_kategorie);
             tabControl1.Controls.Add(tabPage_zdjecia);
             tabControl1.Controls.Add(tabPage_seanse);
+            tabControl1.Controls.Add(tp_aktorzy);
             tabControl1.Location = new Point(6, 140);
             tabControl1.Name = "tabControl1";
             tabControl1.SelectedIndex = 0;
@@ -297,6 +304,7 @@
             btn_usunSeans.TabIndex = 4;
             btn_usunSeans.Text = "Usuń";
             btn_usunSeans.UseVisualStyleBackColor = true;
+            btn_usunSeans.Click += btn_usunSeans_Click;
             // 
             // btn_dodajSeans
             // 
@@ -306,6 +314,47 @@
             btn_dodajSeans.TabIndex = 3;
             btn_dodajSeans.Text = "Dodaj";
             btn_dodajSeans.UseVisualStyleBackColor = true;
+            btn_dodajSeans.Click += btn_dodajSeans_Click;
+            // 
+            // tp_aktorzy
+            // 
+            tp_aktorzy.Controls.Add(dgv_aktorzy);
+            tp_aktorzy.Controls.Add(btn_usunAktora);
+            tp_aktorzy.Controls.Add(btn_dodajAktora);
+            tp_aktorzy.Location = new Point(4, 24);
+            tp_aktorzy.Name = "tp_aktorzy";
+            tp_aktorzy.Padding = new Padding(3);
+            tp_aktorzy.Size = new Size(774, 251);
+            tp_aktorzy.TabIndex = 3;
+            tp_aktorzy.Text = "Aktorzy";
+            tp_aktorzy.UseVisualStyleBackColor = true;
+            // 
+            // dgv_aktorzy
+            // 
+            dgv_aktorzy.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgv_aktorzy.Location = new Point(5, 4);
+            dgv_aktorzy.Name = "dgv_aktorzy";
+            dgv_aktorzy.RowTemplate.Height = 25;
+            dgv_aktorzy.Size = new Size(684, 242);
+            dgv_aktorzy.TabIndex = 8;
+            // 
+            // btn_usunAktora
+            // 
+            btn_usunAktora.Location = new Point(695, 36);
+            btn_usunAktora.Name = "btn_usunAktora";
+            btn_usunAktora.Size = new Size(75, 23);
+            btn_usunAktora.TabIndex = 7;
+            btn_usunAktora.Text = "Usuń";
+            btn_usunAktora.UseVisualStyleBackColor = true;
+            // 
+            // btn_dodajAktora
+            // 
+            btn_dodajAktora.Location = new Point(695, 7);
+            btn_dodajAktora.Name = "btn_dodajAktora";
+            btn_dodajAktora.Size = new Size(75, 23);
+            btn_dodajAktora.TabIndex = 6;
+            btn_dodajAktora.Text = "Dodaj";
+            btn_dodajAktora.UseVisualStyleBackColor = true;
             // 
             // OknoDodaniaFilmu
             // 
@@ -336,6 +385,8 @@
             ((System.ComponentModel.ISupportInitialize)dgv_zdjecia).EndInit();
             tabPage_seanse.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dgv_seanse).EndInit();
+            tp_aktorzy.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)dgv_aktorzy).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -369,5 +420,9 @@
         private DataGridView dgv_seanse;
         private Button btn_usunSeans;
         private Button btn_dodajSeans;
+        private TabPage tp_aktorzy;
+        private DataGridView dgv_aktorzy;
+        private Button btn_usunAktora;
+        private Button btn_dodajAktora;
     }
 }

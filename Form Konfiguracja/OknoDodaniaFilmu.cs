@@ -74,7 +74,7 @@ namespace Projekt_kino.Form_Konfiguracja
             dgv_kategoria.Columns.Add(Nazwa);
             #endregion
 
-            foreach ((int, string) tempKat in film.Film_Cateogry)
+            foreach ((int, string) tempKat in Program.baza.getCategory(film.Film_ID))
             {
                 DataGridViewRow ROW = (DataGridViewRow)dgv_kategoria.Rows[0].Clone();
                 ROW.Cells[0].Value = tempKat.Item1;
@@ -116,13 +116,14 @@ namespace Projekt_kino.Form_Konfiguracja
             dgv_zdjecia.Columns.Add(Nazwa);
             #endregion
 
-            foreach ((int, string) tempKat in film.Pic_Src)
+            foreach ((int, string) tempKat in Program.baza.getPic(film.Film_ID))
             {
                 DataGridViewRow ROW = (DataGridViewRow)dgv_zdjecia.Rows[0].Clone();
                 ROW.Cells[0].Value = tempKat.Item1;
                 ROW.Cells[1].Value = tempKat.Item2;
                 dgv_zdjecia.Rows.Add(ROW);
             }
+            film.Pic_Src = Program.baza.getPic(film.Film_ID);
 
         }
 
@@ -198,19 +199,85 @@ namespace Projekt_kino.Form_Konfiguracja
                 dgv_seanse.Rows.Add(ROW);
                 tempLP++;
             }
+            film.seanses = Program.baza.pobranieListySeansowDoFIlmu(film.Film_ID);
         }
 
         private void edytujSeans(object sender, EventArgs e)
         {
             OknoDodaniaSeansu ods = new OknoDodaniaSeansu();
-            ods.ustawID(film.Film_ID, int.Parse(dgv_seanse.CurrentRow.Cells[0].Value.ToString()));
+            ods.ustawID(film, int.Parse(dgv_seanse.CurrentRow.Cells[0].Value.ToString()));
             ods.ShowDialog();
             film.seanses = null;
             film.seanses = Program.baza.pobranieListySeansowDoFIlmu(film.Film_ID);
             senaseLoad();
         }
+
+        private void btn_dodajSeans_Click(object sender, EventArgs e)
+        {
+            OknoDodaniaSeansu ods = new OknoDodaniaSeansu();
+            ods.ustawID(film, 0);
+            ods.ShowDialog();
+            film.seanses = null;
+            film.seanses = Program.baza.pobranieListySeansowDoFIlmu(film.Film_ID);
+            senaseLoad();
+        }
+
+        private void btn_usunSeans_Click(object sender, EventArgs e)
+        {
+            if (dgv_zdjecia.CurrentCell == null) { return; }
+            int seansId;
+            seansId = int.Parse(dgv_zdjecia.CurrentRow.Cells[0].Value.ToString());
+            Program.baza.usunSeans(seansId);
+            senaseLoad();
+        }
         #endregion
 
+        #region aktorzy
+        private void aktorzyLoad()
+        {
+            dgv_aktorzy.Columns.Clear();
+            dgv_aktorzy.Rows.Clear();
+
+
+            #region Kolumny
+            DataGridViewTextBoxColumn ID = new DataGridViewTextBoxColumn();
+            ID.Name = "ID";
+            ID.HeaderText = "ID";
+            ID.ReadOnly = true;
+            ID.Visible = false;
+            dgv_aktorzy.Columns.Add(ID);
+
+            DataGridViewTextBoxColumn Imie = new DataGridViewTextBoxColumn();
+            Imie.Name = "SRC";
+            Imie.HeaderText = "Imie";
+            Imie.ReadOnly = true;
+            dgv_aktorzy.Columns.Add(Imie);
+
+            DataGridViewTextBoxColumn Nazwisko = new DataGridViewTextBoxColumn();
+            Nazwisko.Name = "SRC";
+            Nazwisko.HeaderText = "Nazwisko";
+            Nazwisko.ReadOnly = true;
+            dgv_aktorzy.Columns.Add(Nazwisko);
+
+            DataGridViewTextBoxColumn Rezyser = new DataGridViewTextBoxColumn();
+            Rezyser.Name = "SRC";
+            Rezyser.HeaderText = "Reżyser";
+            Rezyser.ReadOnly = true;
+            dgv_aktorzy.Columns.Add(Rezyser);
+            #endregion
+
+            foreach ((int, string) tempKat in )
+            {
+                DataGridViewRow ROW = (DataGridViewRow)dgv_zdjecia.Rows[0].Clone();
+                ROW.Cells[0].Value = tempKat.Item1;
+                ROW.Cells[1].Value = tempKat.Item2;
+                dgv_zdjecia.Rows.Add(ROW);
+            }
+
+        }
+        //TODO: w trakcie
+        
+        #endregion
 
 
 
@@ -218,5 +285,6 @@ namespace Projekt_kino.Form_Konfiguracja
         {
             this.Close();
         }
+
     }
 }

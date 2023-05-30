@@ -32,15 +32,15 @@
             listBox1 = new ListBox();
             label2 = new Label();
             label3 = new Label();
-            dtp_dataRoz = new DateTimePicker();
             label4 = new Label();
-            dtp_godzZak = new DateTimePicker();
-            dtp_dataZak = new DateTimePicker();
-            dtp_godzRozp = new DateTimePicker();
             label5 = new Label();
             label6 = new Label();
             button1 = new Button();
             button2 = new Button();
+            tb_dataRoz = new TextBox();
+            tb_godzRoz = new TextBox();
+            tb_godzZak = new TextBox();
+            tb_dataZak = new TextBox();
             SuspendLayout();
             // 
             // sala
@@ -58,7 +58,7 @@
             listBox1.ItemHeight = 15;
             listBox1.Location = new Point(116, 42);
             listBox1.Name = "listBox1";
-            listBox1.Size = new Size(120, 19);
+            listBox1.Size = new Size(120, 34);
             listBox1.TabIndex = 1;
             // 
             // label2
@@ -79,13 +79,6 @@
             label3.TabIndex = 3;
             label3.Text = "Data rozpoczęcia";
             // 
-            // dtp_dataRoz
-            // 
-            dtp_dataRoz.Location = new Point(116, 91);
-            dtp_dataRoz.Name = "dtp_dataRoz";
-            dtp_dataRoz.Size = new Size(200, 23);
-            dtp_dataRoz.TabIndex = 4;
-            // 
             // label4
             // 
             label4.AutoSize = true;
@@ -94,31 +87,6 @@
             label4.Size = new Size(98, 15);
             label4.TabIndex = 5;
             label4.Text = "Data zakończenia";
-            // 
-            // dtp_godzZak
-            // 
-            dtp_godzZak.Enabled = false;
-            dtp_godzZak.Format = DateTimePickerFormat.Time;
-            dtp_godzZak.Location = new Point(445, 132);
-            dtp_godzZak.Name = "dtp_godzZak";
-            dtp_godzZak.Size = new Size(84, 23);
-            dtp_godzZak.TabIndex = 6;
-            // 
-            // dtp_dataZak
-            // 
-            dtp_dataZak.Enabled = false;
-            dtp_dataZak.Location = new Point(116, 132);
-            dtp_dataZak.Name = "dtp_dataZak";
-            dtp_dataZak.Size = new Size(200, 23);
-            dtp_dataZak.TabIndex = 7;
-            // 
-            // dtp_godzRozp
-            // 
-            dtp_godzRozp.Format = DateTimePickerFormat.Time;
-            dtp_godzRozp.Location = new Point(443, 91);
-            dtp_godzRozp.Name = "dtp_godzRozp";
-            dtp_godzRozp.Size = new Size(84, 23);
-            dtp_godzRozp.TabIndex = 8;
             // 
             // label5
             // 
@@ -146,6 +114,7 @@
             button1.TabIndex = 11;
             button1.Text = "Zamknij";
             button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
             // 
             // button2
             // 
@@ -155,21 +124,52 @@
             button2.TabIndex = 12;
             button2.Text = "Zapisz";
             button2.UseVisualStyleBackColor = true;
+            button2.Click += button2_Click;
+            // 
+            // tb_dataRoz
+            // 
+            tb_dataRoz.Location = new Point(136, 94);
+            tb_dataRoz.Name = "tb_dataRoz";
+            tb_dataRoz.Size = new Size(100, 23);
+            tb_dataRoz.TabIndex = 13;
+            // 
+            // tb_godzRoz
+            // 
+            tb_godzRoz.Location = new Point(464, 94);
+            tb_godzRoz.Name = "tb_godzRoz";
+            tb_godzRoz.Size = new Size(100, 23);
+            tb_godzRoz.TabIndex = 14;
+            // 
+            // tb_godzZak
+            // 
+            tb_godzZak.Enabled = false;
+            tb_godzZak.Location = new Point(464, 138);
+            tb_godzZak.Name = "tb_godzZak";
+            tb_godzZak.Size = new Size(100, 23);
+            tb_godzZak.TabIndex = 15;
+            // 
+            // tb_dataZak
+            // 
+            tb_dataZak.Enabled = false;
+            tb_dataZak.Location = new Point(136, 138);
+            tb_dataZak.Name = "tb_dataZak";
+            tb_dataZak.Size = new Size(100, 23);
+            tb_dataZak.TabIndex = 16;
             // 
             // OknoDodaniaSeansu
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(tb_dataZak);
+            Controls.Add(tb_godzZak);
+            Controls.Add(tb_godzRoz);
+            Controls.Add(tb_dataRoz);
             Controls.Add(button2);
             Controls.Add(button1);
             Controls.Add(label6);
             Controls.Add(label5);
-            Controls.Add(dtp_godzRozp);
-            Controls.Add(dtp_dataZak);
-            Controls.Add(dtp_godzZak);
             Controls.Add(label4);
-            Controls.Add(dtp_dataRoz);
             Controls.Add(label3);
             Controls.Add(label2);
             Controls.Add(listBox1);
@@ -195,5 +195,9 @@
         private Label label6;
         private Button button1;
         private Button button2;
+        private TextBox tb_dataRoz;
+        private TextBox tb_godzRoz;
+        private TextBox tb_godzZak;
+        private TextBox tb_dataZak;
     }
 }
