@@ -9,9 +9,9 @@ namespace Projekt_kino
     public class line_up
     {
         public int LU_ID { get; set; }
-        protected string LU_Name { get; set; }
-        protected string LU_Surname { get; set; }
-        protected string LU_Country { get; set; }
+        public string LU_Name { get; set; }
+        public string LU_Surname { get; set; }
+        public string LU_Country { get; set; }
         public int LF_Status { get; set; }
 
         public string getActor()

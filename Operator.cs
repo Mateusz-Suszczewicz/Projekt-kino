@@ -78,7 +78,7 @@ namespace Projekt_kino
             }
         }
         
-        public string modyfikacjaOperatora(Operator op)
+        public bool modyfikacjaOperatora(Operator op)
         {
             int opTyp = 1;
             string? opLogin = op.Oper_Login;
@@ -87,12 +87,12 @@ namespace Projekt_kino
                 opTyp = op.Oper_Type;
             }
             string? opPassword = encryptionPass(op.Oper_Password);
-            return baza.DodanieOperatora(opLogin, opTyp, Oper_ID, opPassword);
+            return baza.dodajOperatora(op);
         }
         
         public static string usun(int id)
         {
-            if (id > 1)
+            if (id > 1 && id != Program.zalogowanyOperator.Oper_ID)
             {
                 baza.usunOperatora(id);
                 return "poprawnie usunięto";

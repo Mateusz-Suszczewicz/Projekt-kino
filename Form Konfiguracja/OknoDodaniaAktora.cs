@@ -1,5 +1,4 @@
-﻿using kino;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -11,26 +10,21 @@ using System.Windows.Forms;
 
 namespace Projekt_kino.Form_Konfiguracja
 {
-    public partial class OknoDodanieKategorii : Form
+    public partial class OknoDodaniaAktora : Form
     {
-        kinoDB baza = new kinoDB(true);
-        int id;
-
-        public OknoDodanieKategorii()
+        public OknoDodaniaAktora()
         {
             InitializeComponent();
         }
-
-        public void ustawienieID(int id)
+        public void ustawID(int id)
         {
-            if (id > 0)
-            {
-                var a = baza.pobranieKategori(id);
-                textBox1.Text = a.Item2;
-            }
-            this.id = id;
+
         }
 
+        private void AktorzyLoad()
+        {
+
+        }
         private void button1_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -38,8 +32,7 @@ namespace Projekt_kino.Form_Konfiguracja
 
         private void button2_Click(object sender, EventArgs e)
         {
-            baza.dodanieKategorii(textBox1.Text, id);
+
         }
-    
     }
 }

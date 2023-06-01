@@ -184,6 +184,7 @@
             btn_zapiszFilm.TabIndex = 13;
             btn_zapiszFilm.Text = "Zapisz film";
             btn_zapiszFilm.UseVisualStyleBackColor = true;
+            btn_zapiszFilm.Click += btn_zapiszFilm_Click;
             // 
             // tabControl1
             // 
@@ -304,7 +305,6 @@
             btn_usunSeans.TabIndex = 4;
             btn_usunSeans.Text = "Usuń";
             btn_usunSeans.UseVisualStyleBackColor = true;
-            btn_usunSeans.Click += btn_usunSeans_Click;
             // 
             // btn_dodajSeans
             // 
@@ -346,6 +346,7 @@
             btn_usunAktora.TabIndex = 7;
             btn_usunAktora.Text = "Usuń";
             btn_usunAktora.UseVisualStyleBackColor = true;
+            btn_usunAktora.Click += btn_usunAktora_Click;
             // 
             // btn_dodajAktora
             // 
@@ -355,6 +356,7 @@
             btn_dodajAktora.TabIndex = 6;
             btn_dodajAktora.Text = "Dodaj";
             btn_dodajAktora.UseVisualStyleBackColor = true;
+            btn_dodajAktora.Click += btn_dodajAktora_Click;
             // 
             // OknoDodaniaFilmu
             // 

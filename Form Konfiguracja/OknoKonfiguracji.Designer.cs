@@ -110,7 +110,7 @@
             dgvSale.RowTemplate.Height = 25;
             dgvSale.Size = new Size(756, 366);
             dgvSale.TabIndex = 1;
-            dgvSale.CellClick += addSala;
+            dgvSale.CellDoubleClick += addSala;
             // 
             // tabfilmy
             // 

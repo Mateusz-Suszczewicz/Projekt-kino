@@ -127,7 +127,7 @@ namespace Projekt_kino.Form_Konfiguracja
 
             if (int.Parse(a) != 1)
             {
-                Operator.usun(int.Parse(dgvOper.SelectedRows[0].Cells[0].Value.ToString()));
+                Operator.usun(int.Parse(a));
             }
             operLoad();
         }
@@ -251,7 +251,7 @@ namespace Projekt_kino.Form_Konfiguracja
 
             if (int.Parse(a) != 0)
             {
-                baza.usunSale(int.Parse(dgvSale.SelectedRows[0].Cells[0].Value.ToString()));
+                baza.usunSale(int.Parse(a));
             }
             Saleload();
         }
@@ -334,7 +334,7 @@ namespace Projekt_kino.Form_Konfiguracja
 
             if (int.Parse(a) != 0)
             {
-                baza.usunKategorie(int.Parse(dgvKategorie.SelectedRows[0].Cells[0].Value.ToString()));
+                baza.usunKategorie(int.Parse(a));
             }
             KatLoad();
         }

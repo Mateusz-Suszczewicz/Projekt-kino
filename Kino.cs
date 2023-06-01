@@ -977,6 +977,29 @@ namespace kino
             catch { }
         }
 
+        public bool dodajOperatora(Operator op)
+        {
+            string query = $"SELECT Oper_ID FROM dbo.operator WHERE Oper_Login = '{op.Oper_Login}'";
+            if(zapytanieINT(query) > -1) { return false; }
+            if(op.Oper_ID > 0)
+            {
+                query = $"SELECT Oper_ID FROM dbo.operator WHERE Oper_ID = {op.Oper_ID}";
+                if(zapytanieINT(query) == -1) { return false; }
+                query = $"UPDATE dbo.operator SET Oper_Login = '{op.Oper_Login}', Oper_Password = '{op.Oper_Password}', Oper_Type = {op.Oper_Type} WHERE Oper_ID = {op.Oper_ID}";
+                
+            }
+            else
+            {
+                query = $"INSERT INTO dbo.operator (Oper_Login, Oper_Password, Oper_Type) VALUES ('{op.Oper_Login}', '{op.Oper_Password}', {op.Oper_Type})";
+            }
+            try
+            {
+                conn.Execute(query);
+                return true;
+            }
+            catch { return false; }
+        }
+
         public List<(int, string)> pobranieListyFilmow()
         {
             string query = "SELECT Film_ID, Film_Title FROM dbo.films";
@@ -1053,6 +1076,46 @@ namespace kino
             return a;
         }
 
+        public bool dodanieKategorii(string kat, int id)
+        {
+            string query = $"SELECT Cat_ID FROM dbo.category WHERE Cat_Name = '{kat}'";
+            if(zapytanieINT(query) > 0) { return false; }
+            if(id > 0)
+            {
+                query = $"SELECT Cat_ID FROM dbo.category WHERE Cat_ID = {id}";
+                if(zapytanieINT(query) == 0) { return false; }
+                query = $"UPDATE dbo.category SET Cat_Name = '{kat}' WHERE Cat_ID = {id}";
+                
+            }
+            else
+            {
+                query = $"INSERT INTO dbo.category (Cat_Name) VALUES ('{kat}')";
+            }
+            try
+            {
+                conn.Execute(query);
+                return true;
+            }
+            catch { return false; }
+        }
+        
+        public bool aktualizacjaKategorii(List<int> listaKategori, int filmID)
+        {
+            string query = $"DELETE dbo.cat_film WHERE CF_FilmID = {filmID}";
+            try
+            {
+                conn.Execute(query);
+            }
+            catch { return false; }
+
+            foreach(int i in listaKategori)
+            {
+                query = $"INSERT INTO dbo.cat_film (CF_CatID, CF_FilmID) VALUES ({i}, {filmID})";
+                zapytanie(query);
+            }
+            return true;
+        }
+        
         public bool usunSale(int SalId)
         {
             // sprawdzenie czy sala nie jest wykorzystana do seansu
@@ -1094,7 +1157,7 @@ namespace kino
     
         public bool modyfikacjaSali(sala sal, bool zmianaMiejsc)
         {
-            // czy numer salinie jest już wykorzytsywany
+            // czy numer sali jest już wykorzytsywany
             string query = $"SEELCT TOP 1 SR_ID FROM dbo.screeningRoom WHERE SR_Nr = {sal.SR_Nr}";
             int a;
             try
@@ -1126,32 +1189,52 @@ namespace kino
                         foreach (miejsce tempmiejsce in sal.listaMiejsc)
                         {
                             query = $"INSERT INTO dbo.seats (Seat_SRID, Seat_Nr, Seat_Row) VALUES ({sal.SR_ID}, {tempmiejsce.Seat_Nr}, {tempmiejsce.Seat_Row})";
-                            if(!zapytanie(query)) { return false; }
+                            try
+                            {
+                                conn.Execute(query);
+                            }
+                            catch { return false; }
                         }
                     }
                     // aktualizacja sali
-                    query = $"UPDATE dbo.screeningRoom SET SR_Content = {sal.SR_Content}, SR_Nr = {sal.SR_Nr}, SR_Status = 0 WHERE SR_ID = {sal.SR_ID}";
+                    query = $"UPDATE dbo.screeningRoom SET SR_Content = '{sal.SR_Content}', SR_Nr = {sal.SR_Nr}, SR_Status = 0, SR_MaxRowMiejsca = {sal.SR_maxRowMiejsca}, SR_MaxNrMiejsca = {sal.SR_maxNrMiejsca} WHERE SR_ID = {sal.SR_ID}";
                     if (zapytanie(query)) { return true; }
-                }// zrobic dodanie sali (mamy udpate a nie insert)
-            }
-            catch { return false; }
-            return false;
-        }
-    
-        public bool aktualizacjaKategorii(List<int> listaKategori, int filmID)
-        {
-            string query = $"DELETE dbo.cat_film WHERE CF_FilmID = {filmID}";
-            try
-            {
-                conn.Execute(query);
-            }
-            catch { return false; }
+                }
+                else
+                {
+                    // czy numer sali nie jest juz wykorzystywany
+                    query = $"SELECT SR_ID FROM dbo.screeningRoom WHERE SR_Nr = {sal.SR_Nr}";
+                    if (zapytanieINT(query) > -1) { return false; }
+                    // dodanie sali
+                    query = $"INSERT INTO dbo.screeningRoom (SR_Nr, SR_Content, SR_Status, SR_MaxRowMiejsca, SR_MaxNrMiejsca) OUTPUT Inserted.SR_ID VALUES ({sal.SR_Nr}, '{sal.SR_Content}', 0, {sal.SR_maxRowMiejsca}, {sal.SR_maxNrMiejsca})";
+                    try
+                    {
+                        sal.SR_ID = conn.QuerySingle<int>(query);
+                    }
+                    catch {  return false; }
+                    if(sal.SR_ID == 0) { return false; }
+                    // czy sala mmiała już jakiejś miejsca
+                    query = $"SELECT TOP 1 Seat_ID FROM dbo.seats WHERE Seat_SRID = {sal.SR_ID}";
+                    if (zapytanieINT(query) > -1)
+                    {
+                        // usuniecie miejsc przypisanych do sali
+                        query = $"DELETE dbo.seats WHERE Seat_SRID = {sal.SR_ID}";
+                        if (!zapytanie(query)) { return false; }
+                    }
+                    //dodanie miejsc do sali
+                    foreach (miejsce tempmiejsce in sal.listaMiejsc)
+                    {
+                        query = $"INSERT INTO dbo.seats (Seat_SRID, Seat_Nr, Seat_Row) VALUES ({sal.SR_ID}, {tempmiejsce.Seat_Nr}, {tempmiejsce.Seat_Row})";
+                        try
+                        {
+                            conn.Execute(query);
+                        }
+                        catch { return false; }
+                    }
 
-            foreach(int i in listaKategori)
-            {
-                query = $"INSERT INTO dbo.cat_film (CF_CatID, CF_FilmID) VALUES ({i}, {filmID})";
-                zapytanie(query);
+                }
             }
+            catch { return false; }
             return true;
         }
 
@@ -1233,6 +1316,27 @@ namespace kino
         {
             return false;
             //TODO: zrobić
+        }
+        
+        public List<line_up> pobranieListyAktorow(int filmId)
+        {
+            string query = $"SELECT LU_ID, LU_Name, LU_Surname, LU_Country, LF_Status FROM dbo.line_up JOIN dbo.lu_film ON LF_LUID = LU_ID WHERE LF_FilmID = {filmId}";
+            List<line_up> a;
+            try
+            {
+                a = conn.Query<line_up>(query).ToList();
+            }
+            catch { a = null; }
+            return a;
+        }
+
+        public bool usunAktora(int aktorId) {
+            return false;
+        }
+
+        public bool zapiszFilm(Filmy film)
+        {
+            return false;
         }
     }
 }

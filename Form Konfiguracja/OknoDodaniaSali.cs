@@ -42,7 +42,7 @@ namespace Projekt_kino.Form_Konfiguracja
         {
             zmianaMiejsc = true;
             panel1.Controls.Clear();
-            sal.listaMiejsc.Clear();
+            sal.listaMiejsc = null;
             int maxRowMiejsca = int.Parse(tb_iloscRzedow.Text);
             int maxIloscMijesc = int.Parse(tb_iloscMijesc.Text);
             int start_position = Width / 2 - 25 - 55 * (maxIloscMijesc / 2);
@@ -91,8 +91,14 @@ namespace Projekt_kino.Form_Konfiguracja
 
         private void button3_Click(object sender, EventArgs e)
         {
+            sal.SR_maxRowMiejsca = int.Parse(tb_iloscRzedow.Text);
+            sal.SR_maxNrMiejsca = int.Parse(tb_iloscMijesc.Text);
+            sal.SR_Nr = int.Parse(tb_numerSali.Text);
+            sal.SR_Content = tb_opis.Text;
+            if(sal.listaMiejsc.Count == 0) { return; }
             Program.baza.modyfikacjaSali(sal, zmianaMiejsc);
             zaladowanieMiejsc();
+            
         }
     }
 }

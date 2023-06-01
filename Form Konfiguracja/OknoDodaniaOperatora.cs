@@ -54,7 +54,7 @@ namespace Projekt_kino.Form_Konfiguracja
             oper2.Oper_Login = textBoxNazwa.Text;
             oper2.Oper_Password = textBoxhaslo.Text;
             oper2.Oper_Type = checkBoxAdmin.Checked ? 0 : 1;
-            info.Text = oper.modyfikacjaOperatora(oper2);
+            oper.modyfikacjaOperatora(oper2);
         }
     }
 }

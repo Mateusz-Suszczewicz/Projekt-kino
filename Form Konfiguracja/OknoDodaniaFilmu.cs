@@ -51,6 +51,10 @@ namespace Projekt_kino.Form_Konfiguracja
             {
                 senaseLoad();
             }
+            else if (tabControl1.SelectedTab == tp_aktorzy)
+            {
+                aktorzyLoad();
+            }
         }
 
         #region kategoria
@@ -266,25 +270,52 @@ namespace Projekt_kino.Form_Konfiguracja
             dgv_aktorzy.Columns.Add(Rezyser);
             #endregion
 
-            foreach ((int, string) tempKat in )
+            foreach (line_up temp in Program.baza.pobranieListyAktorow(film.Film_ID))
             {
                 DataGridViewRow ROW = (DataGridViewRow)dgv_zdjecia.Rows[0].Clone();
-                ROW.Cells[0].Value = tempKat.Item1;
-                ROW.Cells[1].Value = tempKat.Item2;
+                ROW.Cells[0].Value = temp.LU_ID;
+                ROW.Cells[1].Value = temp.LU_Name;
+                ROW.Cells[2].Value = temp.LU_Surname;
+                ROW.Cells[3].Value = temp.LF_Status == 1 ? true : false;
                 dgv_zdjecia.Rows.Add(ROW);
             }
 
         }
-        //TODO: w trakcie
-        
+
+        private void edytujAktora(object sender, EventArgs e)
+        {
+            OknoDodaniaAktora ods = new OknoDodaniaAktora();
+            ods.ustawID(1);
+            ods.ShowDialog();
+            aktorzyLoad();
+        }
+
+        private void btn_dodajAktora_Click(object sender, EventArgs e)
+        {
+            OknoDodaniaSeansu ods = new OknoDodaniaSeansu();
+            ods.ustawID(film, 0);
+            ods.ShowDialog();
+            aktorzyLoad();
+        }
+
+        private void btn_usunAktora_Click(object sender, EventArgs e)
+        {
+            if (dgv_aktorzy.CurrentCell == null) { return; }
+            int seansId;
+            seansId = int.Parse(dgv_aktorzy.CurrentRow.Cells[0].Value.ToString());
+            Program.baza.usunAktora(seansId);
+            senaseLoad();
+        }
         #endregion
-
-
 
         private void btn_zamknij_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
+        private void btn_zapiszFilm_Click(object sender, EventArgs e)
+        {
+            Program.baza.zapiszFilm(film);
+        }
     }
 }
