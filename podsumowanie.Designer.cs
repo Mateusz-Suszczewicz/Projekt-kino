@@ -69,9 +69,9 @@
             label_pods_sala.AutoSize = true;
             label_pods_sala.Location = new Point(305, 210);
             label_pods_sala.Name = "label_pods_sala";
-            label_pods_sala.Size = new Size(50, 20);
+            label_pods_sala.Size = new Size(35, 20);
             label_pods_sala.TabIndex = 3;
-            label_pods_sala.Text = "label1";
+            label_pods_sala.Text = "sala";
             // 
             // label_pods_miejsca
             // 
@@ -117,6 +117,7 @@
             MinimumSize = new Size(1104, 776);
             Name = "podsumowanie";
             Text = "podsumowanie";
+            Load += podsumowanie_Load;
             ResumeLayout(false);
             PerformLayout();
         }

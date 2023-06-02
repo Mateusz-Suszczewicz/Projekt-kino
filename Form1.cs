@@ -134,7 +134,7 @@ namespace Projekt_kino
 
         private void button1_Click(object sender, EventArgs e)
         {
-            
+
             string login = textBox2.Text;
             string password = textBox3.Text;
             Operator oper = new Operator();
@@ -217,6 +217,9 @@ namespace Projekt_kino
 
         }
 
+        private void aktualny_czas_Click(object sender, EventArgs e)
+        {
 
+        }
     }
 }

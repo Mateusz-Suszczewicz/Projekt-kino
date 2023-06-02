@@ -163,7 +163,6 @@ namespace Projekt_kino
                 ROW.Cells[1].Value = (i.Seat_Row - 150) / 70;
                 ROW.Cells[2].Value = (i.Seat_Nr - 450) / 55;
 
-
                 tab.Rows.Add(ROW);
                 numer_biletu++;
             }
@@ -189,6 +188,11 @@ namespace Projekt_kino
             this.Hide();
             zak.ShowDialog();
             zak.Show();
+
+        }
+
+        private void podsumowanie_Load(object sender, EventArgs e)
+        {
 
         }
     }

@@ -81,8 +81,9 @@
             aktualny_czas.Name = "aktualny_czas";
             aktualny_czas.Size = new Size(200, 93);
             aktualny_czas.TabIndex = 4;
-            aktualny_czas.Text = "Willkommen!";
+            aktualny_czas.Text = "Witamy!";
             aktualny_czas.TextAlign = ContentAlignment.MiddleCenter;
+            aktualny_czas.Click += aktualny_czas_Click;
             // 
             // panel_menu_right
             // 
@@ -99,7 +100,6 @@
             panel_menu_right.Name = "panel_menu_right";
             panel_menu_right.Size = new Size(200, 729);
             panel_menu_right.TabIndex = 5;
-            
             // 
             // button2
             // 
