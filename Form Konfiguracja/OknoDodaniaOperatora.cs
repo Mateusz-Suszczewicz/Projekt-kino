@@ -46,15 +46,18 @@ namespace Projekt_kino.Form_Konfiguracja
         {
 
             Operator oper2 = new Operator();
-            if (id > 0)
+            if (oper.Oper_ID > 0)
             {
                 oper2.Oper_ID = oper.Oper_ID;
             }
             else { oper2.Oper_ID = 0; }
+            if (textBoxNazwa.Text == "" || textBoxNazwa.Text == null) { label3.Text = "Podaj login"; return; }
             oper2.Oper_Login = textBoxNazwa.Text;
             oper2.Oper_Password = textBoxhaslo.Text;
             oper2.Oper_Type = checkBoxAdmin.Checked ? 0 : 1;
-            oper.modyfikacjaOperatora(oper2);
+            var a = oper.modyfikacjaOperatora(oper2);
+            label3.Text = komunikaty.komunikat[a.Item1];
+            oper.Oper_ID = a.Item2;
         }
     }
 }

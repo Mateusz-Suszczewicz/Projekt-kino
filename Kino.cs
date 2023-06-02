@@ -977,27 +977,37 @@ namespace kino
             catch { }
         }
 
-        public bool dodajOperatora(Operator op)
+        public (int, int) dodajOperatora(Operator op)
         {
             string query = $"SELECT Oper_ID FROM dbo.operator WHERE Oper_Login = '{op.Oper_Login}'";
-            if(zapytanieINT(query) > -1) { return false; }
+            if(zapytanieINT(query) > -1) { return (1, -1); }
+            int kom, a;
+            
             if(op.Oper_ID > 0)
             {
                 query = $"SELECT Oper_ID FROM dbo.operator WHERE Oper_ID = {op.Oper_ID}";
-                if(zapytanieINT(query) == -1) { return false; }
+                if(zapytanieINT(query) == -1) { return (2, -1); }
                 query = $"UPDATE dbo.operator SET Oper_Login = '{op.Oper_Login}', Oper_Password = '{op.Oper_Password}', Oper_Type = {op.Oper_Type} WHERE Oper_ID = {op.Oper_ID}";
-                
+                kom = 3;
+                try
+                {
+                    conn.Execute(query);
+                    return (kom, op.Oper_ID);
+                }
+                catch { return (4, -1); }
             }
             else
             {
-                query = $"INSERT INTO dbo.operator (Oper_Login, Oper_Password, Oper_Type) VALUES ('{op.Oper_Login}', '{op.Oper_Password}', {op.Oper_Type})";
+                query = $"INSERT INTO dbo.operator (Oper_Login, Oper_Password, Oper_Type) OUTPUT INSERTED.Oper_ID VALUES ('{op.Oper_Login}', '{op.Oper_Password}', {op.Oper_Type})";
+                kom = 5;
+                try
+                {
+                    a = conn.QuerySingle<int>(query);
+                    return (kom, a);
+                }
+                catch { return (4, -1); }
             }
-            try
-            {
-                conn.Execute(query);
-                return true;
-            }
-            catch { return false; }
+            
         }
 
         public List<(int, string)> pobranieListyFilmow()
@@ -1076,27 +1086,34 @@ namespace kino
             return a;
         }
 
-        public bool dodanieKategorii(string kat, int id)
+        public (int, int) dodanieKategorii(string kat, int id)
         {
             string query = $"SELECT Cat_ID FROM dbo.category WHERE Cat_Name = '{kat}'";
-            if(zapytanieINT(query) > 0) { return false; }
+            if(zapytanieINT(query) > 0) { return (6, id); }
+            (int, int) kom;
             if(id > 0)
             {
                 query = $"SELECT Cat_ID FROM dbo.category WHERE Cat_ID = {id}";
-                if(zapytanieINT(query) == 0) { return false; }
+                if(zapytanieINT(query) == 0) { return (7, id); }
                 query = $"UPDATE dbo.category SET Cat_Name = '{kat}' WHERE Cat_ID = {id}";
-                
+                try
+                {
+                    conn.Execute(query);
+                    return (8, id); ;
+                }
+                catch { return (4, id); }
             }
             else
             {
-                query = $"INSERT INTO dbo.category (Cat_Name) VALUES ('{kat}')";
+                query = $"INSERT INTO dbo.category (Cat_Name) OUTPUT INSERTED.Cat_ID VALUES ('{kat}')";
+                try
+                {
+                    int a = conn.QuerySingle<int>(query);
+                    return (9, a); ;
+                }
+                catch { return (4, id); }
             }
-            try
-            {
-                conn.Execute(query);
-                return true;
-            }
-            catch { return false; }
+           
         }
         
         public bool aktualizacjaKategorii(List<int> listaKategori, int filmID)
@@ -1158,17 +1175,17 @@ namespace kino
         public bool modyfikacjaSali(sala sal, bool zmianaMiejsc)
         {
             // czy numer sali jest już wykorzytsywany
-            string query = $"SEELCT TOP 1 SR_ID FROM dbo.screeningRoom WHERE SR_Nr = {sal.SR_Nr}";
+            string query = $"SELECT SR_ID FROM dbo.screeningRoom WHERE SR_Nr = {sal.SR_Nr}";
             int a;
             try
             {
                 if (sal.SR_ID > 0)
                 {
                     a = conn.QueryFirst<int>(query);
-                    if (a != 0) { return false; }
+                    if (a == 0) { return false; }
                     // czy sala nie istnieje na seansie
                     query = $"SELECT TOP 1 SE_ID FROM dbo.seance WHERE SE_SRID = {sal.SR_ID}";
-                    if (zapytanieINT(query) != 0) { return false; }
+                    if (zapytanieINT(query) > -1) { return false; }
 
                     if (zmianaMiejsc)
                     {

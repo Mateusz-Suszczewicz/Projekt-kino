@@ -295,6 +295,7 @@ namespace Projekt_kino.Form_Konfiguracja
             NazwaOper.ReadOnly = true;
             dgvKategorie.Columns.Add(NazwaOper);
 
+            dgvKategorie.RowHeadersVisible = false;
 
             foreach ((int, string) oper in baza.pobranieListyKategori())
             {

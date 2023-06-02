@@ -38,8 +38,16 @@ namespace Projekt_kino.Form_Konfiguracja
 
         private void button2_Click(object sender, EventArgs e)
         {
-            baza.dodanieKategorii(textBox1.Text, id);
+            if(textBox1.Text == "" || textBox1.Text == null) 
+            {
+                label2.Text = "Nazwa kategorii nie może by c pusta";
+                return;
+            }
+            var a = baza.dodanieKategorii(textBox1.Text, id);
+
+            label2.Text = komunikaty.komunikat[a.Item1];
+            id = a.Item2;
         }
-    
+
     }
 }

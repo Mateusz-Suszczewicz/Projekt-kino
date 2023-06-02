@@ -78,7 +78,7 @@ namespace Projekt_kino
             }
         }
         
-        public bool modyfikacjaOperatora(Operator op)
+        public (int, int) modyfikacjaOperatora(Operator op)
         {
             int opTyp = 1;
             string? opLogin = op.Oper_Login;
