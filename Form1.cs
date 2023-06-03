@@ -170,7 +170,7 @@ namespace Projekt_kino
                 this.Close();
             }
             label7.Visible = true;
-            if (Program.zalogowanyOperator.Oper_Type == 0)
+            if (Program.zalogowanyOperator != null && Program.zalogowanyOperator.Oper_Type == 0)
             {
                 btn_konf.Visible = true;
             }

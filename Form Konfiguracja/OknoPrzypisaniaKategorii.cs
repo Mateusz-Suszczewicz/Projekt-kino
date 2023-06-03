@@ -7,6 +7,7 @@
         {
             InitializeComponent();
         }
+       
         public void ustawienieID(Filmy filmy)
         {
             film = filmy;
@@ -62,14 +63,15 @@
             {
                 if (row.Cells[1].Value != null)
                 {
-                    if (row.Cells[1].Value.ToString() == "true") { }
+                    var a = row.Cells[1].Value.ToString();
+                    if (a == "True")
                     {
                         listaKategorii.Add(int.Parse(row.Cells[0].Value.ToString()));
                     }
                 }
             }
 
-            Program.baza.aktualizacjaKategorii(listaKategorii, film.Film_ID);
+            label1.Text = komunikaty.komunikat[Program.baza.aktualizacjaKategorii(listaKategorii, film.Film_ID)];
         }
 
         private void button1_Click(object sender, EventArgs e)

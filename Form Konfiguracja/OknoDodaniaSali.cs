@@ -52,7 +52,7 @@ namespace Projekt_kino.Form_Konfiguracja
             miejsce tempMijesce = new miejsce();
             for (int r = 0; r < maxRowMiejsca; r++)
             {
-                for (int n = 0; n < maxRowMiejsca; n++)
+                for (int n = 0; n < maxIloscMijesc; n++)
                 {
                     Button btn = new Button();
                     btn.Size = new Size(50, 50);
@@ -91,14 +91,36 @@ namespace Projekt_kino.Form_Konfiguracja
 
         private void button3_Click(object sender, EventArgs e)
         {
+            if (tb_iloscMijesc.Text == "" || tb_iloscMijesc == null)
+            {
+                label5.Text = "Podaj ilość miejsc";
+                return;
+            }
+            if (tb_iloscRzedow.Text == "" || tb_iloscRzedow == null)
+            {
+                label5.Text = "Podaj ilość rzędów";
+                return;
+            }
+            if (tb_numerSali.Text == "" || tb_numerSali == null)
+            {
+                label5.Text = "Podaj numer sali";
+                return;
+            }
+            if (sal.listaMiejsc.Count == 0)
+            {
+                label5.Text = "wygeneruj miejsca";
+                return;
+            }
             sal.SR_maxRowMiejsca = int.Parse(tb_iloscRzedow.Text);
             sal.SR_maxNrMiejsca = int.Parse(tb_iloscMijesc.Text);
             sal.SR_Nr = int.Parse(tb_numerSali.Text);
             sal.SR_Content = tb_opis.Text;
-            if(sal.listaMiejsc.Count == 0) { return; }
-            Program.baza.modyfikacjaSali(sal, zmianaMiejsc);
+            var a = Program.baza.modyfikacjaSali(sal, zmianaMiejsc);
+            label5.Text = komunikaty.komunikat[a.Item1];
+            sal.SR_ID = a.Item2;
+
             zaladowanieMiejsc();
-            
+
         }
     }
 }
