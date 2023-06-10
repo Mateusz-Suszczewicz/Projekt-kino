@@ -63,6 +63,7 @@ namespace Projekt_kino.Form_Konfiguracja
             dgvOper.RowHeadersVisible = false;
             dgvOper.BackgroundColor = Color.White;
             dgvOper.AllowUserToResizeRows = false;
+            dgvOper.AllowUserToAddRows = false;
 
 
 
@@ -222,14 +223,14 @@ namespace Projekt_kino.Form_Konfiguracja
             dgvSale.Columns.Add(NazwaOper);
 
 
-            foreach ((int, string) oper in baza.pobranieListySal())
-            {
+            //foreach ((int, string) oper in baza.pobranieListySal())
+            //{
 
-                DataGridViewRow ROW = (DataGridViewRow)dgvSale.Rows[0].Clone();
-                ROW.Cells[0].Value = oper.Item1;
-                ROW.Cells[1].Value = oper.Item2;
-                dgvSale.Rows.Add(ROW);
-            }
+            //    DataGridViewRow ROW = (DataGridViewRow)dgvSale.Rows[0].Clone();
+            //    ROW.Cells[0].Value = oper.Item1;
+            //    ROW.Cells[1].Value = oper.Item2;
+            //    dgvSale.Rows.Add(ROW);
+            //}
         }
 
         private void addSala(object sender, DataGridViewCellEventArgs e)
@@ -422,5 +423,9 @@ namespace Projekt_kino.Form_Konfiguracja
         }
         #endregion
 
+        private void OknoKonfiguracji_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

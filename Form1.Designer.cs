@@ -84,7 +84,7 @@
             aktualny_czas.TabIndex = 4;
             aktualny_czas.Text = "Witamy!";
             aktualny_czas.TextAlign = ContentAlignment.MiddleCenter;
-            aktualny_czas.Click += aktualny_czas_Click;
+            //aktualny_czas.Click += aktualny_czas_Click;
             // 
             // panel_menu_right
             // 
