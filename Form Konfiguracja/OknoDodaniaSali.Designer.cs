@@ -40,6 +40,7 @@
             button2 = new Button();
             button3 = new Button();
             panel1 = new Panel();
+            label5 = new Label();
             SuspendLayout();
             // 
             // label1
@@ -57,7 +58,6 @@
             tb_numerSali.Name = "tb_numerSali";
             tb_numerSali.Size = new Size(100, 23);
             tb_numerSali.TabIndex = 1;
-            
             // 
             // label2
             // 
@@ -144,11 +144,20 @@
             panel1.Size = new Size(777, 303);
             panel1.TabIndex = 11;
             // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Location = new Point(333, 80);
+            label5.Name = "label5";
+            label5.Size = new Size(0, 15);
+            label5.TabIndex = 12;
+            // 
             // OknoDodaniaSali
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(label5);
             Controls.Add(panel1);
             Controls.Add(button3);
             Controls.Add(button2);
@@ -181,5 +190,6 @@
         private Button button2;
         private Button button3;
         private Panel panel1;
+        private Label label5;
     }
 }

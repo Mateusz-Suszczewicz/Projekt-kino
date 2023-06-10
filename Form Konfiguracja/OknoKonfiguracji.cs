@@ -47,6 +47,10 @@ namespace Projekt_kino.Form_Konfiguracja
             {
                 KatLoad();
             }
+            else if (tabControl.SelectedTab == tabAktorzy)
+            {
+                AktLoad();
+            }
         }
         #region operator
         private void operLoad()
@@ -59,7 +63,7 @@ namespace Projekt_kino.Form_Konfiguracja
             dgvOper.RowHeadersVisible = false;
             dgvOper.BackgroundColor = Color.White;
             dgvOper.AllowUserToResizeRows = false;
-            
+
 
 
             DataGridViewTextBoxColumn idOper = new DataGridViewTextBoxColumn();
@@ -144,7 +148,7 @@ namespace Projekt_kino.Form_Konfiguracja
             dgvFilm.RowHeadersVisible = false;
             dgvFilm.BackgroundColor = Color.White;
             dgvFilm.AllowUserToResizeRows = false;
-            
+
 
 
             DataGridViewTextBoxColumn idOper = new DataGridViewTextBoxColumn();
@@ -251,7 +255,7 @@ namespace Projekt_kino.Form_Konfiguracja
 
             if (int.Parse(a) != 0)
             {
-                baza.usunSale(int.Parse(a));
+                info.Text = komunikaty.komunikat[baza.usunSale(int.Parse(a))];
             }
             Saleload();
         }
@@ -279,7 +283,7 @@ namespace Projekt_kino.Form_Konfiguracja
             dgvKategorie.RowHeadersVisible = false;
             dgvKategorie.BackgroundColor = Color.White;
             dgvKategorie.AllowUserToResizeRows = false;
-            
+
 
 
             DataGridViewTextBoxColumn idOper = new DataGridViewTextBoxColumn();
@@ -300,7 +304,7 @@ namespace Projekt_kino.Form_Konfiguracja
             foreach ((int, string) oper in baza.pobranieListyKategori())
             {
 
-                DataGridViewRow ROW = (DataGridViewRow)dgvSale.Rows[0].Clone();
+                DataGridViewRow ROW = (DataGridViewRow)dgvKategorie.Rows[0].Clone();
                 ROW.Cells[0].Value = oper.Item1;
                 ROW.Cells[1].Value = oper.Item2;
                 dgvKategorie.Rows.Add(ROW);
@@ -335,12 +339,88 @@ namespace Projekt_kino.Form_Konfiguracja
 
             if (int.Parse(a) != 0)
             {
-                baza.usunKategorie(int.Parse(a));
+                label1.Text = komunikaty.komunikat[baza.usunKategorie(int.Parse(a))];
             }
             KatLoad();
         }
-        
-        //TODO: zrobic dodawanie kateogrii bez uzycia procedury
         #endregion
+
+        #region aktorzy
+        private void AktLoad()
+        {
+            dgvAktorzy.Rows.Clear();
+            dgvAktorzy.Columns.Clear();
+
+            dgvAktorzy.AllowUserToResizeColumns = false;
+            dgvAktorzy.RowHeadersVisible = false;
+            dgvAktorzy.BackgroundColor = Color.White;
+            dgvAktorzy.AllowUserToResizeRows = false;
+
+            DataGridViewTextBoxColumn idOper = new DataGridViewTextBoxColumn();
+            idOper.Name = "ID";
+            idOper.HeaderText = "ID";
+            idOper.ReadOnly = true;
+            idOper.Visible = false;
+            dgvAktorzy.Columns.Add(idOper);
+
+            DataGridViewTextBoxColumn Imie = new DataGridViewTextBoxColumn();
+            Imie.Name = "Nazwa";
+            Imie.HeaderText = "Imie";
+            Imie.ReadOnly = true;
+            dgvAktorzy.Columns.Add(Imie);
+
+            DataGridViewTextBoxColumn Nazwisko = new DataGridViewTextBoxColumn();
+            Nazwisko.Name = "Nazwisko";
+            Nazwisko.HeaderText = "Nazwisko";
+            Nazwisko.ReadOnly = true;
+            dgvAktorzy.Columns.Add(Nazwisko);
+
+            dgvAktorzy.RowHeadersVisible = false;
+
+            foreach (line_up oper in baza.pobranieListyAktorow())
+            {
+
+                DataGridViewRow ROW = (DataGridViewRow)dgvAktorzy.Rows[0].Clone();
+                ROW.Cells[0].Value = oper.LU_ID;
+                ROW.Cells[1].Value = oper.LU_Name;
+                ROW.Cells[2].Value = oper.LU_Surname;
+                dgvKategorie.Rows.Add(ROW);
+            }
+        }
+
+        private void addAkt(object sender, EventArgs e)
+        {
+            OknoStworzeniaAktora odk = new OknoStworzeniaAktora();
+            int ri = dgvAktorzy.CurrentCell.RowIndex;
+            if (dgvAktorzy.Rows.Count == 0) return;
+            var a = dgvAktorzy.Rows[ri].Cells[0].Value.ToString();
+            odk.ustawienieID(int.Parse(a));
+            odk.ShowDialog();
+            odk.Close();
+            AktLoad();
+        }
+
+        private void btn_usunAktora_Click(object sender, EventArgs e)
+        {
+            int ri = dgvAktorzy.CurrentCell.RowIndex;
+            var a = dgvAktorzy.Rows[ri].Cells[0].Value.ToString();
+
+            if (int.Parse(a) != 0)
+            {
+                label2.Text = komunikaty.komunikat[baza.usunAktora(int.Parse(a))];
+            }
+            AktLoad();
+        }
+
+        private void btn_dodajAktora_Click(object sender, EventArgs e)
+        {
+            OknoStworzeniaAktora odk = new OknoStworzeniaAktora();
+            odk.ustawienieID(-1);
+            odk.ShowDialog();
+            odk.Close();
+            AktLoad();
+        }
+        #endregion
+
     }
 }

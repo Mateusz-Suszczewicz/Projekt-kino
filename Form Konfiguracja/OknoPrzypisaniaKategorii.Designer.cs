@@ -31,6 +31,7 @@
             dgv = new DataGridView();
             button1 = new Button();
             button2 = new Button();
+            label1 = new Label();
             ((System.ComponentModel.ISupportInitialize)dgv).BeginInit();
             SuspendLayout();
             // 
@@ -63,11 +64,20 @@
             button2.UseVisualStyleBackColor = true;
             button2.Click += button2_Click;
             // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(19, 427);
+            label1.Name = "label1";
+            label1.Size = new Size(0, 15);
+            label1.TabIndex = 3;
+            // 
             // OknoPrzypisaniaKategorii
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(label1);
             Controls.Add(button2);
             Controls.Add(button1);
             Controls.Add(dgv);
@@ -75,6 +85,7 @@
             Text = "OknoPrzypisaniaKategorii";
             ((System.ComponentModel.ISupportInitialize)dgv).EndInit();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -82,5 +93,6 @@
         private DataGridView dgv;
         private Button button1;
         private Button button2;
+        private Label label1;
     }
 }

@@ -85,6 +85,7 @@ namespace Projekt_kino.Form_Konfiguracja
                 ROW.Cells[1].Value = tempKat.Item2;
                 dgv_kategoria.Rows.Add(ROW);
             }
+            film.Film_Cateogry = Program.baza.getCategory(film.Film_ID);
 
         }
 

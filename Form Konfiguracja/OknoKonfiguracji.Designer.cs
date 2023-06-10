@@ -42,9 +42,16 @@
             button1 = new Button();
             dgvOper = new DataGridView();
             tabKat = new TabPage();
+            label1 = new Label();
             button8 = new Button();
             button7 = new Button();
             dgvKategorie = new DataGridView();
+            tabAktorzy = new TabPage();
+            label2 = new Label();
+            btn_dodajAktora = new Button();
+            btn_usunAktora = new Button();
+            dgvAktorzy = new DataGridView();
+            info = new Label();
             tabControl.SuspendLayout();
             tabsale.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvSale).BeginInit();
@@ -54,6 +61,8 @@
             ((System.ComponentModel.ISupportInitialize)dgvOper).BeginInit();
             tabKat.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvKategorie).BeginInit();
+            tabAktorzy.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvAktorzy).BeginInit();
             SuspendLayout();
             // 
             // tabControl
@@ -62,6 +71,7 @@
             tabControl.Controls.Add(tabfilmy);
             tabControl.Controls.Add(tabOper);
             tabControl.Controls.Add(tabKat);
+            tabControl.Controls.Add(tabAktorzy);
             tabControl.Location = new Point(12, 12);
             tabControl.Name = "tabControl";
             tabControl.SelectedIndex = 0;
@@ -71,6 +81,7 @@
             // 
             // tabsale
             // 
+            tabsale.Controls.Add(info);
             tabsale.Controls.Add(button6);
             tabsale.Controls.Add(button3);
             tabsale.Controls.Add(dgvSale);
@@ -200,6 +211,7 @@
             // 
             // tabKat
             // 
+            tabKat.Controls.Add(label1);
             tabKat.Controls.Add(button8);
             tabKat.Controls.Add(button7);
             tabKat.Controls.Add(dgvKategorie);
@@ -210,6 +222,14 @@
             tabKat.TabIndex = 3;
             tabKat.Text = "Kategorie";
             tabKat.UseVisualStyleBackColor = true;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(6, 373);
+            label1.Name = "label1";
+            label1.Size = new Size(0, 15);
+            label1.TabIndex = 3;
             // 
             // button8
             // 
@@ -241,6 +261,66 @@
             dgvKategorie.TabIndex = 0;
             dgvKategorie.CellDoubleClick += addKat;
             // 
+            // tabAktorzy
+            // 
+            tabAktorzy.Controls.Add(label2);
+            tabAktorzy.Controls.Add(btn_dodajAktora);
+            tabAktorzy.Controls.Add(btn_usunAktora);
+            tabAktorzy.Controls.Add(dgvAktorzy);
+            tabAktorzy.Location = new Point(4, 24);
+            tabAktorzy.Name = "tabAktorzy";
+            tabAktorzy.Padding = new Padding(3);
+            tabAktorzy.Size = new Size(768, 398);
+            tabAktorzy.TabIndex = 4;
+            tabAktorzy.Text = "Aktorzy";
+            tabAktorzy.UseVisualStyleBackColor = true;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(6, 373);
+            label2.Name = "label2";
+            label2.Size = new Size(0, 15);
+            label2.TabIndex = 6;
+            // 
+            // btn_dodajAktora
+            // 
+            btn_dodajAktora.Location = new Point(547, 369);
+            btn_dodajAktora.Name = "btn_dodajAktora";
+            btn_dodajAktora.Size = new Size(98, 23);
+            btn_dodajAktora.TabIndex = 5;
+            btn_dodajAktora.Text = "dodaj aktora";
+            btn_dodajAktora.UseVisualStyleBackColor = true;
+            btn_dodajAktora.Click += btn_dodajAktora_Click;
+            // 
+            // btn_usunAktora
+            // 
+            btn_usunAktora.Location = new Point(651, 369);
+            btn_usunAktora.Name = "btn_usunAktora";
+            btn_usunAktora.Size = new Size(111, 23);
+            btn_usunAktora.TabIndex = 4;
+            btn_usunAktora.Text = "usuń aktora";
+            btn_usunAktora.UseVisualStyleBackColor = true;
+            btn_usunAktora.Click += btn_usunAktora_Click;
+            // 
+            // dgvAktorzy
+            // 
+            dgvAktorzy.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvAktorzy.Location = new Point(6, 6);
+            dgvAktorzy.Name = "dgvAktorzy";
+            dgvAktorzy.RowTemplate.Height = 25;
+            dgvAktorzy.Size = new Size(756, 357);
+            dgvAktorzy.TabIndex = 3;
+            dgvAktorzy.CellDoubleClick += addAkt;
+            // 
+            // info
+            // 
+            info.AutoSize = true;
+            info.Location = new Point(9, 378);
+            info.Name = "info";
+            info.Size = new Size(0, 15);
+            info.TabIndex = 4;
+            // 
             // OknoKonfiguracji
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -251,13 +331,18 @@
             Text = "OknoKonfiguracji";
             tabControl.ResumeLayout(false);
             tabsale.ResumeLayout(false);
+            tabsale.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dgvSale).EndInit();
             tabfilmy.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dgvFilm).EndInit();
             tabOper.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dgvOper).EndInit();
             tabKat.ResumeLayout(false);
+            tabKat.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dgvKategorie).EndInit();
+            tabAktorzy.ResumeLayout(false);
+            tabAktorzy.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvAktorzy).EndInit();
             ResumeLayout(false);
         }
 
@@ -281,5 +366,12 @@
         private Button button8;
         private Button button7;
         private DataGridView dgvKategorie;
+        private Label label1;
+        private TabPage tabAktorzy;
+        private Button btn_dodajAktora;
+        private Button btn_usunAktora;
+        private DataGridView dgvAktorzy;
+        private Label label2;
+        private Label info;
     }
 }

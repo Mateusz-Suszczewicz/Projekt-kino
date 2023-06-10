@@ -52,6 +52,7 @@ namespace Projekt_kino.Form_Konfiguracja
             }
             else { oper2.Oper_ID = 0; }
             if (textBoxNazwa.Text == "" || textBoxNazwa.Text == null) { label3.Text = "Podaj login"; return; }
+            if (textBoxNazwa.Text.Length < 1 || textBoxNazwa.Text.Length > 50) { label3.Text = "Błędna długość loginu"; return; }
             oper2.Oper_Login = textBoxNazwa.Text;
             oper2.Oper_Password = textBoxhaslo.Text;
             oper2.Oper_Type = checkBoxAdmin.Checked ? 0 : 1;

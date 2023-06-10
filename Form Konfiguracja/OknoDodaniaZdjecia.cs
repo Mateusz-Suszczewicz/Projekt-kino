@@ -23,7 +23,7 @@ namespace Projekt_kino.Form_Konfiguracja
         {
             this.filmid = filmid;
             this.picId = picId;
-            if(picId != -1)
+            if (picId != -1)
             {
                 var temp = Program.baza.pobranieZdjecia(picId);
                 textBox1.Text = temp.Item1;
@@ -38,9 +38,14 @@ namespace Projekt_kino.Form_Konfiguracja
 
         private void button2_Click(object sender, EventArgs e)
         {
+            if (textBox1.Text == "" || textBox1.Text == null)
+            {
+                label2.Text = "Ścieżka musi być uzupełniona";
+                return;
+            }
             int mainPic;
-            mainPic  = checkBox1.Checked ? 1 : 0;
-            Program.baza.dodajZdjecie(textBox1.Text, mainPic, filmid);
+            mainPic = checkBox1.Checked ? 1 : 0;
+            label2.Text = komunikaty.komunikat[Program.baza.dodajZdjecie(textBox1.Text, mainPic, filmid)];
         }
     }
 }
