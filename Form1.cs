@@ -5,6 +5,7 @@ using System.Data;
 using System;
 using static System.Net.Mime.MediaTypeNames;
 using System.Diagnostics;
+using Projekt_kino.Form_Konfiguracja;
 
 namespace Projekt_kino
 {
@@ -21,11 +22,18 @@ namespace Projekt_kino
             {
                 Okno_ustawien okno_Ustawien = new Okno_ustawien();
                 DialogResult dr = okno_Ustawien.ShowDialog(this);
+
             }
             if (!log)
             {
                 customizeDesign();
+                baza.ustawienieCen();
             }
+            if (Program.zalogowanyOperator != null && Program.zalogowanyOperator.Oper_Type == 0)
+            {
+                btn_konf.Visible = true;
+            }
+
         }
 
         public void logowanie()
@@ -162,6 +170,10 @@ namespace Projekt_kino
                 this.Close();
             }
             label7.Visible = true;
+            if (Program.zalogowanyOperator.Oper_Type == 0)
+            {
+                btn_konf.Visible = true;
+            }
         }
 
         private void button_rejestracja_zaloz_konto_Click(object sender, EventArgs e)
@@ -217,9 +229,12 @@ namespace Projekt_kino
 
         }
 
-        private void aktualny_czas_Click(object sender, EventArgs e)
+        private void btn_konf_Click(object sender, EventArgs e)
         {
-
+            OknoKonfiguracji ok = new OknoKonfiguracji();
+            this.Hide();
+            ok.ShowDialog();
+            this.Show();
         }
     }
 }

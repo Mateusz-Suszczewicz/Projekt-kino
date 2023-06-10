@@ -14,6 +14,9 @@ namespace Projekt_kino
     {
         Filmy Film;
         List<miejsce> listaMiejsc = new List<miejsce>();
+        DataGridView koszyk = new DataGridView();
+        DataGridView tab = new DataGridView();
+
         public podsumowanie()
         {
             InitializeComponent();
@@ -28,8 +31,8 @@ namespace Projekt_kino
                 listaMiejsc.Add(miejsce);
             }
             buttons_loads();
+            odswierzenieKoszyka();
         }
-
 
         private void buttons_loads()
         {
@@ -64,11 +67,12 @@ namespace Projekt_kino
             label_koszyk.Location = new Point(750, 30);
 
             #region tabela biletów
-            DataGridView tab = new DataGridView();
+            
             tab.DataSource = null;
             tab.Rows.Clear();
             tab.Columns.Clear();
 
+           
 
             DataGridViewTextBoxColumn lp = new DataGridViewTextBoxColumn();
             //lp.ValueType = typeof(int);
@@ -96,11 +100,13 @@ namespace Projekt_kino
             type.Name = "Rodzaj";
             type.HeaderText = "Ulogwy";
             type.Width = 120;
+
             tab.Columns.Add(type);
+
             #endregion
 
             #region tabela_koszyk
-            DataGridView koszyk = new DataGridView();
+
             koszyk.DataSource = null;
             koszyk.Rows.Clear();
             koszyk.Columns.Clear();
@@ -126,13 +132,6 @@ namespace Projekt_kino
             koszyk_kwota.ReadOnly = true;
             koszyk.Columns.Add(koszyk_kwota);
 
-            #endregion
-
-            //tab.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
-            tab.AllowUserToResizeColumns = false;
-            tab.RowHeadersVisible = false;
-            tab.BackgroundColor = Color.White;
-
             koszyk.AllowUserToResizeColumns = false;
             koszyk.RowHeadersVisible = false;
             koszyk.BackgroundColor = Color.White;
@@ -140,21 +139,14 @@ namespace Projekt_kino
             koszyk.AllowUserToResizeRows = false;
             koszyk.Location = new Point(750, 80);
 
-            //if (listaMiejsc.Count() > 10)
-            //{
+            this.Controls.Add(koszyk);
+
+            tab.AllowUserToResizeColumns = false;
+            tab.RowHeadersVisible = false;
+            tab.BackgroundColor = Color.White;
+            
             tab.Size = new Size(465, 320);
-            //}
-            //else
-            //{
-            //    if (listaMiejsc.Count == 1)
-            //    {
-            //        tab.Size = new Size(690, 60);
-            //    }
-            //    else
-            //    {
-            //        tab.Size = new Size(690, listaMiejsc.Count() * 45);
-            //    }
-            //}
+           
             int numer_biletu = 1;
             foreach (miejsce i in listaMiejsc)
             {
@@ -169,17 +161,11 @@ namespace Projekt_kino
             tab.AllowUserToAddRows = false;
             tab.AllowUserToResizeRows = false;
             tab.Location = new Point(50, 280);
+            tab.CellClick += tab_CellContentClick;
             this.Controls.Add(tab);
-            this.Controls.Add(koszyk);
+                      
+            #endregion
 
-
-
-
-
-
-
-            //btn.Size = new Size(180, 80);
-            //btn.Name = seans.SE_ID.ToString();
         }
 
         private void button_zatwierdz_Click(object sender, EventArgs e)
@@ -189,6 +175,51 @@ namespace Projekt_kino
             zak.ShowDialog();
             zak.Show();
 
+        }
+
+        private void tab_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+            odswierzenieKoszyka();
+   
+        }
+
+        private void odswierzenieKoszyka()
+        {
+            koszyk.Rows.Clear();
+            decimal kosztUlgowy = 0;
+            int ilosculgowy = 0;
+            decimal kosztNormalny = 0;
+            int iloscNormalny = 0;
+
+            foreach (DataGridViewRow wiersz in tab.Rows)
+            {
+                DataGridViewCheckBoxCell chkchecking = wiersz.Cells[3] as DataGridViewCheckBoxCell;
+                if (Convert.ToBoolean(chkchecking.Value) == true)
+                {
+                    kosztUlgowy += Program.cenaUlgowa;
+                    ilosculgowy++;
+                }
+                else
+                {
+                    kosztNormalny += Program.cenaNormalna;
+                    iloscNormalny++;
+                }
+
+            }
+            DataGridViewRow ROW = (DataGridViewRow)koszyk.Rows[0].Clone();
+            ROW.Cells[0].Value = "Normalny";
+            ROW.Cells[1].Value = iloscNormalny;
+            ROW.Cells[2].Value = kosztNormalny;
+
+            koszyk.Rows.Add(ROW);
+
+            DataGridViewRow ROW1 = (DataGridViewRow)koszyk.Rows[0].Clone();
+            ROW1.Cells[0].Value = "Ulgowy";
+            ROW1.Cells[1].Value = ilosculgowy;
+            ROW1.Cells[2].Value = kosztUlgowy;
+
+            koszyk.Rows.Add(ROW1);
         }
 
         private void podsumowanie_Load(object sender, EventArgs e)

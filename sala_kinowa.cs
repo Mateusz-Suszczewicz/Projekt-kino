@@ -16,7 +16,6 @@ namespace Projekt_kino
     {
         Filmy Film;
         List<int> miejscaDoKupienia = new List<int>();
-        //TODO: modyfikacja listy ma przyjmować 3 wartości: id, nr, row 
         public sala_kinowa()
         {
             InitializeComponent();

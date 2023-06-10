@@ -75,9 +75,9 @@ namespace Projekt_kino
             #region Film_Category
             label6.Text = "     Kategoria: ";
             label6.Font = new Font("Arial", 14);
-            foreach (string kat in Film.Film_Cateogry)
+            foreach ((int, string) kat in Film.Film_Cateogry)
             {
-                 label6.Text += kat + ", ";
+                 label6.Text += kat.Item2 + ", ";
             }
             label6.Text = label6.Text.Remove(label6.Text.Length - 2);
             

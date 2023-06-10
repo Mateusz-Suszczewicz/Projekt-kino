@@ -1,3 +1,5 @@
+using kino;
+
 namespace Projekt_kino
 {
     internal static class Program
@@ -16,5 +18,8 @@ namespace Projekt_kino
 
         }
         public static Operator zalogowanyOperator = null;
+        public static decimal cenaNormalna = 0;
+        public static decimal cenaUlgowa = 0;
+        public static kinoDB baza = new kinoDB(true);
     }
 }
