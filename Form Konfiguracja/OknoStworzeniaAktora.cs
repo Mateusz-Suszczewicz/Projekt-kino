@@ -12,7 +12,7 @@ namespace Projekt_kino.Form_Konfiguracja
 {
     public partial class OknoStworzeniaAktora : Form
     {
-        line_up lu;
+        line_up lu = new line_up();
 
         public OknoStworzeniaAktora()
         {
@@ -51,10 +51,11 @@ namespace Projekt_kino.Form_Konfiguracja
                 info.Text = "Aktor musi mieć kraj";
                 return;
             }
-            lu.LU_Surname = tb_nazwisko.Text;
-            lu.LU_Name = tb_imie.Text;
-            lu.LU_Country = tb_kraj.Text;
-            var a = Program.baza.dodajAktora(lu);
+            line_up temp = new line_up();
+            temp.LU_Surname = tb_nazwisko.Text;
+            temp.LU_Name = tb_imie.Text;
+            temp.LU_Country = tb_kraj.Text;
+            var a = Program.baza.dodajAktora(temp);
             lu.LU_ID = a.Item2;
             info.Text = komunikaty.komunikat[a.Item1];
         }

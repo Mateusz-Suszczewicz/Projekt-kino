@@ -34,7 +34,6 @@ namespace Projekt_kino
             { 22, "Film ma już zdjęcie główne" },
             { 23, "Poprawnie dodano zdjęcie" },
             { 24, "Błąd dodania zdjęcia" },
-            { 24, "Poprawnie zaktualizowano zdjęcie" },
             { 25, "Aktor jest dodany do filmu" },
             { 26, "Podane Id aktora nie istnieje" },
             { 27, "Poprawne usunięcie aktora" },
@@ -43,6 +42,9 @@ namespace Projekt_kino
             { 30, "Poprawnie zmodyfikowano aktora" },
             { 31, "Sala jest wykorzytywana do seansu" },
             { 32, "Miejsce zostało wykupione" },
+            { 33, "Poprawnie zaktualizowano zdjęcie" },
+            { 34, "Sala została zaktualizowana" },
+            { 35, "Poprawnie zaktualizowano aktorów" },
         };
     }
 }

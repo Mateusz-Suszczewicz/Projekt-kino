@@ -49,22 +49,24 @@ namespace Projekt_kino.Form_Konfiguracja
             int position = start_position;
             int h = 220;
             List<miejsce> noweMiejsca = new List<miejsce>();
-            miejsce tempMijesce = new miejsce();
             for (int r = 0; r < maxRowMiejsca; r++)
             {
                 for (int n = 0; n < maxIloscMijesc; n++)
                 {
+                    miejsce tempMijesce = new miejsce();
                     Button btn = new Button();
                     btn.Size = new Size(50, 50);
                     btn.BackColor = Color.Green;
                     btn.Location = new Point(position, h);
                     panel1.Controls.Add(btn);
-                    position += 55;
                     tempMijesce.Seat_Row = h;
                     tempMijesce.Seat_Nr = position;
                     tempMijesce.status = false;
+                    position += 55;
+                    noweMiejsca.Add(tempMijesce);
+
+                    //TODO: tutaj jest jakiś problem 
                 }
-                noweMiejsca.Add(tempMijesce);
                 position = start_position;
                 h += 70;
             }

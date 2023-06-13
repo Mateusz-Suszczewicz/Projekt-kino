@@ -119,7 +119,7 @@
             // 
             // button2
             // 
-            button2.Location = new Point(713, 415);
+            button2.Location = new Point(968, 514);
             button2.Name = "button2";
             button2.Size = new Size(75, 23);
             button2.TabIndex = 9;
@@ -129,7 +129,7 @@
             // 
             // button3
             // 
-            button3.Location = new Point(632, 415);
+            button3.Location = new Point(887, 514);
             button3.Name = "button3";
             button3.Size = new Size(75, 23);
             button3.TabIndex = 10;
@@ -141,7 +141,7 @@
             // 
             panel1.Location = new Point(11, 106);
             panel1.Name = "panel1";
-            panel1.Size = new Size(777, 303);
+            panel1.Size = new Size(1032, 402);
             panel1.TabIndex = 11;
             // 
             // label5
@@ -156,7 +156,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(1055, 549);
             Controls.Add(label5);
             Controls.Add(panel1);
             Controls.Add(button3);

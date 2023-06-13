@@ -60,6 +60,7 @@ namespace Projekt_kino.Form_Konfiguracja
         #region kategoria
         private void kategorieLoad()
         {
+            dgv_kategoria.AllowUserToAddRows = true;
             dgv_kategoria.Columns.Clear();
             dgv_kategoria.Rows.Clear();
 
@@ -86,7 +87,7 @@ namespace Projekt_kino.Form_Konfiguracja
                 dgv_kategoria.Rows.Add(ROW);
             }
             film.Film_Cateogry = Program.baza.getCategory(film.Film_ID);
-
+            dgv_kategoria.AllowUserToAddRows = false;
         }
 
         private void editKat(object sender, EventArgs e)
@@ -102,6 +103,7 @@ namespace Projekt_kino.Form_Konfiguracja
         #region zdjęcia
         private void zdjeciaLoad()
         {
+            dgv_zdjecia.AllowUserToAddRows = true;
             dgv_zdjecia.Columns.Clear();
             dgv_zdjecia.Rows.Clear();
 
@@ -129,7 +131,7 @@ namespace Projekt_kino.Form_Konfiguracja
                 dgv_zdjecia.Rows.Add(ROW);
             }
             film.Pic_Src = Program.baza.getPic(film.Film_ID);
-
+            dgv_zdjecia.AllowUserToAddRows = false;
         }
 
         private void btn_dodajZdjecia_Click(object sender, EventArgs e)
@@ -240,6 +242,7 @@ namespace Projekt_kino.Form_Konfiguracja
         #region aktorzy
         private void aktorzyLoad()
         {
+            dgv_aktorzy.AllowUserToAddRows = true;
             dgv_aktorzy.Columns.Clear();
             dgv_aktorzy.Rows.Clear();
 
@@ -273,28 +276,28 @@ namespace Projekt_kino.Form_Konfiguracja
 
             foreach (line_up temp in Program.baza.pobranieListyAktorow(film.Film_ID))
             {
-                DataGridViewRow ROW = (DataGridViewRow)dgv_zdjecia.Rows[0].Clone();
+                DataGridViewRow ROW = (DataGridViewRow)dgv_aktorzy.Rows[0].Clone();
                 ROW.Cells[0].Value = temp.LU_ID;
                 ROW.Cells[1].Value = temp.LU_Name;
                 ROW.Cells[2].Value = temp.LU_Surname;
                 ROW.Cells[3].Value = temp.LF_Status == 1 ? true : false;
-                dgv_zdjecia.Rows.Add(ROW);
+                dgv_aktorzy.Rows.Add(ROW);
             }
-
+            dgv_aktorzy.AllowUserToAddRows = true;
         }
 
         private void edytujAktora(object sender, EventArgs e)
         {
             OknoDodaniaAktora ods = new OknoDodaniaAktora();
-            ods.ustawID(1);
+            ods.ustawID(film);
             ods.ShowDialog();
             aktorzyLoad();
         }
 
         private void btn_dodajAktora_Click(object sender, EventArgs e)
         {
-            OknoDodaniaSeansu ods = new OknoDodaniaSeansu();
-            ods.ustawID(film, 0);
+            OknoDodaniaAktora ods = new OknoDodaniaAktora();
+            ods.ustawID(film);
             ods.ShowDialog();
             aktorzyLoad();
         }

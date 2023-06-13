@@ -1131,7 +1131,7 @@ namespace kino
                 query = $"INSERT INTO dbo.cat_film (CF_CatID, CF_FilmID) VALUES ({i}, {filmID})";
                 zapytanie(query);
             }
-            return 21;
+            return 35;
         }
         
         public int usunSale(int SalId)
@@ -1194,14 +1194,18 @@ namespace kino
                         foreach (miejsce tempmiejsce in sal.listaMiejsc)
                         {
                             query = $"SELECT TOP 1 Book_ID FROM dbo.booking WHERE Book_SeatID = {tempmiejsce.Seat_ID}";
-                            if (zapytanieINT(query) != 0) { return (12, sal.SR_ID); }
+                            if (zapytanieINT(query) > -1) { return (12, sal.SR_ID); }
                         }
                         // czy sala mmiała już jakiejś miejsca
                         query = $"SELECT TOP 1 Seat_ID FROM dbo.seats WHERE Seat_SRID = {sal.SR_ID}";
-                        if (zapytanieINT(query) != 0) {
+                        if (zapytanieINT(query) > -1 ) {
                             // usuniecie miejsc przypisanych do sali
                             query = $"DELETE dbo.seats WHERE Seat_SRID = {sal.SR_ID}";
-                            if (!zapytanie(query)) { return (13, sal.SR_ID); }
+                            try
+                            {
+                                conn.Execute(query);
+                            }
+                            catch { return (13, sal.SR_ID); }
                         }
                         //dodanie miejsc do sali
                         foreach (miejsce tempmiejsce in sal.listaMiejsc)
@@ -1216,7 +1220,11 @@ namespace kino
                     }
                     // aktualizacja sali
                     query = $"UPDATE dbo.screeningRoom SET SR_Content = '{sal.SR_Content}', SR_Nr = {sal.SR_Nr}, SR_Status = 0, SR_MaxRowMiejsca = {sal.SR_maxRowMiejsca}, SR_MaxNrMiejsca = {sal.SR_maxNrMiejsca} WHERE SR_ID = {sal.SR_ID}";
-                    if (zapytanie(query)) { return (17, sal.SR_ID); }
+                    try{
+                        conn.Execute(query);
+                        return (34, sal.SR_ID); 
+                    }
+                    catch { return (17, sal.SR_ID);}
                 }
                 else
                 {
@@ -1259,7 +1267,7 @@ namespace kino
         public int dodajZdjecie(string src,int sequence, int filmID, int pic_id = -1)
         {
             string query;
-            if (sequence == 0)
+            if (sequence == 1)
             {
                 // sprawdzenie czy film nie ma już zdjęcia głównego 
                 query = $"SELECT TOP 1 Pic_ID FROM dbo.picture WHERE Pic_FIlmID = {filmID} AND Pic_Sequence = {sequence}";
@@ -1279,7 +1287,7 @@ namespace kino
             else{
                 query = $"UPDATE dbo.picture SET Pic_Sequence = {sequence}, Pic_Src = '{src}' WHERE Pic_ID = {pic_id}";
                 zapytanie(query);
-                return 25;
+                return 33;
             }
         }
     
@@ -1409,13 +1417,31 @@ namespace kino
             }
             query = $"SELECT LU_ID FROM dbo.line_up WHERE LU_Name = {lu.LU_Name} AND LU_Surname = {lu.LU_Surname}";
             if(zapytanieINT(query) > -1) { return (28, lu.LU_ID); }
-            query = $"INSERT INTO dbo.line_up (LU_Name, LU_Surname, LU_Country) OUTPUT INSERTED.LU_ID VALUES ('{lu.LU_Name}', {lu.LU_Surname}, {lu.LU_Country})";
+            query = $"INSERT INTO dbo.line_up (LU_Name, LU_Surname, LU_Country) OUTPUT INSERTED.LU_ID VALUES ('{lu.LU_Name}', '{lu.LU_Surname}', '{lu.LU_Country}')";
             try
             {
                 int a = conn.QuerySingle<int>(query);
                 return (29, a);
             }
             catch { return (4, lu.LU_ID); }
+        }
+    
+        public int aktualizacjaAktorow(List<(int, bool)> id, int filmid)
+        {
+            string query = $"DELETE dbo.lu_film WHERE LF_FilmID = {filmid}";
+            try
+            {
+                conn.Execute(query);
+            }
+            catch { return 20; }
+
+            foreach ((int, bool) i in id)
+            {
+                int a = i.Item2 == true ? 1 : 0;
+                query = $"INSERT INTO dbo.lu_film (LF_LUID, LF_FilmID, LF_Status) VALUES ({i.Item1}, {filmid}, {a})";
+                zapytanie(query);
+            }
+            return 21;
         }
     }
 }

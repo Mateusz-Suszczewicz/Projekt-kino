@@ -55,6 +55,7 @@ namespace Projekt_kino.Form_Konfiguracja
         #region operator
         private void operLoad()
         {
+            dgvOper.AllowUserToAddRows = true;
             dgvOper.Rows.Clear();
             dgvOper.Columns.Clear();
 
@@ -63,7 +64,7 @@ namespace Projekt_kino.Form_Konfiguracja
             dgvOper.RowHeadersVisible = false;
             dgvOper.BackgroundColor = Color.White;
             dgvOper.AllowUserToResizeRows = false;
-            dgvOper.AllowUserToAddRows = false;
+
 
 
 
@@ -101,6 +102,7 @@ namespace Projekt_kino.Form_Konfiguracja
                 ROW.Cells[2].Value = stat;
                 dgvOper.Rows.Add(ROW);
             }
+            dgvOper.AllowUserToAddRows = false;
 
         }
 
@@ -141,6 +143,7 @@ namespace Projekt_kino.Form_Konfiguracja
         #region film
         private void FilmyLoad()
         {
+            dgvFilm.AllowUserToAddRows = true;
             dgvFilm.Rows.Clear();
             dgvFilm.Columns.Clear();
 
@@ -171,7 +174,7 @@ namespace Projekt_kino.Form_Konfiguracja
                 ROW.Cells[1].Value = oper.Item2;
                 dgvFilm.Rows.Add(ROW);
             }
-
+            dgvFilm.AllowUserToAddRows = false;
 
         }
 
@@ -201,6 +204,7 @@ namespace Projekt_kino.Form_Konfiguracja
         #region sale
         private void Saleload()
         {
+            dgvSale.AllowUserToAddRows = true;
             dgvSale.Rows.Clear();
             dgvSale.Columns.Clear();
 
@@ -223,14 +227,16 @@ namespace Projekt_kino.Form_Konfiguracja
             dgvSale.Columns.Add(NazwaOper);
 
 
-            //foreach ((int, string) oper in baza.pobranieListySal())
-            //{
+            foreach ((int, string) oper in baza.pobranieListySal())
+            {
 
-            //    DataGridViewRow ROW = (DataGridViewRow)dgvSale.Rows[0].Clone();
-            //    ROW.Cells[0].Value = oper.Item1;
-            //    ROW.Cells[1].Value = oper.Item2;
-            //    dgvSale.Rows.Add(ROW);
-            //}
+                DataGridViewRow ROW = (DataGridViewRow)dgvSale.Rows[0].Clone();
+                ROW.Cells[0].Value = oper.Item1;
+                ROW.Cells[1].Value = oper.Item2;
+                dgvSale.Rows.Add(ROW);
+            }
+            //TODO: trzeba to wszedzie dać po wygenerowniu dgv
+            dgvSale.AllowUserToAddRows = false;
         }
 
         private void addSala(object sender, DataGridViewCellEventArgs e)
@@ -276,6 +282,7 @@ namespace Projekt_kino.Form_Konfiguracja
         #region kategoria
         private void KatLoad()
         {
+            dgvKategorie.AllowUserToAddRows = true;
             dgvKategorie.Rows.Clear();
             dgvKategorie.Columns.Clear();
 
@@ -310,6 +317,7 @@ namespace Projekt_kino.Form_Konfiguracja
                 ROW.Cells[1].Value = oper.Item2;
                 dgvKategorie.Rows.Add(ROW);
             }
+            dgvKategorie.AllowUserToAddRows = false;
         }
 
         private void addKat(object sender, EventArgs e)
@@ -349,6 +357,7 @@ namespace Projekt_kino.Form_Konfiguracja
         #region aktorzy
         private void AktLoad()
         {
+            dgvAktorzy.AllowUserToAddRows = true;
             dgvAktorzy.Rows.Clear();
             dgvAktorzy.Columns.Clear();
 
@@ -385,8 +394,9 @@ namespace Projekt_kino.Form_Konfiguracja
                 ROW.Cells[0].Value = oper.LU_ID;
                 ROW.Cells[1].Value = oper.LU_Name;
                 ROW.Cells[2].Value = oper.LU_Surname;
-                dgvKategorie.Rows.Add(ROW);
+                dgvAktorzy.Rows.Add(ROW);
             }
+            dgvAktorzy.AllowUserToAddRows = false;
         }
 
         private void addAkt(object sender, EventArgs e)

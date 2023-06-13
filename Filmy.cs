@@ -88,14 +88,14 @@ namespace Projekt_kino
             Pic_Src = baza.getPic(Film_ID);
         }
 
-        protected void setLine_ups()
+        public void setLine_ups()
         {
             line_up = baza.GetLine_Ups(Film_ID, 0);
         }
 
-        protected void setDirector()
+        public void setDirector()
         {
-            line_up = baza.GetLine_Ups(Film_ID, 1);
+            directors = baza.GetLine_Ups(Film_ID, 1);
         }
 
         public List<Filmy> getFilmOnDay(DateTime date)

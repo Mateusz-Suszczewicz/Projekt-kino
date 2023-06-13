@@ -127,7 +127,7 @@
             // 
             // dgvSale
             // 
-            dgvSale.AllowUserToAddRows = false;
+            //dgvSale.AllowUserToAddRows = false;
             dgvSale.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvSale.Location = new Point(7, 8);
             dgvSale.Margin = new Padding(3, 4, 3, 4);
@@ -176,7 +176,8 @@
             // 
             // dgvFilm
             // 
-            dgvFilm.AllowUserToAddRows = false;
+            //
+            //dgvFilm.AllowUserToAddRows = false;
             dgvFilm.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvFilm.Location = new Point(7, 8);
             dgvFilm.Margin = new Padding(3, 4, 3, 4);
@@ -225,7 +226,7 @@
             // 
             // dgvOper
             // 
-            dgvOper.AllowUserToAddRows = false;
+            //dgvOper.AllowUserToAddRows = false;
             dgvOper.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvOper.Location = new Point(3, 4);
             dgvOper.Margin = new Padding(3, 4, 3, 4);
@@ -283,7 +284,7 @@
             // 
             // dgvKategorie
             // 
-            dgvKategorie.AllowUserToAddRows = false;
+            //dgvKategorie.AllowUserToAddRows = false;
             dgvKategorie.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvKategorie.Location = new Point(7, 8);
             dgvKategorie.Margin = new Padding(3, 4, 3, 4);
@@ -341,7 +342,7 @@
             // 
             // dgvAktorzy
             // 
-            dgvAktorzy.AllowUserToAddRows = false;
+            //dgvAktorzy.AllowUserToAddRows = false;
             dgvAktorzy.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvAktorzy.Location = new Point(7, 8);
             dgvAktorzy.Margin = new Padding(3, 4, 3, 4);

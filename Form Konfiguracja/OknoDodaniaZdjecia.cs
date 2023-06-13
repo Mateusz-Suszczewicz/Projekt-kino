@@ -27,7 +27,7 @@ namespace Projekt_kino.Form_Konfiguracja
             {
                 var temp = Program.baza.pobranieZdjecia(picId);
                 textBox1.Text = temp.Item1;
-                checkBox1.Checked = temp.Item2 == 0 ? true : false;
+                checkBox1.Checked = temp.Item2 == 1 ? true : false;
             }
         }
 
