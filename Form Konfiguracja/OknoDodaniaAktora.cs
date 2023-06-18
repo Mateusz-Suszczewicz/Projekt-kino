@@ -96,7 +96,7 @@ namespace Projekt_kino.Form_Konfiguracja
             List<(int, bool)> listaId = new List<(int, bool)>();
             foreach (DataGridViewRow row in dataGridView1.Rows)
             {
-                
+
                 if (row.Cells[1].Value != null)
                 {
                     var a = row.Cells[1].Value.ToString();

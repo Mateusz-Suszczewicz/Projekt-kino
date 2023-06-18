@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -77,11 +78,11 @@ namespace Projekt_kino
             label6.Font = new Font("Arial", 14);
             foreach ((int, string) kat in Film.Film_Cateogry)
             {
-                 label6.Text += kat.Item2 + ", ";
+                label6.Text += kat.Item2 + ", ";
             }
             label6.Text = label6.Text.Remove(label6.Text.Length - 2);
-            
-            
+
+
             #endregion
 
             //foreach (var seans in Film.seanses)
@@ -114,6 +115,12 @@ namespace Projekt_kino
 
 
             #endregion
+
+            #region zdjęcie 
+
+            pictureBox1.Image = Image.FromFile(Film.Pic_Src[0].Item2);
+            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+            #endregion
         }
 
 
@@ -129,7 +136,7 @@ namespace Projekt_kino
             this.Hide();
             sk.ShowDialog(this);
             sk.Close();
-            this.Show();
+            this.Close();
         }
 
         private void Film_szczegoly_Load(object sender, EventArgs e)

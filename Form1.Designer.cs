@@ -31,6 +31,8 @@
             components = new System.ComponentModel.Container();
             aktualny_czas = new Label();
             panel_menu_right = new Panel();
+            button4 = new Button();
+            button3 = new Button();
             btn_konf = new Button();
             button2 = new Button();
             ustawienia = new Button();
@@ -66,11 +68,13 @@
             label_logowanie_login = new Label();
             textBox3 = new TextBox();
             textBox2 = new TextBox();
+            pictureBox1 = new PictureBox();
             panel_menu_right.SuspendLayout();
             panel_do_przycisku_konto.SuspendLayout();
             panel_logo.SuspendLayout();
             panel_rejestracja.SuspendLayout();
             panel_logowanie.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // aktualny_czas
@@ -84,12 +88,13 @@
             aktualny_czas.TabIndex = 4;
             aktualny_czas.Text = "Witamy!";
             aktualny_czas.TextAlign = ContentAlignment.MiddleCenter;
-            //aktualny_czas.Click += aktualny_czas_Click;
             // 
             // panel_menu_right
             // 
             panel_menu_right.AutoScroll = true;
             panel_menu_right.BackColor = Color.Firebrick;
+            panel_menu_right.Controls.Add(button4);
+            panel_menu_right.Controls.Add(button3);
             panel_menu_right.Controls.Add(btn_konf);
             panel_menu_right.Controls.Add(button2);
             panel_menu_right.Controls.Add(ustawienia);
@@ -103,6 +108,38 @@
             panel_menu_right.Name = "panel_menu_right";
             panel_menu_right.Size = new Size(175, 547);
             panel_menu_right.TabIndex = 5;
+            // 
+            // button4
+            // 
+            button4.BackColor = Color.LightSalmon;
+            button4.Dock = DockStyle.Top;
+            button4.FlatStyle = FlatStyle.Flat;
+            button4.Font = new Font("Segoe UI", 13F, FontStyle.Regular, GraphicsUnit.Point);
+            button4.Location = new Point(0, 364);
+            button4.Margin = new Padding(3, 2, 3, 2);
+            button4.Name = "button4";
+            button4.Size = new Size(175, 45);
+            button4.TabIndex = 8;
+            button4.Text = "Wyloguj";
+            button4.UseVisualStyleBackColor = false;
+            button4.Visible = false;
+            button4.Click += button4_Click;
+            // 
+            // button3
+            // 
+            button3.BackColor = Color.LightSalmon;
+            button3.Dock = DockStyle.Top;
+            button3.FlatStyle = FlatStyle.Flat;
+            button3.Font = new Font("Segoe UI", 13F, FontStyle.Regular, GraphicsUnit.Point);
+            button3.Location = new Point(0, 319);
+            button3.Margin = new Padding(3, 2, 3, 2);
+            button3.Name = "button3";
+            button3.Size = new Size(175, 45);
+            button3.TabIndex = 7;
+            button3.Text = "Ustawienia";
+            button3.UseVisualStyleBackColor = false;
+            button3.Visible = false;
+            button3.Click += button3_Click;
             // 
             // btn_konf
             // 
@@ -122,7 +159,7 @@
             // 
             // button2
             // 
-            button2.Location = new Point(18, 373);
+            button2.Location = new Point(16, 450);
             button2.Name = "button2";
             button2.Size = new Size(106, 23);
             button2.TabIndex = 5;
@@ -139,7 +176,6 @@
             ustawienia.TabIndex = 4;
             ustawienia.Text = "ustawienia";
             ustawienia.UseVisualStyleBackColor = true;
-            ustawienia.Click += ustawienia_Click;
             // 
             // przycisk_repertuar
             // 
@@ -259,7 +295,7 @@
             panel_rejestracja.Margin = new Padding(3, 2, 3, 2);
             panel_rejestracja.MinimumSize = new Size(88, 75);
             panel_rejestracja.Name = "panel_rejestracja";
-            panel_rejestracja.Size = new Size(566, 298);
+            panel_rejestracja.Size = new Size(530, 331);
             panel_rejestracja.TabIndex = 7;
             // 
             // button_rejestracja_zaloz_konto
@@ -492,6 +528,7 @@
             textBox3.Name = "textBox3";
             textBox3.Size = new Size(242, 23);
             textBox3.TabIndex = 1;
+            textBox3.TextChanged += textBox3_TextChanged;
             // 
             // textBox2
             // 
@@ -500,6 +537,15 @@
             textBox2.Name = "textBox2";
             textBox2.Size = new Size(242, 23);
             textBox2.TabIndex = 0;
+            // 
+            // pictureBox1
+            // 
+            pictureBox1.ImageLocation = "C:\\Users\\suszc\\Desktop\\1.png";
+            pictureBox1.Location = new Point(0, 0);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(785, 725);
+            pictureBox1.TabIndex = 9;
+            pictureBox1.TabStop = false;
             // 
             // Form1
             // 
@@ -511,12 +557,13 @@
             Controls.Add(panel_rejestracja);
             Controls.Add(panel1);
             Controls.Add(panel_menu_right);
+            Controls.Add(pictureBox1);
             ForeColor = Color.Black;
             MaximumSize = new Size(1682, 816);
             MinimumSize = new Size(898, 582);
             Name = "Form1";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Form1";
+            Text = "Strona główna";
             panel_menu_right.ResumeLayout(false);
             panel_menu_right.PerformLayout();
             panel_do_przycisku_konto.ResumeLayout(false);
@@ -525,6 +572,7 @@
             panel_rejestracja.PerformLayout();
             panel_logowanie.ResumeLayout(false);
             panel_logowanie.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -567,5 +615,8 @@
         private TextBox textBox2;
         private Button button2;
         private Button btn_konf;
+        private Button button3;
+        private Button button4;
+        private PictureBox pictureBox1;
     }
 }

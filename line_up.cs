@@ -13,12 +13,5 @@ namespace Projekt_kino
         public string LU_Surname { get; set; }
         public string LU_Country { get; set; }
         public int LF_Status { get; set; }
-
-        public string getActor()
-        {
-            return $"{LU_Name} {LU_Surname}";
-        }
-        
-
     }
 }

@@ -175,7 +175,7 @@
             Controls.Add(listBox1);
             Controls.Add(sala);
             Name = "OknoDodaniaSeansu";
-            Text = "OknoDodaniaSeansu";
+            Text = "Dodanie Seansu";
             ResumeLayout(false);
             PerformLayout();
         }

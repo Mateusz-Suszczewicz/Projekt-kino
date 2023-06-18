@@ -130,7 +130,7 @@
             Controls.Add(label2);
             Controls.Add(label1);
             Name = "OknoStworzeniaAktora";
-            Text = "OknoStworzeniaAktora";
+            Text = "Stworzenie Aktora";
             ResumeLayout(false);
             PerformLayout();
         }

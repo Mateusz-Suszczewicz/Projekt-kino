@@ -24,12 +24,7 @@ namespace Projekt_kino
         }
 
         public string getGodzinaEmisji() { return SE_DataEmisji.ToString("HH:mm"); }
+        
         public string getDataEmisji() { return SE_DataEmisji.ToString("dd.MM.yyyy"); }
     }
-
-
-
-
-    
-
 }

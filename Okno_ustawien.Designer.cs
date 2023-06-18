@@ -208,7 +208,7 @@
             Controls.Add(button_okno_ustawien_zapisz);
             Margin = new Padding(3, 2, 3, 2);
             Name = "Okno_ustawien";
-            Text = "Okno_ustawien";
+            Text = "Ustawienia";
             ResumeLayout(false);
             PerformLayout();
         }

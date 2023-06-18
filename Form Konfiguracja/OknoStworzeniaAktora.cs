@@ -41,7 +41,7 @@ namespace Projekt_kino.Form_Konfiguracja
                 info.Text = "Aktor musi mieć nazwisko";
                 return;
             }
-            if(tb_imie.Text == "" || tb_imie == null)
+            if (tb_imie.Text == "" || tb_imie == null)
             {
                 info.Text = "Aktor musi mieć imie";
                 return;

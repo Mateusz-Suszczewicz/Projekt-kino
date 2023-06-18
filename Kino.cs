@@ -14,7 +14,6 @@ namespace kino
 {
     internal class kinoDB
     {
-        // TODO: poprawić w procedurach zwracana komunikaty -> dodać convert albo ogarnąć to z poziomu c#
         private decimal wersja = 1.0m;
 
         private string? connectionString;
@@ -65,15 +64,6 @@ namespace kino
 
         }
 
-        /// <summary>
-        /// method <c>ConnectionString</c> Ustawienie linku do połączenie do bazy danych 
-        /// </summary>
-        /// <param name="server">Adres serwera do którego chcemy się połączyć</param>
-        /// <param name="loginMethod">Metoda logowania: 1 - Logowanie zintegrowane 2 - poprzez autoryzację SQL</param>
-        /// <param name="database">Baza danych do której się chcemy podpiąć</param>
-        /// <param name="login">Login użytkownika bazy danych</param>
-        /// <param name="passowrd">Hasło użytkownika bazy danych</param>
-        /// <returns>Zwraca TRUE jesli połączenie się powiodło i FALSE jeśli się nie powiodło</returns>
         public bool ConnectionString(string server, bool loginMethod, string database, string login = "", string passowrd = "")
         {
             string conString = loginMethod == true ? $"Data Source={server}; Database={database}; Integrated Security=SSPI;" : $"Data Source={server}; Initial Catalog = {database}; User ID={login}; Password={passowrd}";
@@ -110,9 +100,6 @@ namespace kino
             }
         }
 
-        /// <summary>
-        /// method <c>CreateTable</c> Tworzy tabele w bazie danych zalecane jednokrotne uruchomienie
-        /// </summary>
         public string CreateTable(int wymuszenieAktualizacji = 0) // TODO: Przygotować mechanizm pod sprawdzanie czy poszczególne tabele istnieją
         {
             List<string> sqlList = new List<string>() {
@@ -227,77 +214,6 @@ namespace kino
             return "Nie wykonano żadnej operacji"; 
         }
 
-        /// <summary>
-        /// method <c>ShowFilms</c> wyświetlenie wszystkich filmów
-        /// </summary>
-        /// <returns></returns>
-        public SqlDataReader ShowFilms()
-        {
-            string query = "SELECT * FROM dbo.FIlmListV";
-            SqlCommand command = new SqlCommand(query, conn);
-            conn.Open();
-            SqlDataReader reader = command.ExecuteReader();
-            return reader;
-        }
-
-        /// <summary>
-        /// method <c>ShowCode</c> wyświetlenie wszytskich operatorów z kodami 
-        /// </summary>
-        /// <returns></returns>
-        public SqlDataReader ShowCode()
-        {
-            string query = "SELECT * FROM dbo.OperCodeV";
-            SqlCommand command = new SqlCommand(query, conn);
-            conn.Open();
-            SqlDataReader reader = command.ExecuteReader();
-            conn.Close();
-            return reader;
-        }
-
-        /// <summary>
-        /// method <c>DodanieFilmu</c> Umozliwia dodanie filmu lub edycję już istniejącego. Jesli do metody zostanie przekazane ID filmu to film w bazie zostanie zaktualizowany o WSZYSTKIE wprowadzone dane
-        /// </summary>
-        /// <param name="Title">Tytuł filmu</param>
-        /// <param name="Content">OPis filmu</param>
-        /// <param name="DataDodania">Data dodania filmu </param>
-        /// <param name="CatID">Kategoria do której należy film</param>
-        /// <param name="Duration">Czas trwania filmu w minutach</param>
-        /// <param name="Src">Link do obrazka </param>
-        /// <param name="FilmID"><ID filmu domyslnie 0/param>
-        /// <returns>Zwracany tekst z błędem lub komunikatem o poprawnym dodaniu</returns>
-        public string DodanieFilmu(string Title, string Content, DateTime? DataDodania, int Duration, string Film_Language, string Film_Production, string Film_Translation,  int FilmID = 0) 
-        {
-            var procedure = "dbo.addFilm";
-            var values = new
-            {
-                title = Title,
-                content = Content,
-                dataDodania = DataDodania,
-                duration = Duration,
-                film_Language = Film_Language,
-                film_Production = Film_Production,
-                film_Translation = Film_Translation,
-                id = FilmID
-            };
-            try
-            {
-                var results = conn.ExecuteScalar<string>(procedure, values, commandType: CommandType.StoredProcedure);
-                return results;
-            }
-            catch (Exception ex)
-            {
-                return ex.Message;
-            };
-        }
-
-        /// <summary>
-        /// method <c>DodanieOperatora</c> Umożliwia dodanie operatora lub edycję już istniejącego.
-        /// </summary>
-        /// <param name="Login">Login operatora</param>
-        /// <param name="Typ">Typ operatora: 1 - kierownik; 2- klient</param>
-        /// <param name="OperID">Id operatora</param>
-        /// <param name="Password"> hasło operatora</param>
-        /// <returns>Zwracany tekst z błędem lub komunikatem o poprawnym dodaniu</returns>
         public string DodanieOperatora(string Login, int Typ, int OperID = 0, string? Password = "")
         {
             var procedure = "dbo.addOper";
@@ -319,175 +235,6 @@ namespace kino
             };
         }
 
-        /// <summary>
-        /// method <c>DodanieSali</c> Umożliwia dodanie sali lub jej edycję
-        /// </summary>
-        /// <param name="NumberSR">Numer sali</param>
-        /// <param name="ContentSR">opis sali</param>
-        /// <param name="SRID">Id sali</param>
-        /// <param name="Status">status sali: 0 - sala aktywna; 1 - sala nieaktywna</param>
-        /// <returns>Zwracany tekst z błędem lub komunikatem o poprawnym dodaniu</returns>
-        public string DodanieSali(int NumberSR, string ContentSR, int SRID = 0, int Status = 0)
-        {
-            var procedure = "dbo.addSR";
-            var values = new
-            {
-                nr = NumberSR,
-                content = ContentSR,
-                status = Status,
-                id = SRID
-            };
-            try
-            {
-                var results = conn.ExecuteScalar<string>(procedure, values, commandType: CommandType.StoredProcedure);
-                return results;
-            }
-            catch (Exception ex)
-            {
-                return ex.Message;
-            };
-        }
-
-        /// <summary>
-        /// method <c>DodanieMiejsca</c> Umożliwia dodanie miejsca na sali lub jego edycję 
-        /// </summary>
-        /// <param name="SrID">ID Sali </param>
-        /// <param name="NumberSeat">numer fotela</param>
-        /// <param name="RowSeat">rząd foteli</param>
-        /// <param name="SeatID">ID fotela</param>
-        /// <returns>Zwracany tekst z błędem lub komunikatem o poprawnym dodaniu</returns>
-        public string DodanieMiejsca(int SrID, int NumberSeat, int RowSeat, int SeatID = 0)
-        {
-            var procedure = "dbo.addSeat";
-            var values = new
-            {
-                srid = SrID,
-                nr = NumberSeat,
-                row = RowSeat,
-                id = SeatID
-            };
-            try
-            {
-                var results = conn.ExecuteScalar<string>(procedure, values, commandType: CommandType.StoredProcedure);
-                return results;
-            }
-            catch (Exception ex)
-            {
-                return ex.Message;
-            };
-        }
-
-        /// <summary>
-        /// method <c>DodanieKategorii</c> Umożliwia dodanie miejsca na sali lub jego edycję 
-        /// </summary>
-        /// <param name="Name">nazwa kategorii</param>
-        /// <param name="CatId">ID kategorii</param>
-        /// <returns>Zwracany tekst z błędem lub komunikatem o poprawnym dodaniu</returns>
-        public string DodanieKategorii(string Name, int CatId = 0)
-        {
-            var procedure = "addCategory";
-            var values = new { 
-                name = Name
-                , id = CatId
-            };
-            try
-            {
-                var results = conn.ExecuteScalar<string>(procedure, values, commandType: CommandType.StoredProcedure);
-                return results;
-            }
-            catch (Exception ex)
-            {
-                return ex.Message;
-            }
-        }
-
-        /// <summary>
-        /// method <c>DodanieBiletu</c> Umożliwia dodanie biletu lub jego edycję
-        /// </summary>
-        /// <param name="OperId">ID operatora</param>
-        /// <param name="SeatId">ID fotela</param>
-        /// <param name="SeID">Id seansu</param>
-        /// <param name="Type">typ biletu</param>
-        /// <param name="DataZakupu">data zakupu</param>
-        /// <param name="Code">kod promocyjny</param>
-        /// <param name="StatusB">0 - rezerwacja; 1 - wykupiony; 2 - anulowany</param>
-        /// <param name="BookID">id biletu</param>
-        /// <returns>Zwracany tekst z błędem lub komunikatem o poprawnym dodaniu</returns>
-        public string DodanieBiletu(int OperId, int SeatId, int SeID, int Type, DateTime DataZakupu, int StatusB = 0, int Code = 0, int BookID = 0)
-        {
-            var procedure = "addBooking";
-            var values = new
-            {
-                operID = OperId,
-                seatID = SeatId,
-                seID = SeID,
-                type = Type,
-                dataZakupu = DataZakupu,
-                code = Code,
-                status = StatusB,
-                id = BookID
-            };
-            try
-            {
-                var results = conn.ExecuteScalar<string>(procedure, values, commandType: CommandType.StoredProcedure);
-                return results;
-            }
-            catch (Exception ex)
-            {
-                return ex.Message;
-            }
-        }
-             
-        public string WskazanieSciezkiDoObrazka()
-        {
-            CommonOpenFileDialog dialog = new CommonOpenFileDialog();
-            dialog.InitialDirectory = "C:\\Users";
-            if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
-            {
-                return dialog.FileName;
-            }
-            return "";
-        }
-
-        public string DodanieObrazka(string Src, int FilmID, int PicID = 0)
-        {
-            var procedure = "dbo.addPicture";
-            var values = new
-            {
-                id = PicID,
-                filmID = FilmID,
-                src = Src,
-                            };
-            try
-            {
-                var results = conn.ExecuteScalar<string>(procedure, values, commandType: CommandType.StoredProcedure);
-                return results;
-            }
-            catch (Exception ex)
-            {
-                return ex.Message;
-            };
-        }
-       
-        public string DodanieKategoriiDoFilmu(int CatID, int FilmID)
-        {
-            var procedure = "dbo.addCategoryToFilm";
-            var values = new
-            {
-                filmID = FilmID,
-                catID = CatID
-            };
-            try
-            {
-                var results = conn.ExecuteScalar<string>(procedure, values, commandType: CommandType.StoredProcedure);
-                return results;
-            }
-            catch (Exception ex)
-            {
-                return ex.Message;
-            };
-        }
-        
         public Operator GetOperators(string login)
         {
             string query = $"SELECT TOP 1 * FROM dbo.operator WHERE Oper_Login = '{login}'";
@@ -874,7 +621,7 @@ namespace kino
             foreach(var b in a)
             {
                 var c = DateTime.Now.Day - b.Item2.Day + 1;
-                DateTime DE = b.Item2.AddDays(c);
+                DateTime DE = DateTime.Now.AddDays(1);
                 DateTime DK = b.Item3.AddDays(c);
                 query = $"Update dbo.seance SET SE_DataEmisji = '{DE.ToString("yyyy-MM-dd HH:mm")}', SE_DataKonca = '{DK.ToString("yyyy-MM-dd HH:mm")}' WHERE SE_ID = {b.Item1}";
                 zapytanie(query);
@@ -979,8 +726,7 @@ namespace kino
 
         public (int, int) dodajOperatora(Operator op)
         {
-            string query = $"SELECT Oper_ID FROM dbo.operator WHERE Oper_Login = '{op.Oper_Login}'";
-            if(zapytanieINT(query) > -1) { return (1, -1); }
+            string query;
             int kom, a;
             
             if(op.Oper_ID > 0)
@@ -999,6 +745,8 @@ namespace kino
             }
             else
             {
+                query = $"SELECT Oper_ID FROM dbo.operator WHERE Oper_Login = '{op.Oper_Login}'";
+                if (zapytanieINT(query) > -1) { return (1, -1); }
                 query = $"INSERT INTO dbo.operator (Oper_Login, Oper_Password, Oper_Type) OUTPUT INSERTED.Oper_ID VALUES ('{op.Oper_Login}', '{op.Oper_Password}', {op.Oper_Type})";
                 kom = 3;
                 try
@@ -1442,6 +1190,59 @@ namespace kino
                 zapytanie(query);
             }
             return 21;
+        }
+    
+        public int usunFilm(int filmId)
+        {
+            // istnienie filmu
+            string query = $"SELECT Film_ID FROM dbo.films WHERE Film_ID = {filmId}";
+            if (!zapytanie(query)) { return 37; }
+            // wykupione bilety
+            query = $"SELECT TOP 1 Book_ID FROM dbo.booking JOIN dbo.seance ON Book_SeID = SE_ID WHERE SE_FilmID = {filmId}";
+            if (zapytanie(query)) { return 36; }
+            // usuwanie
+            List<(string, string, int)> tabele = new List<(string, string, int)>
+            {
+                ("cat_film", "CF_FilmID", 38),
+                ("seance", "SE_FilmID", 39),
+                ("lu_film", "LF_FilmID", 40),
+                ("picture", "Pic_FilmID", 41),
+                ("films", "Film_ID", 42),
+            };
+            foreach ((string, string, int) temp in tabele)
+            {
+                query = $"DELETE dbo.{temp.Item1} WHERE {temp.Item2} = {filmId}";
+                try
+                {
+                    conn.Execute(query);
+                }
+                catch { return temp.Item3; }
+            }
+            return 43;
+        }
+    
+        public (int, int) kupnoBiletu(miejsce miejsc, Filmy film, bool ulgowy)
+        {
+            string query = $"SELECT film_ID FROM dbo.films WHERE film_ID = {film.Film_ID}";
+            if(!zapytanie(query)) { return (0, 37);  }
+            query = $"SELECT Book_ID FROM dbo.booking WHERE Book_SEID = {miejsc.Seat_ID} AND Book_SeID = {film.seanses[0].SE_ID}";
+            if(zapytanie(query)) { return (0, 44); }
+            var cena = Program.cenaNormalna;
+            if (ulgowy)
+            {
+                cena = Program.cenaUlgowa;
+            }
+            int bil = ulgowy ? 1 : 0;
+            query = $"INSERT INTO dbo.booking " +
+                $"(Book_OperID, Book_SeatID, Book_SeID, Book_Type, Book_DataZakupu, Book_Cena, Book_Status) " +
+                $"VALUES " +
+                $"({Program.zalogowanyOperator.Oper_ID}, {miejsc.Seat_ID}, {film.seanses[0].SE_ID}, {bil}, '{DateTime.Now.ToString("yyyy-MM-dd")}', {cena}, 0);";
+            try
+            {
+                conn.Execute(query);
+                return (45, 1);
+            }
+            catch { return (0, 4); }
         }
     }
 }

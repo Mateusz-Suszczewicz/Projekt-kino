@@ -37,6 +37,10 @@ namespace Projekt_kino
             label_pods_miejsca = new Label();
             button_zatwierdz = new Button();
             label_koszyk = new Label();
+            button1 = new Button();
+            button2 = new Button();
+            label1 = new Label();
+            button3 = new Button();
             SuspendLayout();
             // 
             // label_pods_tytul
@@ -71,7 +75,7 @@ namespace Projekt_kino
             label_pods_sala.AutoSize = true;
             label_pods_sala.Location = new Point(267, 158);
             label_pods_sala.Name = "label_pods_sala";
-            label_pods_sala.Size = new Size(38, 15);
+            label_pods_sala.Size = new Size(27, 15);
             label_pods_sala.TabIndex = 3;
             label_pods_sala.Text = "sala";
             // 
@@ -102,13 +106,54 @@ namespace Projekt_kino
             label_koszyk.Size = new Size(38, 15);
             label_koszyk.TabIndex = 6;
             label_koszyk.Text = "label1";
-
+            // 
+            // button1
+            // 
+            button1.Location = new Point(836, 504);
+            button1.Name = "button1";
+            button1.Size = new Size(75, 23);
+            button1.TabIndex = 7;
+            button1.Text = "Potwierdź";
+            button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
+            // 
+            // button2
+            // 
+            button2.Enabled = false;
+            button2.Location = new Point(731, 504);
+            button2.Name = "button2";
+            button2.Size = new Size(75, 23);
+            button2.TabIndex = 8;
+            button2.Text = "Zamknij";
+            button2.UseVisualStyleBackColor = true;
+            button2.Click += button2_Click;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(724, 395);
+            label1.Name = "label1";
+            label1.Size = new Size(0, 15);
+            label1.TabIndex = 9;
+            // 
+            // button3
+            // 
+            button3.Location = new Point(847, 450);
+            button3.Name = "button3";
+            button3.Size = new Size(75, 23);
+            button3.TabIndex = 10;
+            button3.Text = "test";
+            button3.UseVisualStyleBackColor = true;
             // 
             // podsumowanie
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(952, 553);
+            Controls.Add(button3);
+            Controls.Add(label1);
+            Controls.Add(button2);
+            Controls.Add(button1);
             Controls.Add(label_koszyk);
             Controls.Add(button_zatwierdz);
             Controls.Add(label_pods_miejsca);
@@ -120,7 +165,7 @@ namespace Projekt_kino
             MaximumSize = new Size(968, 592);
             MinimumSize = new Size(968, 592);
             Name = "podsumowanie";
-            Text = "podsumowanie";
+            Text = "Podsumowanie";
             Load += podsumowanie_Load;
             ResumeLayout(false);
             PerformLayout();
@@ -135,5 +180,9 @@ namespace Projekt_kino
         private Label label_pods_miejsca;
         private Button button_zatwierdz;
         private Label label_koszyk;
+        private Button button1;
+        private Button button2;
+        private Label label1;
+        private Button button3;
     }
 }

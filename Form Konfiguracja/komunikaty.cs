@@ -45,6 +45,16 @@ namespace Projekt_kino
             { 33, "Poprawnie zaktualizowano zdjęcie" },
             { 34, "Sala została zaktualizowana" },
             { 35, "Poprawnie zaktualizowano aktorów" },
+            { 36, "Film posiada wykupione bilety" },
+            { 37, "Film nie istnieje w bazie" },
+            { 38, "Błąd usunięcia powiązań z kategoriami" },
+            { 39, "Błąd usunięcia powiązań z seansami" },
+            { 40, "Błąd usunięcia powiązań z aktorami" },
+            { 41, "Błąd usunięcia powiązań ze zdjęciami" },
+            { 42, "Błąd usunięcia nagłówka filmu" },
+            { 43, "Poprawnie usunięto film" },
+            { 44, "miejsce jest już zajęte" },
+            { 45, "dodano bilet" },
         };
     }
 }

@@ -100,7 +100,7 @@
             Controls.Add(textBox1);
             Controls.Add(label1);
             Name = "OknoDodanieKategorii";
-            Text = "OknoDodanieKategorii";
+            Text = "Dodanie Kategorii";
             ResumeLayout(false);
             PerformLayout();
         }

@@ -144,7 +144,7 @@ namespace Projekt_kino
                         Font = new Font("Arial", 16, FontStyle.Bold),
                         AutoSize = true,
                         Top = 40,
-                        Left = 1100
+                        Left = 600
 
                     });
 
@@ -156,7 +156,7 @@ namespace Projekt_kino
                         Font = new Font("Arial", 16, FontStyle.Bold),
                         AutoSize = true,
                         Top = 40,
-                        Left = 700
+                        Left = 500
                     }); ;
 
                     // OPIS string Film_Content
@@ -184,23 +184,26 @@ namespace Projekt_kino
                         Top = 305,
                         Size = new Size(180, 80),
                         Name = film.Film_ID.ToString(),
-                        
+
                     };
 
-                    
 
-                    btn.Click += wywołanie_okna_szczegolow ;
 
-                   panel.Controls.Add(btn);
+                    btn.Click += wywołanie_okna_szczegolow;
+
+                    panel.Controls.Add(btn);
                     // Obrazek :D -> pierwszy na liście jest obrazkiem nagłówkowym w bazie danych dodalem kolumnę z kolejnością po której sortuje
-                    //panel.Controls.Add(new PictureBox
-                    //{
-                    //    Image = Image.FromFile(film.Pic_Src[0]),
-                    //    SizeMode = PictureBoxSizeMode.StretchImage,
-                    //    Top = 40,
-                    //    Left = 5,
-                    //    Size = new Size(310, 455),
-                    //});
+                    if (film.Pic_Src.Count != 0)
+                    {
+                        panel.Controls.Add(new PictureBox
+                        {
+                            Image = Image.FromFile(film.Pic_Src[0].Item2),
+                            SizeMode = PictureBoxSizeMode.StretchImage,
+                            Top = 40,
+                            Left = 5,
+                            Size = new Size(280, 350),
+                        });
+                    }
 
                     //dodawanie seansów
                     //foreach(var a in film.seanses)
@@ -217,13 +220,13 @@ namespace Projekt_kino
 
             Button button = (Button)sender;
             string film_id = button.Name;
-                   
+
             Film_szczegoly fs = new Film_szczegoly();
             fs.getFIlmId(film_id, data);
             this.Hide();
             fs.ShowDialog(this);
             fs.Close();
-            this.Show();
+            this.Close();
         }
 
 

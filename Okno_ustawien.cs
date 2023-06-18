@@ -81,7 +81,8 @@ namespace Projekt_kino
 
         private void btn_ustawienia_skrypty_Click(object sender, EventArgs e)
         {
-            if(baza.PolaczenieDoBazyZRejestru()) {
+            if (baza.PolaczenieDoBazyZRejestru())
+            {
                 Label_info.Text = baza.CreateTable();
             }
         }

@@ -72,11 +72,10 @@
             tabControl.Controls.Add(tabOper);
             tabControl.Controls.Add(tabKat);
             tabControl.Controls.Add(tabAktorzy);
-            tabControl.Location = new Point(14, 16);
-            tabControl.Margin = new Padding(3, 4, 3, 4);
+            tabControl.Location = new Point(12, 12);
             tabControl.Name = "tabControl";
             tabControl.SelectedIndex = 0;
-            tabControl.Size = new Size(887, 568);
+            tabControl.Size = new Size(776, 426);
             tabControl.TabIndex = 0;
             tabControl.SelectedIndexChanged += TabControl1_SelectedIndexChanged;
             // 
@@ -86,11 +85,10 @@
             tabsale.Controls.Add(button6);
             tabsale.Controls.Add(button3);
             tabsale.Controls.Add(dgvSale);
-            tabsale.Location = new Point(4, 29);
-            tabsale.Margin = new Padding(3, 4, 3, 4);
+            tabsale.Location = new Point(4, 24);
             tabsale.Name = "tabsale";
-            tabsale.Padding = new Padding(3, 4, 3, 4);
-            tabsale.Size = new Size(879, 535);
+            tabsale.Padding = new Padding(3);
+            tabsale.Size = new Size(768, 398);
             tabsale.TabIndex = 0;
             tabsale.Text = "Sale kinowe";
             tabsale.UseVisualStyleBackColor = true;
@@ -98,17 +96,16 @@
             // info
             // 
             info.AutoSize = true;
-            info.Location = new Point(10, 504);
+            info.Location = new Point(9, 378);
             info.Name = "info";
-            info.Size = new Size(0, 20);
+            info.Size = new Size(0, 15);
             info.TabIndex = 4;
             // 
             // button6
             // 
-            button6.Location = new Point(693, 500);
-            button6.Margin = new Padding(3, 4, 3, 4);
+            button6.Location = new Point(606, 375);
             button6.Name = "button6";
-            button6.Size = new Size(86, 31);
+            button6.Size = new Size(75, 23);
             button6.TabIndex = 3;
             button6.Text = "dodaj sale";
             button6.UseVisualStyleBackColor = true;
@@ -116,10 +113,9 @@
             // 
             // button3
             // 
-            button3.Location = new Point(785, 500);
-            button3.Margin = new Padding(3, 4, 3, 4);
+            button3.Location = new Point(687, 375);
             button3.Name = "button3";
-            button3.Size = new Size(86, 31);
+            button3.Size = new Size(75, 23);
             button3.TabIndex = 2;
             button3.Text = "Usuń sale";
             button3.UseVisualStyleBackColor = true;
@@ -127,14 +123,12 @@
             // 
             // dgvSale
             // 
-            //dgvSale.AllowUserToAddRows = false;
             dgvSale.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvSale.Location = new Point(7, 8);
-            dgvSale.Margin = new Padding(3, 4, 3, 4);
+            dgvSale.Location = new Point(6, 6);
             dgvSale.Name = "dgvSale";
             dgvSale.RowHeadersWidth = 51;
             dgvSale.RowTemplate.Height = 25;
-            dgvSale.Size = new Size(864, 488);
+            dgvSale.Size = new Size(756, 366);
             dgvSale.TabIndex = 1;
             dgvSale.CellDoubleClick += addSala;
             // 
@@ -143,21 +137,19 @@
             tabfilmy.Controls.Add(button5);
             tabfilmy.Controls.Add(button2);
             tabfilmy.Controls.Add(dgvFilm);
-            tabfilmy.Location = new Point(4, 29);
-            tabfilmy.Margin = new Padding(3, 4, 3, 4);
+            tabfilmy.Location = new Point(4, 24);
             tabfilmy.Name = "tabfilmy";
-            tabfilmy.Padding = new Padding(3, 4, 3, 4);
-            tabfilmy.Size = new Size(879, 535);
+            tabfilmy.Padding = new Padding(3);
+            tabfilmy.Size = new Size(768, 398);
             tabfilmy.TabIndex = 1;
             tabfilmy.Text = "Filmy";
             tabfilmy.UseVisualStyleBackColor = true;
             // 
             // button5
             // 
-            button5.Location = new Point(693, 496);
-            button5.Margin = new Padding(3, 4, 3, 4);
+            button5.Location = new Point(606, 372);
             button5.Name = "button5";
-            button5.Size = new Size(86, 31);
+            button5.Size = new Size(75, 23);
             button5.TabIndex = 2;
             button5.Text = "dodaj film";
             button5.UseVisualStyleBackColor = true;
@@ -165,10 +157,9 @@
             // 
             // button2
             // 
-            button2.Location = new Point(785, 496);
-            button2.Margin = new Padding(3, 4, 3, 4);
+            button2.Location = new Point(687, 372);
             button2.Name = "button2";
-            button2.Size = new Size(86, 31);
+            button2.Size = new Size(75, 23);
             button2.TabIndex = 1;
             button2.Text = "usuń film";
             button2.UseVisualStyleBackColor = true;
@@ -176,15 +167,12 @@
             // 
             // dgvFilm
             // 
-            //
-            //dgvFilm.AllowUserToAddRows = false;
             dgvFilm.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvFilm.Location = new Point(7, 8);
-            dgvFilm.Margin = new Padding(3, 4, 3, 4);
+            dgvFilm.Location = new Point(6, 6);
             dgvFilm.Name = "dgvFilm";
             dgvFilm.RowHeadersWidth = 51;
             dgvFilm.RowTemplate.Height = 25;
-            dgvFilm.Size = new Size(864, 488);
+            dgvFilm.Size = new Size(756, 366);
             dgvFilm.TabIndex = 0;
             dgvFilm.CellDoubleClick += addFilm;
             // 
@@ -193,21 +181,19 @@
             tabOper.Controls.Add(button4);
             tabOper.Controls.Add(button1);
             tabOper.Controls.Add(dgvOper);
-            tabOper.Location = new Point(4, 29);
-            tabOper.Margin = new Padding(3, 4, 3, 4);
+            tabOper.Location = new Point(4, 24);
             tabOper.Name = "tabOper";
-            tabOper.Padding = new Padding(3, 4, 3, 4);
-            tabOper.Size = new Size(879, 535);
+            tabOper.Padding = new Padding(3);
+            tabOper.Size = new Size(768, 398);
             tabOper.TabIndex = 2;
             tabOper.Text = "Użytkownicy";
             tabOper.UseVisualStyleBackColor = true;
             // 
             // button4
             // 
-            button4.Location = new Point(598, 496);
-            button4.Margin = new Padding(3, 4, 3, 4);
+            button4.Location = new Point(514, 372);
             button4.Name = "button4";
-            button4.Size = new Size(142, 31);
+            button4.Size = new Size(124, 23);
             button4.TabIndex = 2;
             button4.Text = "dodaj użytkownika";
             button4.UseVisualStyleBackColor = true;
@@ -215,25 +201,22 @@
             // 
             // button1
             // 
-            button1.Location = new Point(746, 496);
-            button1.Margin = new Padding(3, 4, 3, 4);
+            button1.Location = new Point(644, 372);
             button1.Name = "button1";
-            button1.Size = new Size(125, 31);
+            button1.Size = new Size(118, 23);
             button1.TabIndex = 1;
-            button1.Text = "usuń operatora";
+            button1.Text = "usuń użytkownika";
             button1.UseVisualStyleBackColor = true;
             button1.Click += button1_Click;
             // 
             // dgvOper
             // 
-            //dgvOper.AllowUserToAddRows = false;
             dgvOper.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvOper.Location = new Point(3, 4);
-            dgvOper.Margin = new Padding(3, 4, 3, 4);
+            dgvOper.Location = new Point(3, 3);
             dgvOper.Name = "dgvOper";
             dgvOper.RowHeadersWidth = 51;
             dgvOper.RowTemplate.Height = 25;
-            dgvOper.Size = new Size(867, 485);
+            dgvOper.Size = new Size(759, 364);
             dgvOper.TabIndex = 0;
             dgvOper.CellDoubleClick += addOper;
             // 
@@ -243,11 +226,10 @@
             tabKat.Controls.Add(button8);
             tabKat.Controls.Add(button7);
             tabKat.Controls.Add(dgvKategorie);
-            tabKat.Location = new Point(4, 29);
-            tabKat.Margin = new Padding(3, 4, 3, 4);
+            tabKat.Location = new Point(4, 24);
             tabKat.Name = "tabKat";
-            tabKat.Padding = new Padding(3, 4, 3, 4);
-            tabKat.Size = new Size(879, 535);
+            tabKat.Padding = new Padding(3);
+            tabKat.Size = new Size(768, 398);
             tabKat.TabIndex = 3;
             tabKat.Text = "Kategorie";
             tabKat.UseVisualStyleBackColor = true;
@@ -255,17 +237,16 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(7, 497);
+            label1.Location = new Point(6, 373);
             label1.Name = "label1";
-            label1.Size = new Size(0, 20);
+            label1.Size = new Size(0, 15);
             label1.TabIndex = 3;
             // 
             // button8
             // 
-            button8.Location = new Point(625, 492);
-            button8.Margin = new Padding(3, 4, 3, 4);
+            button8.Location = new Point(547, 369);
             button8.Name = "button8";
-            button8.Size = new Size(112, 31);
+            button8.Size = new Size(98, 23);
             button8.TabIndex = 2;
             button8.Text = "dodaj kategorię";
             button8.UseVisualStyleBackColor = true;
@@ -273,10 +254,9 @@
             // 
             // button7
             // 
-            button7.Location = new Point(744, 492);
-            button7.Margin = new Padding(3, 4, 3, 4);
+            button7.Location = new Point(651, 369);
             button7.Name = "button7";
-            button7.Size = new Size(127, 31);
+            button7.Size = new Size(111, 23);
             button7.TabIndex = 1;
             button7.Text = "usuń kategorię";
             button7.UseVisualStyleBackColor = true;
@@ -284,14 +264,12 @@
             // 
             // dgvKategorie
             // 
-            //dgvKategorie.AllowUserToAddRows = false;
             dgvKategorie.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvKategorie.Location = new Point(7, 8);
-            dgvKategorie.Margin = new Padding(3, 4, 3, 4);
+            dgvKategorie.Location = new Point(6, 6);
             dgvKategorie.Name = "dgvKategorie";
             dgvKategorie.RowHeadersWidth = 51;
             dgvKategorie.RowTemplate.Height = 25;
-            dgvKategorie.Size = new Size(864, 476);
+            dgvKategorie.Size = new Size(756, 357);
             dgvKategorie.TabIndex = 0;
             dgvKategorie.CellDoubleClick += addKat;
             // 
@@ -301,11 +279,10 @@
             tabAktorzy.Controls.Add(btn_dodajAktora);
             tabAktorzy.Controls.Add(btn_usunAktora);
             tabAktorzy.Controls.Add(dgvAktorzy);
-            tabAktorzy.Location = new Point(4, 29);
-            tabAktorzy.Margin = new Padding(3, 4, 3, 4);
+            tabAktorzy.Location = new Point(4, 24);
             tabAktorzy.Name = "tabAktorzy";
-            tabAktorzy.Padding = new Padding(3, 4, 3, 4);
-            tabAktorzy.Size = new Size(879, 535);
+            tabAktorzy.Padding = new Padding(3);
+            tabAktorzy.Size = new Size(768, 398);
             tabAktorzy.TabIndex = 4;
             tabAktorzy.Text = "Aktorzy";
             tabAktorzy.UseVisualStyleBackColor = true;
@@ -313,17 +290,16 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(7, 497);
+            label2.Location = new Point(6, 373);
             label2.Name = "label2";
-            label2.Size = new Size(0, 20);
+            label2.Size = new Size(0, 15);
             label2.TabIndex = 6;
             // 
             // btn_dodajAktora
             // 
-            btn_dodajAktora.Location = new Point(625, 492);
-            btn_dodajAktora.Margin = new Padding(3, 4, 3, 4);
+            btn_dodajAktora.Location = new Point(547, 369);
             btn_dodajAktora.Name = "btn_dodajAktora";
-            btn_dodajAktora.Size = new Size(112, 31);
+            btn_dodajAktora.Size = new Size(98, 23);
             btn_dodajAktora.TabIndex = 5;
             btn_dodajAktora.Text = "dodaj aktora";
             btn_dodajAktora.UseVisualStyleBackColor = true;
@@ -331,10 +307,9 @@
             // 
             // btn_usunAktora
             // 
-            btn_usunAktora.Location = new Point(744, 492);
-            btn_usunAktora.Margin = new Padding(3, 4, 3, 4);
+            btn_usunAktora.Location = new Point(651, 369);
             btn_usunAktora.Name = "btn_usunAktora";
-            btn_usunAktora.Size = new Size(127, 31);
+            btn_usunAktora.Size = new Size(111, 23);
             btn_usunAktora.TabIndex = 4;
             btn_usunAktora.Text = "usuń aktora";
             btn_usunAktora.UseVisualStyleBackColor = true;
@@ -342,26 +317,23 @@
             // 
             // dgvAktorzy
             // 
-            //dgvAktorzy.AllowUserToAddRows = false;
             dgvAktorzy.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvAktorzy.Location = new Point(7, 8);
-            dgvAktorzy.Margin = new Padding(3, 4, 3, 4);
+            dgvAktorzy.Location = new Point(6, 6);
             dgvAktorzy.Name = "dgvAktorzy";
             dgvAktorzy.RowHeadersWidth = 51;
             dgvAktorzy.RowTemplate.Height = 25;
-            dgvAktorzy.Size = new Size(864, 476);
+            dgvAktorzy.Size = new Size(756, 357);
             dgvAktorzy.TabIndex = 3;
             dgvAktorzy.CellDoubleClick += addAkt;
             // 
             // OknoKonfiguracji
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(914, 600);
+            ClientSize = new Size(800, 450);
             Controls.Add(tabControl);
-            Margin = new Padding(3, 4, 3, 4);
             Name = "OknoKonfiguracji";
-            Text = "OknoKonfiguracji";
+            Text = "Konfiguracja";
             Load += OknoKonfiguracji_Load;
             tabControl.ResumeLayout(false);
             tabsale.ResumeLayout(false);

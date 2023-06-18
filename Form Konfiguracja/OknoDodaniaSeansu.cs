@@ -87,7 +87,7 @@ namespace Projekt_kino.Form_Konfiguracja
         {
             string text = $"{tb_dataRoz.Text} {tb_godzRoz.Text}";
             seans.SE_DataEmisji = DateTime.ParseExact(text, "dd.MM.yyyy HH:mm", System.Globalization.CultureInfo.InvariantCulture);
-            
+
             text = $"{tb_dataZak.Text} {tb_godzZak.Text}";
             seans.SE_DataKonca = DateTime.ParseExact(text, "dd.MM.yyyy HH:mm", System.Globalization.CultureInfo.InvariantCulture);
             seans.SE_SRID = Program.baza.getIdSali(int.Parse(listBox1.SelectedItem.ToString()));

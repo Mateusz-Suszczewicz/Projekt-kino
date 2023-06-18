@@ -82,7 +82,7 @@
             Controls.Add(button1);
             Controls.Add(dgv);
             Name = "OknoPrzypisaniaKategorii";
-            Text = "OknoPrzypisaniaKategorii";
+            Text = "Przypisanie Kategorii";
             ((System.ComponentModel.ISupportInitialize)dgv).EndInit();
             ResumeLayout(false);
             PerformLayout();

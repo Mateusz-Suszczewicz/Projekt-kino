@@ -1,4 +1,5 @@
-﻿using System;
+﻿using kino;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -20,6 +21,7 @@ namespace Projekt_kino
         public podsumowanie()
         {
             InitializeComponent();
+            button2.Visible = false;
         }
 
         public void zaladowanie_danych(List<int> listaMijesc, Filmy film)
@@ -67,12 +69,12 @@ namespace Projekt_kino
             label_koszyk.Location = new Point(750, 30);
 
             #region tabela biletów
-            
+
             tab.DataSource = null;
             tab.Rows.Clear();
             tab.Columns.Clear();
 
-           
+
 
             DataGridViewTextBoxColumn lp = new DataGridViewTextBoxColumn();
             //lp.ValueType = typeof(int);
@@ -100,8 +102,16 @@ namespace Projekt_kino
             type.Name = "Rodzaj";
             type.HeaderText = "Ulogwy";
             type.Width = 120;
-
             tab.Columns.Add(type);
+
+            DataGridViewTextBoxColumn id = new DataGridViewTextBoxColumn();
+            //lp.ValueType = typeof(int);
+            id.Name = "id";
+            id.HeaderText = "id";
+            id.Width = 100;
+            id.Visible = false;
+            tab.Columns.Add(id);
+
 
             #endregion
 
@@ -135,18 +145,19 @@ namespace Projekt_kino
             koszyk.AllowUserToResizeColumns = false;
             koszyk.RowHeadersVisible = false;
             koszyk.BackgroundColor = Color.White;
-            koszyk.Size = new Size(265, 95);
+            koszyk.Size = new Size(265, 80);
             koszyk.AllowUserToResizeRows = false;
-            koszyk.Location = new Point(750, 80);
+            koszyk.Location = new Point(600, 80);
+
 
             this.Controls.Add(koszyk);
 
             tab.AllowUserToResizeColumns = false;
             tab.RowHeadersVisible = false;
             tab.BackgroundColor = Color.White;
-            
-            tab.Size = new Size(465, 320);
-           
+
+            tab.Size = new Size(465, 200);
+
             int numer_biletu = 1;
             foreach (miejsce i in listaMiejsc)
             {
@@ -154,18 +165,19 @@ namespace Projekt_kino
                 ROW.Cells[0].Value = numer_biletu;
                 ROW.Cells[1].Value = (i.Seat_Row - 150) / 70;
                 ROW.Cells[2].Value = (i.Seat_Nr - 450) / 55;
+                ROW.Cells[4].Value = i.Seat_ID.ToString();
 
                 tab.Rows.Add(ROW);
                 numer_biletu++;
             }
             tab.AllowUserToAddRows = false;
             tab.AllowUserToResizeRows = false;
-            tab.Location = new Point(50, 280);
+            tab.Location = new Point(50, 300);
             tab.CellClick += tab_CellContentClick;
             this.Controls.Add(tab);
-                      
-            #endregion
 
+            #endregion
+            koszyk.AllowUserToAddRows = false;
         }
 
         private void button_zatwierdz_Click(object sender, EventArgs e)
@@ -181,11 +193,12 @@ namespace Projekt_kino
         {
 
             odswierzenieKoszyka();
-   
+
         }
 
         private void odswierzenieKoszyka()
         {
+            koszyk.AllowUserToAddRows = true;
             koszyk.Rows.Clear();
             decimal kosztUlgowy = 0;
             int ilosculgowy = 0;
@@ -220,11 +233,46 @@ namespace Projekt_kino
             ROW1.Cells[2].Value = kosztUlgowy;
 
             koszyk.Rows.Add(ROW1);
+            koszyk.AllowUserToAddRows = false;
         }
 
         private void podsumowanie_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            bool flag = false;
+            kinoDB baza = new kinoDB(true);
+            foreach (DataGridViewRow i in tab.Rows)
+            {
+                foreach (miejsce a in listaMiejsc)
+                {
+                    if (a.Seat_ID.ToString() == i.Cells[4].Value.ToString())
+                    {
+                        var info = baza.kupnoBiletu(a, Film, Convert.ToBoolean(i.Cells[3].Value));
+                        if (info.Item1 != 45)
+                        {
+                            flag = true;
+                            label1.Text += komunikaty.komunikat[info.Item1];
+
+                        }
+                    }
+                }
+            }
+            if (!flag)
+            {
+                label1.Text = "Zakupiono bilety";
+            }
+            button1.Enabled = false;
+            button2.Visible = true;
+            button2.Enabled = true;
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

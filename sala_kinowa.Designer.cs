@@ -39,9 +39,9 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(30, 21);
+            label1.Location = new Point(26, 16);
             label1.Name = "label1";
-            label1.Size = new Size(275, 20);
+            label1.Size = new Size(216, 15);
             label1.TabIndex = 0;
             label1.Text = "id + tytul + data emisji + godzina emisji";
             label1.Click += label1_Click;
@@ -50,9 +50,10 @@
             // 
             panel1.BackColor = SystemColors.ScrollBar;
             panel1.Controls.Add(label_ekran);
-            panel1.Location = new Point(333, 68);
+            panel1.Location = new Point(291, 51);
+            panel1.Margin = new Padding(3, 2, 3, 2);
             panel1.Name = "panel1";
-            panel1.Size = new Size(831, 29);
+            panel1.Size = new Size(727, 22);
             panel1.TabIndex = 1;
             // 
             // label_ekran
@@ -60,9 +61,9 @@
             label_ekran.Anchor = AnchorStyles.Bottom;
             label_ekran.AutoSize = true;
             label_ekran.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            label_ekran.Location = new Point(382, 1);
+            label_ekran.Location = new Point(334, 1);
             label_ekran.Name = "label_ekran";
-            label_ekran.Size = new Size(65, 28);
+            label_ekran.Size = new Size(53, 21);
             label_ekran.TabIndex = 0;
             label_ekran.Text = "Ekran";
             label_ekran.Click += label_ekran_Click_1;
@@ -77,9 +78,10 @@
             // button_final
             // 
             button_final.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            button_final.Location = new Point(1321, 862);
+            button_final.Location = new Point(1156, 646);
+            button_final.Margin = new Padding(3, 2, 3, 2);
             button_final.Name = "button_final";
-            button_final.Size = new Size(149, 79);
+            button_final.Size = new Size(130, 59);
             button_final.TabIndex = 2;
             button_final.Text = "Zakup";
             button_final.UseVisualStyleBackColor = true;
@@ -87,16 +89,17 @@
             // 
             // sala_kinowa
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1482, 953);
+            ClientSize = new Size(1298, 721);
             Controls.Add(button_final);
             Controls.Add(panel1);
             Controls.Add(label1);
-            MaximumSize = new Size(1500, 1000);
-            MinimumSize = new Size(1500, 1000);
+            Margin = new Padding(3, 2, 3, 2);
+            MaximumSize = new Size(1314, 760);
+            MinimumSize = new Size(1314, 760);
             Name = "sala_kinowa";
-            Text = "sala_kinowa";
+            Text = "Sala kinowa";
             Load += sala_kinowa_Load;
             panel1.ResumeLayout(false);
             panel1.PerformLayout();

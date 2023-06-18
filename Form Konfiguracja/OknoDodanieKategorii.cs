@@ -38,12 +38,12 @@ namespace Projekt_kino.Form_Konfiguracja
 
         private void button2_Click(object sender, EventArgs e)
         {
-            if(textBox1.Text == "" || textBox1.Text == null) 
+            if (textBox1.Text == "" || textBox1.Text == null)
             {
                 label2.Text = "Nazwa kategorii nie może byc pusta";
                 return;
             }
-            if(textBox1.Text.Length < 5 || textBox1.Text.Length > 50) 
+            if (textBox1.Text.Length < 5 || textBox1.Text.Length > 50)
             {
                 label2.Text = "Błędna długość nazwy";
                 return;

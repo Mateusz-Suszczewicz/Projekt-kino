@@ -132,7 +132,7 @@
             Controls.Add(label2);
             Controls.Add(label1);
             Name = "OknoDodaniaOperatora";
-            Text = "OknoDodaniaOperatora";
+            Text = "Dodanie Operatora";
             ResumeLayout(false);
             PerformLayout();
         }

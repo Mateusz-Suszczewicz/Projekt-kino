@@ -7,7 +7,7 @@
         {
             InitializeComponent();
         }
-       
+
         public void ustawienieID(Filmy filmy)
         {
             film = filmy;

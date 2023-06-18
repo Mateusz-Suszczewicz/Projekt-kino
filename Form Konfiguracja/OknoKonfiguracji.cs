@@ -190,7 +190,14 @@ namespace Projekt_kino.Form_Konfiguracja
 
         private void button2_Click(object sender, EventArgs e)
         {
-            //TODO: obsłużyć usuwanie filmu
+            int ri = dgvFilm.CurrentCell.RowIndex;
+            var a = dgvFilm.Rows[ri].Cells[0].Value.ToString();
+
+            if (int.Parse(a) != 0)
+            {
+                info.Text = komunikaty.komunikat[baza.usunFilm(int.Parse(a))];
+            }
+            FilmyLoad();
         }
 
         private void button5_Click(object sender, EventArgs e)

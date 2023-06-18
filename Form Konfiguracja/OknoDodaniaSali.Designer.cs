@@ -171,7 +171,7 @@
             Controls.Add(tb_numerSali);
             Controls.Add(label1);
             Name = "OknoDodaniaSali";
-            Text = "OknoDodaniaSali";
+            Text = "Dodanie Sali";
             ResumeLayout(false);
             PerformLayout();
         }

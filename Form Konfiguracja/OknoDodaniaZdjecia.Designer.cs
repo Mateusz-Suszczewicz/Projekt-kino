@@ -102,7 +102,7 @@
             Controls.Add(textBox1);
             Controls.Add(label1);
             Name = "OknoDodaniaZdjecia";
-            Text = "OknoDodaniaZdjecia";
+            Text = "Dodanie Zdjecia";
             ResumeLayout(false);
             PerformLayout();
         }

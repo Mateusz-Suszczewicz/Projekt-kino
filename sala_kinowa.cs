@@ -165,7 +165,7 @@ namespace Projekt_kino
             podsumowanie pods = new podsumowanie();
             pods.zaladowanie_danych(miejscaDoKupienia, Film);
             pods.ShowDialog();
-            this.Show();
+            this.Close();
         }
     }
 }

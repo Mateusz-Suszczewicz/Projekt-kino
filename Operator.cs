@@ -27,7 +27,8 @@ namespace Projekt_kino
                 this.Oper_Password = a.Oper_Password;
             }
         }
-        private string encryptionPass(string password)
+        
+        public string encryptionPass(string password)
         {
             string a = "";
             foreach (char c in password)
