@@ -45,6 +45,14 @@ namespace Projekt_kino.Form_Konfiguracja
             sal.listaMiejsc = null;
             int maxRowMiejsca = int.Parse(tb_iloscRzedow.Text);
             int maxIloscMijesc = int.Parse(tb_iloscMijesc.Text);
+            if (maxRowMiejsca > 15)
+            {
+                return;
+            }
+            if (maxRowMiejsca > 10)
+            {
+                return;
+            }
             int start_position = Width / 2 - 25 - 55 * (maxIloscMijesc / 2);
             int position = start_position;
             int h = 220;
@@ -122,6 +130,11 @@ namespace Projekt_kino.Form_Konfiguracja
             sal.SR_ID = a.Item2;
 
             zaladowanieMiejsc();
+
+        }
+
+        private void tb_iloscRzedow_TextChanged(object sender, EventArgs e)
+        {
 
         }
     }

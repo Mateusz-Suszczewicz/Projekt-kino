@@ -54,7 +54,7 @@
             // 
             // tb_numerSali
             // 
-            tb_numerSali.Location = new Point(82, 7);
+            tb_numerSali.Location = new Point(183, 7);
             tb_numerSali.Name = "tb_numerSali";
             tb_numerSali.Size = new Size(100, 23);
             tb_numerSali.TabIndex = 1;
@@ -62,7 +62,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(220, 10);
+            label2.Location = new Point(460, 9);
             label2.Name = "label2";
             label2.Size = new Size(51, 15);
             label2.TabIndex = 2;
@@ -70,7 +70,7 @@
             // 
             // tb_opis
             // 
-            tb_opis.Location = new Point(277, 7);
+            tb_opis.Location = new Point(532, 7);
             tb_opis.Name = "tb_opis";
             tb_opis.Size = new Size(511, 23);
             tb_opis.TabIndex = 3;
@@ -80,36 +80,37 @@
             label3.AutoSize = true;
             label3.Location = new Point(1, 46);
             label3.Name = "label3";
-            label3.Size = new Size(75, 15);
+            label3.Size = new Size(124, 15);
             label3.TabIndex = 4;
-            label3.Text = "ilość rzędów:";
+            label3.Text = "ilość rzędów (max 15):";
             // 
             // label4
             // 
             label4.AutoSize = true;
             label4.Location = new Point(2, 80);
             label4.Name = "label4";
-            label4.Size = new Size(71, 15);
+            label4.Size = new Size(120, 15);
             label4.TabIndex = 5;
-            label4.Text = "ilość miejsc:";
+            label4.Text = "ilość miejsc (max 10):";
             // 
             // tb_iloscRzedow
             // 
-            tb_iloscRzedow.Location = new Point(82, 43);
+            tb_iloscRzedow.Location = new Point(183, 43);
             tb_iloscRzedow.Name = "tb_iloscRzedow";
             tb_iloscRzedow.Size = new Size(100, 23);
             tb_iloscRzedow.TabIndex = 6;
+            tb_iloscRzedow.TextChanged += tb_iloscRzedow_TextChanged;
             // 
             // tb_iloscMijesc
             // 
-            tb_iloscMijesc.Location = new Point(82, 77);
+            tb_iloscMijesc.Location = new Point(183, 77);
             tb_iloscMijesc.Name = "tb_iloscMijesc";
             tb_iloscMijesc.Size = new Size(100, 23);
             tb_iloscMijesc.TabIndex = 7;
             // 
             // button1
             // 
-            button1.Location = new Point(202, 76);
+            button1.Location = new Point(945, 76);
             button1.Name = "button1";
             button1.Size = new Size(98, 23);
             button1.TabIndex = 8;
