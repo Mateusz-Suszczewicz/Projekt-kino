@@ -91,13 +91,13 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1298, 721);
+            ClientSize = new Size(1384, 1061);
             Controls.Add(button_final);
             Controls.Add(panel1);
             Controls.Add(label1);
             Margin = new Padding(3, 2, 3, 2);
-            MaximumSize = new Size(1314, 760);
-            MinimumSize = new Size(1314, 760);
+            MaximumSize = new Size(1400, 1100);
+            MinimumSize = new Size(1400, 1030);
             Name = "sala_kinowa";
             Text = "Sala kinowa";
             Load += sala_kinowa_Load;
